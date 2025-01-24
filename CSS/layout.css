@@ -1,0 +1,62 @@
+.principal_page {
+    font-family: Arial, sans-serif;
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    grid-template-rows: 55px;
+    height: 100vh;
+    grid-template-areas: 
+    'header  header'
+    'sidebar container';
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #f4f4f4;
+}
+
+h1 {
+    font-size: 0.9rem;
+    display: inline;
+}
+
+h4 {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    color: #aaa;
+    margin-left: 20px;   
+}
+
+i {
+    font-size: 1.5rem;
+    color: var(--fourth-color);
+    transition: 0.5s;
+    color: var(--third-color);
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+  }
+
+p,a {
+    font-size: 0.9rem;
+}
+
+hr {
+    border: 5px solid rgba(255,255,255,0.1);
+    margin-top: 49px;
+    margin-left: -6px;
+    background-color: var(--third-color);
+}
+
+.titulo_cards {
+    display: flex;
+    padding: 20px;
+    margin-left: 65px;
+    margin-right: 900px;
+    background-color: var(--main-color);
+    color: var(--fourth-color);
+    justify-content: center;
+}

@@ -1,0 +1,40 @@
+.sidebar {
+    grid-area: sidebar;
+    background-color: var(--main-color);
+    position: fixed;
+    height: 100vh;
+    padding: 65px 0px;
+}
+
+.sidebar-items {
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-item {
+    display: flex;
+    color:var(--fourth-color);
+    text-decoration: none;
+    height: 40px;
+    align-items: center;
+    gap: 10px;
+    border-radius: 10px;
+    margin: 20px;
+}
+
+.sidebar-item:hover{
+    background-color: var(--fourth-color);
+    transition: 0.3s;
+    color: var(--main-color);
+    text-decoration: none;
+}
+
+#item {
+    display: flex;
+    height: 40px;
+    min-width: 40px;
+    border-radius: 50%;
+    background-color: var(--fourth-color);
+    align-items: center;
+    justify-content: center;
+}

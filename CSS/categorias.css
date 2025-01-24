@@ -1,0 +1,113 @@
+/* Header de la categoría */
+
+  .categoria_header {
+    background-color: var(--main-color);
+    text-align: center;
+    padding: 20px 15px;
+}
+
+.categoria_header h1 {
+    font-size: 2.5rem;
+    color: #f4f4f4;
+}
+
+.categoria_header p {
+    font-size: 1rem;
+    color: #f4f4f4;
+  }
+  
+  /* Sección destacada */
+  
+  .destacada {
+    display: flex;
+    position: relative;
+    margin-top: 20px;
+    height: 250px;
+    background-size: cover; /* La imagen cubre todo el espacio */
+    background-position: initial;
+    background-repeat: no-repeat; /* Evita que se repita */
+    align-items: center;
+    justify-content: flex-start;
+    color: #fff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7); /* Contraste del texto */
+}
+
+.destacada_contenido {
+    text-align: start;
+    z-index: 2;
+    margin-left: 20px;
+}
+
+.destacada_contenido h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.destacada_contenido p {
+    font-size: 1rem;
+    margin-bottom: 15px;
+}
+
+.btn_ver_mas {
+    padding: 10px 20px;
+    background-color: var(--third-color);
+    color: #fff;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn_ver_mas:hover {
+    background-color: var(--second-color);
+    text-decoration: none;
+}
+
+  /* Grilla de contenido */
+  .cards_section { 
+    padding: 20px;
+}
+  
+.cards_section h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+  
+.album_cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Ajusta las columnas para que sean proporcionales */
+    gap: 20px;
+}
+  
+.cards_item {
+    background-color: #f4f4f4; /* Color de fondo por defecto si no hay imagen */
+    background-size: cover; /* La imagen cubre toda la card */
+    background-position: center; /* La imagen se centra */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    border-radius: 8px; /* Esquinas redondeadas */
+    color: #fff; /* Texto en blanco para visibilidad */
+    position: relative; /* Necesario para capas */
+    height: 200px; /* Altura fija de la card */
+    padding: 15px; /* Espaciado interno */
+    display: flex; /* Para centrar contenido */
+    flex-direction: column; /* Coloca el título y el texto en vertical */
+    justify-content: flex-end; /* Alínea el contenido hacia la parte inferior */
+    text-align: center; /* Centra el texto */
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7); /* Sombra para el texto */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transición para el hover */
+    cursor: pointer;
+}
+
+.cards_item:hover {
+    transform: scale(1.05); /* Efecto de zoom al pasar el mouse */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra extra al hacer hover */
+}
+
+.cards_item h3 {
+    margin-bottom: 5px;
+    font-size: 1.2rem;
+}
+
+.cards_item p {
+    font-size: 0.9rem;
+    margin-top: 5px;
+}
