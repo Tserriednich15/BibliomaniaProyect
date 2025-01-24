@@ -1,13 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
-@import url('/CSS/header_start.css');
-@import url('/CSS/layout.css');
-@import url('/CSS/container_header.css');
-@import url('/CSS/container.css');
-@import url('/CSS/sidebar_start.css');
-@import url('/CSS/footer.css');
-@import url('/CSS/cards_horizontales.css');
-@import url('/CSS/footer.css');
-@import url('/CSS/categorias.css');
+@import url('header_start.css');
+@import url('layout.css');
+@import url('container_header.css');
+@import url('container.css');
+@import url('sidebar_start.css');
+@import url('footer.css');
+@import url('cards_horizontales.css');
+@import url('categorias.css');
 
 
 * {
