@@ -8,15 +8,19 @@
   }
 
   .section_wrapper {
-    width: 950px; 
-    overflow: hidden; 
+    /* overflow-x: auto; */
+    scroll-behavior: smooth;
   }
-
+  
   .section_content {
     display: flex;
-    transition: transform 0.3s ease-in-out;
-    gap: 20px; 
+    gap: 20px;
+    overflow-x: auto;
   }
+
+  .section_wrapper::-webkit-scrollbar {
+    display: none; /* Oculta la barra en Chrome, Safari y Edge */
+}
 
   .card_categorias {
     position: relative;
