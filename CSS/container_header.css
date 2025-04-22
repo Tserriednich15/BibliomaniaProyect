@@ -1,11 +1,9 @@
 .main_top {
-    display: flex;
-    margin: 50px 50px;
-    border: 1px solid #121212;
-    height: 200px;
-    align-items: center;
-    justify-content: center;
+    width: 100%;
+    max-width: 1000px;
     background-color: #f0f0f0;
+    border: 1px solid #121212;
+    text-align: center;
 }
 
 .main_top h1 {
