@@ -140,3 +140,7 @@ hr {
   color: var(--fourth-color);
   justify-content: center;
 }
+
+body {
+  overflow-x: hidden;
+}

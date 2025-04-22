@@ -1,7 +1,11 @@
+import { cargarItemsPorCategoria } from "../models/categoriaModel.js";
+import { crearCarrusel } from "../components/carruselComponent.js";
+
 document.addEventListener("DOMContentLoaded", async function () {
     const categorias = ["anime", "manga", "peliculas", "series"];
     const contenedor_index = document.getElementById("contenedor_index");
 
+    // Función para obtener datos según la categoría
     async function obtenerDatos(categoria) {
         try {
             let url, options = {};
@@ -60,58 +64,29 @@ document.addEventListener("DOMContentLoaded", async function () {
         }
     }
 
+    // Función para cargar el contenido del índice
     async function cargarIndex() {
         for (let categoria of categorias) {
             const items = await obtenerDatos(categoria);
-    
             const separador = document.createElement("hr");
-    
+
             const tituloDiv = document.createElement("div");
             tituloDiv.classList.add("titulo_cards");
             tituloDiv.innerHTML = `<h1>${categoria.charAt(0).toUpperCase() + categoria.slice(1)}</h1>`;
-    
+
             const seccion = document.createElement("section");
             seccion.classList.add("section_categorias");
-            seccion.innerHTML = `
-                <button class="scroll-btn left">&#10094;</button>
-                <div class="section_wrapper">
-                    <div class="section_content">
-                        ${items.map(item => `
-                            <div class="card_categorias">
-                                <img src="${item.image}" alt="${item.title}">
-                                <div class="card_contenido_categorias">
-                                    <h1>${item.title}</h1>
-                                </div>
-                            </div>
-                        `).join("")}
-                    </div>
-                </div>
-                <button class="scroll-btn right">&#10095;</button>
-            `;
-    
+
+            // Usamos la función de carrusel para crear las cards
+            const carrusel = crearCarrusel(categoria, items);
+
+            seccion.appendChild(carrusel);
             contenedor_index.appendChild(separador);
             contenedor_index.appendChild(tituloDiv);
             contenedor_index.appendChild(seccion);
         }
-    
-        agregarDesplazamiento();
-    }    
-
-    function agregarDesplazamiento() {
-        document.querySelectorAll('.section_categorias').forEach((section) => {
-            const sectionContent = section.querySelector('.section_content');
-            const btnLeft = section.querySelector('.scroll-btn.left');
-            const btnRight = section.querySelector('.scroll-btn.right');
-
-            btnLeft.addEventListener('click', () => {
-                sectionContent.scrollBy({ left: -300, behavior: "smooth" });
-            });
-
-            btnRight.addEventListener('click', () => {
-                sectionContent.scrollBy({ left: 300, behavior: "smooth" });
-            });
-        });
     }
 
+    // Llamar a la función que carga el carrusel
     cargarIndex();
 });
