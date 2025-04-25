@@ -34,9 +34,28 @@ window.addEventListener('DOMContentLoaded', async () => {
 
   app.appendChild(appContainer);
   const categorias = ["anime", "manga", "peliculas", "series"];
+  
   for (let categoria of categorias) {
-    const items = await cargarItemsPorCategoria(categoria);  // Usamos la función para obtener los datos
-    const carrusel = crearCarrusel(categoria, items);  // Pasamos la categoría y los items al carrusel
-    main.appendChild(carrusel);  // Añadimos el carrusel a la sección principal
+    const items = await cargarItemsPorCategoria(categoria); // array de objetos con info
+    const cards = items.map(item => {
+      const card = document.createElement('div');
+      card.classList.add('card');
+  
+      const img = document.createElement('img');
+      img.src = item.image || "https://via.placeholder.com/150x220?text=No+Image";
+      img.alt = item.title || "Sin título";
+  
+      const title = document.createElement('h3');
+      title.textContent = item.title || "Sin título";
+  
+      card.appendChild(img);
+      card.appendChild(title);
+  
+      return card;
+    });
+  
+    const carrusel = crearCarrusel(categoria, cards); // ✅ ahora le pasamos categoría y array de elementos HTML
+    main.appendChild(carrusel);
   }
+  
 });

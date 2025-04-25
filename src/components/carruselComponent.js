@@ -1,47 +1,63 @@
-export function crearCarrusel(cards) {
-  const carruselContainer = document.createElement('div');
-  carruselContainer.classList.add('carrusel-container');
-
-  const carruselInner = document.createElement('div');
-  carruselInner.classList.add('carrusel-inner');
-
+export function crearCarrusel(categoria, cards) {
   if (!Array.isArray(cards)) {
     console.error("Se esperaba un array de cards, pero se recibió:", cards);
-    return document.createTextNode("Error: No se pudo crear el carrusel.");
+    return;
   }
 
+  const contenedor = document.createElement('section');
+  contenedor.classList.add('carrusel_categoria');
+
+  const titulo = document.createElement('h2');
+  titulo.textContent = categoria.charAt(0).toUpperCase() + categoria.slice(1);
+  contenedor.appendChild(titulo);
+
+  const carruselWrapper = document.createElement('div');
+  carruselWrapper.classList.add('carrusel-wrapper');
+
+  const carrusel = document.createElement('div');
+  carrusel.classList.add('carrusel');
+
+  const track = document.createElement('div');
+  track.classList.add('carrusel-track');
+
   cards.forEach(card => {
-    const wrapper = document.createElement('div');
-    wrapper.classList.add('carrusel-card');
-    wrapper.appendChild(card);
-    carruselInner.appendChild(wrapper);
+    card.classList.add('card_item'); // aseguramos el tamaño correcto
+    track.appendChild(card);
   });
 
+  carrusel.appendChild(track);
+  carruselWrapper.appendChild(carrusel);
+
+  // Botones
   const btnIzq = document.createElement('button');
   btnIzq.textContent = '‹';
-  btnIzq.classList.add('carrusel-btn', 'btn-izq');
+  btnIzq.classList.add('scroll-btn', 'left');
 
   const btnDer = document.createElement('button');
   btnDer.textContent = '›';
-  btnDer.classList.add('carrusel-btn', 'btn-der');
+  btnDer.classList.add('scroll-btn', 'right');
 
-  btnIzq.addEventListener('click', () => {
-    carruselInner.scrollBy({
-      left: -carruselInner.offsetWidth,
-      behavior: 'smooth'
-    });
-  });
+  carruselWrapper.appendChild(btnIzq);
+  carruselWrapper.appendChild(btnDer);
+
+  // Agregamos todo al contenedor
+  contenedor.appendChild(carruselWrapper);
+
+  // Lógica del scroll
+  let posicionScroll = 0;
+  const cardWidth = 240 + 16; // ancho + gap
+  const totalCards = cards.length;
 
   btnDer.addEventListener('click', () => {
-    carruselInner.scrollBy({
-      left: carruselInner.offsetWidth,
-      behavior: 'smooth'
-    });
+    const maxScroll = (totalCards - 5) * cardWidth;
+    posicionScroll = Math.min(posicionScroll + cardWidth * 5, maxScroll);
+    track.style.transform = `translateX(-${posicionScroll}px)`;
   });
 
-  carruselContainer.appendChild(btnIzq);
-  carruselContainer.appendChild(carruselInner);
-  carruselContainer.appendChild(btnDer);
+  btnIzq.addEventListener('click', () => {
+    posicionScroll = Math.max(posicionScroll - cardWidth * 5, 0);
+    track.style.transform = `translateX(-${posicionScroll}px)`;
+  });
 
-  return carruselContainer;
+  return contenedor;
 }
