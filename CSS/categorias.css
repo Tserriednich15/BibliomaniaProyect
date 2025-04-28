@@ -23,13 +23,13 @@
     position: relative;
     margin-top: 20px;
     height: 250px;
-    background-size: cover; /* La imagen cubre todo el espacio */
+    background-size: cover;
     background-position: initial;
-    background-repeat: no-repeat; /* Evita que se repita */
+    background-repeat: no-repeat;
     align-items: center;
     justify-content: flex-start;
     color: #fff;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7); /* Contraste del texto */
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
 }
 
 .destacada_contenido {
@@ -74,32 +74,32 @@
   
 .album_cards {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Ajusta las columnas para que sean proporcionales */
+    grid-template-columns: repeat(3, 1fr);
     gap: 20px;
 }
   
 .cards_item {
-    background-color: #f4f4f4; /* Color de fondo por defecto si no hay imagen */
-    background-size: cover; /* La imagen cubre toda la card */
-    background-position: center; /* La imagen se centra */
-    background-repeat: no-repeat; /* Evita que la imagen se repita */
-    border-radius: 8px; /* Esquinas redondeadas */
-    color: #fff; /* Texto en blanco para visibilidad */
-    position: relative; /* Necesario para capas */
-    height: 200px; /* Altura fija de la card */
-    padding: 15px; /* Espaciado interno */
-    display: flex; /* Para centrar contenido */
-    flex-direction: column; /* Coloca el título y el texto en vertical */
-    justify-content: flex-end; /* Alínea el contenido hacia la parte inferior */
-    text-align: center; /* Centra el texto */
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7); /* Sombra para el texto */
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transición para el hover */
+    background-color: #f4f4f4;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 8px;
+    color: #fff;
+    position: relative;
+    height: 200px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    text-align: center;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
 }
 
 .cards_item:hover {
-    transform: scale(1.05); /* Efecto de zoom al pasar el mouse */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra extra al hacer hover */
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .cards_item h3 {

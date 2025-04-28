@@ -21,14 +21,24 @@ export function crearCarrusel(categoria, cards) {
   track.classList.add('carrusel-track');
 
   cards.forEach(card => {
-    card.classList.add('card_item'); // aseguramos el tamaño correcto
-    track.appendChild(card);
+    const cardItem = document.createElement('div');
+    cardItem.classList.add('card_item');
+
+    const img = document.createElement('img');
+    img.src = card.image;
+    img.alt = card.title;
+    cardItem.appendChild(img);
+
+    const title = document.createElement('h3');
+    title.textContent = card.title;
+    cardItem.appendChild(title);
+
+    track.appendChild(cardItem);
   });
 
   carrusel.appendChild(track);
   carruselWrapper.appendChild(carrusel);
 
-  // Botones
   const btnIzq = document.createElement('button');
   btnIzq.textContent = '‹';
   btnIzq.classList.add('scroll-btn', 'left');
@@ -40,23 +50,20 @@ export function crearCarrusel(categoria, cards) {
   carruselWrapper.appendChild(btnIzq);
   carruselWrapper.appendChild(btnDer);
 
-  // Agregamos todo al contenedor
   contenedor.appendChild(carruselWrapper);
 
-  // Lógica del scroll
-  let posicionScroll = 0;
-  const cardWidth = 240 + 16; // ancho + gap
-  const totalCards = cards.length;
-
   btnDer.addEventListener('click', () => {
-    const maxScroll = (totalCards - 5) * cardWidth;
-    posicionScroll = Math.min(posicionScroll + cardWidth * 5, maxScroll);
-    track.style.transform = `translateX(-${posicionScroll}px)`;
+    carrusel.scrollBy({
+      left: carrusel.offsetWidth,
+      behavior: "smooth"
+    });
   });
 
   btnIzq.addEventListener('click', () => {
-    posicionScroll = Math.max(posicionScroll - cardWidth * 5, 0);
-    track.style.transform = `translateX(-${posicionScroll}px)`;
+    carrusel.scrollBy({
+      left: -carrusel.offsetWidth,
+      behavior: "smooth"
+    });
   });
 
   return contenedor;
