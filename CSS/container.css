@@ -1,77 +1,66 @@
-.content {
-    grid-area: container;
-}
-
-
-/* Aquí están todos los estilos de la galeria y las cards principales (categorías) del contenido. */
 .gallery {
     display: flex;
-    flex-wrap: wrap;    /* Sino cabe en una sola fila crea una nueva (fila) */
-    gap: 16px; /* Define un espacio */
-    justify-content: center; /* Centra las cards horizontalmente */
-    max-width: 1200px; /* Límite máximo de la galería */
-    margin: 25px auto;
+    flex-wrap:wrap-reverse;
+    justify-content: center;
   }
 
 .card {
-    position: relative; /* ubica en su posición "normal" pero se puede ver afectado con las propiedades de top,bottom, etc. Se pueden ubicar encima de otro elemento. Al desplazarse puede dejar un espacio, un hueco (su posición inicial)*/
+    position: relative;
     width: 300px;
-    height: 200px;
-    overflow: hidden; /* No muestra los contenidos que salgan de los límites de la tarjeta. */
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: height 0.5s ease; /* Transición suave al cambiar la altura de la tarjeta. */
+    height: 300px;
+    /* overflow: hidden; */
+    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); */
+    /* transition: height 0.5s ease; */
 }
 
 .card img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Se asegura que la imagen mantenga sus proposciones y rellene todo el espacio sin que se malforme/deforme. */
-  transition: 0.3s ease; /* Aplica una transición suave a la imagen */
+  object-fit: cover;
+  /* transition: 0.3s ease; */
 }
 
 .card_contenido {
+  display: flex;
     position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 2.5em; /* Altura suficiente para mostrar solo el título */
-    background: rgba(0, 0, 0, 0.7);
-    color: white;
+    height: 2.5em;
+    background: var(--second-color);
+    color: var(--main-color);
 
     /* Centra el contenido en el eje X */
-    display: flex;
     flex-direction: column;
-    justify-content: flex-start; /* Alinea el contenido al principio */
-    align-items: center;
+    /* justify-content: flex-start; */
     text-align: center;
 
     /* Oculta el resto del contenido */
     overflow: hidden;
 
     /* Transición suave al cambiar la altura */
-    transition: height 0.3s ease;
+    transition: 'smoot' 0.3s ease;
 }
 
 .card:hover .card_contenido {
-    height: 50%; /* Muestra todo el contenido al hacer hover */
+    height: 50%;
     cursor: pointer;
+    border-top-right-radius: 10%;
+    border-top-left-radius: 10%;
 }
 
- 
-  /* Zoom suave en la imagen al hacer hover */
   .card:hover img {
-    transform: scale(1.1); /* Se aumenta el tamaño de la imagen haciendo semejanza a hacerle zoom a la imagen */
+    transform: scale(1);
     cursor: pointer;
   }
   
-  .card_contenido h1 {
-    margin: 8px auto;
-    font-size: 1.2rem;
-    color: #ffd700;
+  .card card_item h3 {
+    /* margin: 8px auto; */
+    /* font-size: 1.2rem; */
+    /* color: var(--third-color); */
   }
   
-  .card_contenido p {
-    font-size: 1rem;
-    line-height: 1.5;
+  .card card_item p {
+    /* font-size: 1rem; */
+    /* line-height: 1.5; */
   }

@@ -29,4 +29,3 @@ export function crearDestacado(destacado) {
   
     return seccion;
   }
-  

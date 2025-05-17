@@ -1,6 +1,7 @@
 // src/models/categoriaModel.js
-import { obtenerDatos } from "../utils/obtenerDatos.js";
+
+import { obtenerDatosPorGenero } from "../utils/obtenerDatos.js";
 
 export async function cargarItemsPorCategoria(categoria) {
-  return await obtenerDatos(categoria);
+  return await obtenerDatosPorGenero(categoria);
 }
