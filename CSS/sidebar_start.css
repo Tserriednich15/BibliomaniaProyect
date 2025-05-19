@@ -9,6 +9,10 @@
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
+<<<<<<< HEAD
+=======
+  padding: 20px 0;
+>>>>>>> 0849479e59ef1ef9becc56ea055b06d6e5054206
 }
 
 .sidebar-item {

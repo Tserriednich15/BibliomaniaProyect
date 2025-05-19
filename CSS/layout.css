@@ -34,7 +34,15 @@ main {
 }
 
 .sidebar {
+<<<<<<< HEAD
   /* width: 200px; */
+=======
+  width: 200px;
+  height: calc(100vh - 55px);
+  position: sticky;
+
+  background-color: var(--main-color);
+>>>>>>> 0849479e59ef1ef9becc56ea055b06d6e5054206
   min-height: calc(100vh - 55px);
   /* position: sticky; */
   /* top: 55px; */
