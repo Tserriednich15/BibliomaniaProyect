@@ -1,4 +1,3 @@
-// src/views/categoriasView.js
 export default function categoriasView() {
   const container = document.createElement("div");
   container.id = "contenedor_index";

@@ -1,18 +1,18 @@
 .main_top {
-    width: 100%;
-    max-width: 1000px;
-    background-color: #f0f0f0;
-    border: 1px solid #121212;
-    text-align: center;
+    /* width: 100%; */
+    /* max-width: 1000px; */
+    /* background-color: #f0f0f0; */
+    /* border: 1px solid #121212; */
+    /* text-align: center; */
 }
 
 .main_top h1 {
-    font-size: 1.8em;
-    font-family: 'Times New Roman', Times, serif;
-    font-weight: normal;
-    margin-left: 20px;
+    /* font-size: 1.8em; */
+    /* font-family: 'Times New Roman', Times, serif; */
+    /* font-weight: normal; */
+    /* margin-left: 20px; */
 }
 
 .main_top p {
-    margin-left: 20px;
+    /* margin-left: 20px; */
 }

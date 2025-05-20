@@ -1,43 +1,57 @@
 .sidebar {
   display: flex;
-  background-color: var(--main-color);
+  
+  left: 0;
+  
+  height: 100vh;
+  background-color: var(--main-color); 
+  align-items: flex-start;
+  align-items: center;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
   position: fixed;
 }
 
 .sidebar-items {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
-<<<<<<< HEAD
-=======
-  padding: 20px 0;
->>>>>>> 0849479e59ef1ef9becc56ea055b06d6e5054206
+  align-items: flex-start;
+  gap: 15px;
+  /* border-radius: 8%; */
+  /* transition: background-color 0.3s ease; */
+  /* color: var(--second-color); */
 }
 
 .sidebar-item {
   display: flex;
   align-items: center;
-  gap: 10px;
-  height: 40px;
-  padding: 10px 20px;
-  border-radius: 8%;
-  transition: background-color 0.3s ease;
+  /* border-radius: 8%; */
+  /* transition: background-color 0.3s ease; */
   color: var(--second-color);
+  padding: 10px;
+  width: 100%;
+
 }
 
 .sidebar-item:hover {
   background-color: var(--second-color);
+  color: var(--main-color);
   transition: 2s ease;
   text-decoration: none;
+  border-radius: 8px;
+}
+
+
+.sidebar-items:hover {
   color: var(--main-color);
 }
 
-.sidebar-items:hover {
-  color:var(--main-color);
+.sidebar i {
+  font-size: 1.5rem;
 }
 
-#item {
-  margin: 2.1rem;
-  color: var(--third-color);
+.sidebar span {
+  font-size: 1.5rem;
+  margin-left:2rem;
 }

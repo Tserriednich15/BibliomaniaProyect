@@ -25,8 +25,7 @@ export const crearHeader = () => {
 
   tituloLogo.appendChild(spanSheep);
   logoImgDiv.appendChild(img);
-  logo.appendChild(logoImgDiv);
-  logo.appendChild(tituloLogo);
+  logo.append(logoImgDiv, tituloLogo);
   logoContainer.appendChild(logo);
 
   // Search Form
@@ -46,8 +45,7 @@ export const crearHeader = () => {
   i.className = "ri-search-line";
 
   button.appendChild(i);
-  form.appendChild(input);
-  form.appendChild(button);
+  form.append(input, button);
   searchContainer.appendChild(form);
 
   // Profile
@@ -63,8 +61,7 @@ export const crearHeader = () => {
   const notificaciones = document.createElement("a");
   notificaciones.classList.add("notificaciones");
 
-  noti.appendChild(notiIcon);
-  noti.appendChild(notificaciones);
+  noti.append(notiIcon, notificaciones);
 
   const profileBox = document.createElement("div");
   profileBox.classList.add("profile-box");
@@ -74,13 +71,10 @@ export const crearHeader = () => {
 
   profileBox.appendChild(profileImg);
 
-  profileContainer.appendChild(noti);
-  profileContainer.appendChild(profileBox);
+  profileContainer.appendChild(noti, profileBox);
 
   // Assemble header
-  header.appendChild(logoContainer);
-  header.appendChild(searchContainer);
-  header.appendChild(profileContainer);
+  header.append(logoContainer, searchContainer, profileContainer);
 
   return header;
 };

@@ -1,8 +1,8 @@
 const crearSidebar = () => {
     const aside = document.createElement('aside');
-    aside.classList.add('sidebar');
-  
     const container = document.createElement('div');
+    
+    aside.classList.add('sidebar');
     container.classList.add('sidebar-items');
   
     const items = [
@@ -32,7 +32,6 @@ const crearSidebar = () => {
       container.appendChild(a);
     });
     aside.appendChild(container);
-
     return aside;
   };
   

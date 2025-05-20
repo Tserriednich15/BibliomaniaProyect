@@ -6,41 +6,22 @@ import crearMainTop from './components/mainTop.js';
 import { crearCarrusel } from './components/carruselComponent.js';
 import { cargarItemsPorCategoria } from './models/categoriaModel.js';
 
-
-
 window.addEventListener('DOMContentLoaded', async () => {
-  const app = document.querySelector('#app');
-  const appContainer = document.createElement('div');
-  appContainer.classList.add('app-container');
+  const body = document.querySelector('body.principal_page');
 
-  const content = document.createElement('div');
-  content.classList.add('content');
-  const contentBody = document.createElement('div');
-  contentBody.classList.add('content-body');
-
+  // Crear los elementos principales:
   const header = crearHeader();
+  const sidebar = crearSidebar();
+  const main = crearMain();
   const footer = crearFooter();
 
-  // Detectar ruta actual
+  // Detectar la ruta actual y construir el contenido:
   const path = window.location.pathname;
-
   if (path.includes('index.html') || path.endsWith('/')) {
-    // === Página principal ===
     const banner = crearMainTop();
-    const sidebar = crearSidebar();
-    const main = crearMain();
-
     main.prepend(banner);
-    contentBody.appendChild(sidebar);
-    contentBody.appendChild(main);
-    content.appendChild(contentBody);
 
-    appContainer.appendChild(header);
-    appContainer.appendChild(content);
-    appContainer.appendChild(footer);
-    app.appendChild(appContainer);
-
-    // Cargar carruseles por categoría
+    // Cargar carruseles por categoría en <main>
     const categorias = ["anime", "manga", "peliculas", "series"];
     for (let categoria of categorias) {
       const items = await cargarItemsPorCategoria(categoria);
@@ -55,23 +36,17 @@ window.addEventListener('DOMContentLoaded', async () => {
         const title = document.createElement('h3');
         title.textContent = item.title || "Sin título";
 
-        card.appendChild(img);
-        card.appendChild(title);
-
+        card.append(img, title);
         return card;
       });
 
       const carrusel = crearCarrusel(categoria, cards);
       main.appendChild(carrusel);
     }
-
   } else if (path.includes('categoria.html')) {
-    // === Página de categoría ===
     const { default: cargarCategoria } = await import('./controllers/categoriaController.js');
-    cargarCategoria(app); // se asume que esta función ya construye el layout internamente
-
+    cargarCategoria(main); // Pasa 'main' en lugar de 'app'
   } else if (path.includes('lectura.html')) {
-    // === Página de lectura ===
     const banner = document.createElement('section');
     banner.id = 'lectura_banner';
     banner.classList.add('lectura_banner');
@@ -80,18 +55,13 @@ window.addEventListener('DOMContentLoaded', async () => {
     details.id = 'lectura_details';
     details.classList.add('lectura_details');
 
-    const main = document.createElement('main');
     main.classList.add('lectura_main');
-    main.appendChild(banner);
-    main.appendChild(details);
-
-    content.appendChild(main);
-    appContainer.appendChild(header);
-    appContainer.appendChild(content);
-    appContainer.appendChild(footer);
-    app.appendChild(appContainer);
+    main.append(banner, details);
 
     const { default: controladorLectura } = await import('./controllers/lecturaController.js');
-    controladorLectura(); // asegúrate de exportar por defecto en lecturaController.js
+    controladorLectura();
   }
+
+  // Insertar los elementos en el body en el orden correcto:
+  body.append(header, sidebar, main, footer);
 });

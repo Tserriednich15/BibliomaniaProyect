@@ -10,14 +10,44 @@
 
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Times New Roman', Times, serif;
 }
 
 :root {
-    --main-color: #21324B;
-    --second-color: #78b9BA;
-    --third-color: #CE472F;
-    --fourth-color: #C6C5B4;
-  }
+  --main-color: #21324B;
+  --second-color: #78b9BA;
+  --third-color: #CE472F;
+  --fourth-color: #C6C5B4;
+}
+
+body.principal_page {
+  display: grid;
+  grid-template-areas:
+    "header header"
+    "sidebar main"
+    "footer footer";
+  grid-template-columns: 200px 1fr;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
+}
+
+header.header {
+  grid-area: header;
+}
+
+aside.sidebar {
+  grid-area: sidebar;
+}
+
+main#app {
+  grid-area: main;
+  overflow-x: hidden;
+  /* Evitamos scroll horizontal global */
+}
+
+footer.footer {
+  grid-area: footer;
+}
