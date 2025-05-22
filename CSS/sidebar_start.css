@@ -1,8 +1,6 @@
 .sidebar {
   display: flex;
-  
   left: 0;
-  
   height: 100vh;
   background-color: var(--main-color); 
   align-items: flex-start;

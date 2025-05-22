@@ -1,11 +1,9 @@
-/* Limitar el ancho del carrusel y centrarlo */
 .section_categorias {
   max-width: 180vh;
   margin: 5rem auto;
   width: 100%;
 }
 
-/* Título del carrusel, centrado y en su propia línea */
 .section_categorias h1 {
   display: flex;
   text-align: center;
@@ -16,29 +14,24 @@
   text-shadow: 0 2px 10px var(--second-color);
 }
 
-/* Contenedor del carrusel con posición relativa para los botones */
 .carrusel_container {
   position: relative;
   width: 100%;
 }
 
-/* "Ventana" del carrusel: oculta lo desbordado */
 .section_content {
   overflow: hidden;
   width: 100%;
 }
 
-/* Wrapper de las cards: utiliza flex y no permite envolver (wrap) */
 .carrusel_wrapper {
   display: flex;
   flex-wrap: nowrap;
   gap: 1rem;
   transition: transform 0.3s ease;
   width: max-content;
-  /* El ancho se ajusta al contenido */
 }
 
-/* Cada card: ancho fijo (puedes experimentar con diferentes anchos para obtener efecto diverso) */
 .card_item {
   position: relative;
   flex: 0 0 300px;
@@ -49,7 +42,6 @@
   transition: transform 0.3s ease;
 }
 
-/* La imagen de la card se ajusta a su contenedor */
 .card_item img {
   width: 100%;
   height: 100%;
@@ -57,7 +49,6 @@
   border-radius: inherit;
 }
 
-/* Overlay para el título dentro de la card */
 .card_overlay {
   position: absolute;
   bottom: 0;
@@ -84,7 +75,6 @@
   color: var(--main-color);
 }
 
-/* Botones de desplazamiento – posicionados absolutamente dentro de .carrusel_container */
 .scroll-btn {
   position: absolute;
   top: 50%;
@@ -106,7 +96,6 @@
   background-color: rgba(0, 0, 0, 0.9);
 }
 
-/* Posicionar botón izquierdo y derecho */
 .scroll-btn.left {
   left: 10px;
 }
@@ -115,7 +104,6 @@
   right: 10px;
 }
 
-/* Media Queries para móviles */
 @media (max-width: 768px) {
   .section_categorias h1 {
     font-size: 1.2rem;

@@ -1,60 +1,42 @@
 import { crearHeader } from "./components/header.js";
-import crearSidebar from "./components/sidebar.js";
-import crearMain from "./components/mainSection.js";
+import { crearSidebar } from "./components/sidebar.js";
+import { crearMain } from "./components/mainSection.js";
 import { crearFooter } from "./components/footer.js";
-import { crearCarrusel } from "./components/carruselComponent.js";
-import { cargarItemsPorCategoria } from "./models/categoriaModel.js";
-import initCategoriasController from "./controllers/categoriaController.js";
+import { initCategoriasController } from "./controllers/categoriaController.js";
 
+// Escucha el evento DOMContentLoaded para iniciar la aplicación
 window.addEventListener("DOMContentLoaded", async () => {
-  // Seleccionamos el contenedor #app
+  // Seleccionamos el contenedor principal #app
   const app = document.getElementById("app");
 
-  // Crear los elementos principales
+  // Creamos e inyectamos las partes estáticas: header, sidebar, footer.
   const header = crearHeader();
   const sidebar = crearSidebar();
   const footer = crearFooter();
 
-  // Detectar la ruta actual y construir el contenido
-  const path = window.location.pathname;
+  // Creamos un contenedor para el contenido dinámico y le agregamos un loader
+  const mainContainer = document.createElement("main");
+  mainContainer.classList.add("content");
+  const loader = document.createElement("p");
+  loader.textContent = "Cargando contenido, por favor espera…";
+  loader.classList.add("loader");
+  mainContainer.appendChild(loader);
 
-  if (path.includes("index.html") || path.endsWith("/")) {
-    const mainSection = await crearMain(); // Carga las categorías en la página principal
-    app.append(header, sidebar, mainSection, footer);
-  } else if (path.includes("categoria.html")) {
-    const main = await crearMain(); // Genera contenido específico para categorías
-    app.append(header, sidebar, main, footer);
-    initCategoriasController(); // Ejecuta el controlador de categorías (se asume que en esta vista se requiere)
-  } else if (path.includes("lectura.html")) {
-    const main = document.createElement("main");
-    main.classList.add("lectura_main");
+  // Inyectamos inmediatamente las partes estáticas y el contenedor principal
+  app.append(header, sidebar, mainContainer, footer);
 
-    // Cargar carruseles por categoría en <main>
-    const categorias = ["anime", "manga"];
-    for (let categoria of categorias) {
-      const items = await cargarItemsPorCategoria(categoria);
-      const cards = items.map(item => {
-        const card = document.createElement("div");
-        card.classList.add("card");
+  // Procedemos a cargar los datos dinámicos (cards y carruseles)
+  const dynamicContent = await crearMain();
 
-        const img = document.createElement("img");
-        img.src = item.image || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZPb9KqZvuoBmf71tYhOzxOCar7lKi1b9sag&s";
-        img.alt = item.title || "Sin título";
+  // Una vez que se carga el contenido dinámico, reemplazamos el contenido del contenedor
+  mainContainer.innerHTML = ""; // Eliminamos el loader
+  // Movemos todos los elementos dynamicContent al mainContainer
+  while(dynamicContent.firstChild) {
+    mainContainer.appendChild(dynamicContent.firstChild);
+  }
 
-        const title = document.createElement("h3");
-        title.textContent = item.title || "Sin título";
-
-        card.append(img, title);
-        return card;
-      });
-
-      const carrusel = crearCarrusel(categoria, cards);
-      main.appendChild(carrusel);
-    }
-
-    app.append(header, sidebar, main, footer);
-
-    const { default: controladorLectura } = await import("./controllers/lecturaController.js");
-    controladorLectura();
+  // Si estamos en la página de categoría, iniciamos el controlador de categorías
+  if (window.location.pathname.includes("categoria.html")) {
+    initCategoriasController();
   }
 });

@@ -1,8 +1,8 @@
-// src/components/mainSection.js
 import { obtenerDatosPorGenero } from "../utils/obtenerDatos.js";
 import { crearCarrusel } from "./carruselComponent.js";
+import { genreMapAnime, genreMapManga, additionalGenres } from "../utils/genreMap.js";
 
-const crearMain = async () => {
+export const crearMain = async () => {
   const main = document.createElement("main");
   main.classList.add("content");
 
@@ -10,29 +10,25 @@ const crearMain = async () => {
   const gallery = document.createElement("div");
   gallery.classList.add("gallery");
 
-  const categorias = [
-    { key: "shonen", id: 27, title: "Shonen", tipo: "anime" },
-    { key: "seinen", id: 37, title: "Seinen", tipo: "anime" },
-    { key: "shojo", id: 26, title: "Shojo", tipo: "anime" },
-    { key: "isekai", id: 142, title: "Isekai", tipo: "anime" },
-    { key: "mecha", id: 18, title: "Mecha", tipo: "anime" },
-    { key: "fantasy", id: 6, title: "Fantasy", tipo: "anime" },
-    { key: "psychological", id: 40, title: "Psychological", tipo: "anime" },
-    { key: "sports", id: 30, title: "Sports", tipo: "anime" },
-    { key: "supernatural", id: 7, title: "Supernatural", tipo: "anime" },
-    { key: "romance", id: 22, title: "Romance", tipo: "anime" },
-    { key: "drama", id: 8, title: "Drama", tipo: "anime" },
-    { key: "adventure", id: 2, title: "Adventure", tipo: "anime" },
-    { key: "horror", id: 14, title: "Horror", tipo: "anime" },
-    { key: "shonen", id: 27, title: "Shonen Manga", tipo: "manga" },
-    { key: "shojo", id: 26, title: "Shojo Manga", tipo: "manga" }
-  ];
+  // Construir el array de categorías para la galería.
+  const categoriasAnime = Object.entries(genreMapAnime).map(([key, id]) => {
+    const title = key.charAt(0).toUpperCase() + key.slice(1);
+    return { key, id, title, tipo: "anime" };
+  });
+
+  const categoriasManga = Object.entries(genreMapManga).map(([key, id]) => {
+    // Por ejemplo, para "shojo-manga", extraemos la parte "shojo" y la capitalizamos.
+    const parts = key.split("-");
+    const title = parts[0].charAt(0).toUpperCase() + parts[0].slice(1);
+    return { key, id, title, tipo: "manga" };
+  });
+
+  const categorias = [...categoriasAnime, ...categoriasManga];
 
   async function cargarCategorias() {
-    // Agrupar en bloques de 3 para evitar saturar la API (con un delay de 5 s)
+    // Agrupar en bloques de 3 para evitar saturar la API (delay de 5 seg)
     for (let i = 0; i < categorias.length; i += 3) {
       const grupo = categorias.slice(i, i + 3);
-      
       await Promise.all(grupo.map(async (cat) => {
         try {
           const data = await obtenerDatosPorGenero(cat.id, cat.tipo);
@@ -40,27 +36,28 @@ const crearMain = async () => {
             ? data[0]
             : {
                 title: cat.title,
-                image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZPb9KqZvuoBmf71tYhOzxOCar7lKi1b9sag&s",
+                image:
+                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZPb9KqZvuoBmf71tYhOzxOCar7lKi1b9sag&s",
               };
 
           // Enlace hacia la vista de la categoría
           const link = document.createElement("a");
-          link.href = `categoria.html?genero=${cat.key}&tipo=${cat.tipo}`;
+          link.setAttribute("href", `categoria.html?genero=${cat.key}&tipo=${cat.tipo}`);
 
-          // Crear la card con clases "card", "card_contenido" y "titulo_cards"
+          // Crear la card usando la clase "card"
           const card = document.createElement("div");
           card.classList.add("card");
 
           const img = document.createElement("img");
-          img.src = representative.image;
-          img.alt = representative.title;
+          img.setAttribute("src", representative.image);
+          img.setAttribute("alt", representative.title);
           img.setAttribute("loading", "lazy");
 
           const contenido = document.createElement("div");
           contenido.classList.add("card_contenido");
 
           const h1 = document.createElement("h1");
-          h1.classList.add("titulo_cards");
+          h1.classList.add("section_categorias");
           h1.textContent = cat.title;
 
           contenido.appendChild(h1);
@@ -72,8 +69,7 @@ const crearMain = async () => {
           console.error("Error al cargar datos para la categoría:", cat, error);
         }
       }));
-
-      await new Promise(resolve => setTimeout(resolve, 5000)); // Delay de 5 s cada 3 categorías
+      await new Promise(resolve => setTimeout(resolve, 5000));
     }
   }
 
@@ -81,36 +77,36 @@ const crearMain = async () => {
   main.appendChild(gallery);
 
   // --- NUEVOS CARRUSELES ADICIONALES ---
-  // Array con 5 nuevos temas basados en los endpoints que proporcionaste:
-  const nuevosTemas = [
-    { key: "avant_garde", id: 5, title: "Avant Garde", tipo: "manga" },
-    { key: "award_winning", id: 46, title: "Award Winning", tipo: "manga" },
-    { key: "fantasy", id: 10, title: "Fantasy", tipo: "manga" },
-    { key: "gourmet", id: 47, title: "Gourmet", tipo: "manga" },
-    { key: "suspense", id: 45, title: "Suspense", tipo: "manga" }
-  ];
+  // Construir el array de nuevos temas usando additionalGenres
+  const nuevosTemas = Object.entries(additionalGenres).map(([key, genre]) => {
+    return {
+      key,
+      id: genre.mal_id,
+      title: genre.name,
+      // Aquí forzamos que el tipo sea "manga" (o ajusta según corresponda)
+      tipo: "manga"
+    };
+  });
 
-  // Para cada nuevo tema, se generan las cards y se crea un carrusel
   for (let tema of nuevosTemas) {
     try {
       const data = await obtenerDatosPorGenero(tema.id, tema.tipo);
-      // Se crean los elementos de card para cada ítem obtenido
-      const cards = data.map(item => {
+      const cards = data.map((item) => {
         const link = document.createElement("a");
-        link.href = `categoria.html?genero=${tema.key}&tipo=${tema.tipo}`;
+        link.setAttribute("href", `categoria.html?genero=${tema.key}&tipo=${tema.tipo}`);
         const card = document.createElement("div");
         card.classList.add("card");
 
         const img = document.createElement("img");
-        img.src = item.image || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZPb9KqZvuoBmf71tYhOzxOCar7lKi1b9sag&s";
-        img.alt = item.title;
+        img.setAttribute("src", item.image || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZPb9KqZvuoBmf71tYhOzxOCar7lKi1b9sag&s");
+        img.setAttribute("alt", item.title);
         img.setAttribute("loading", "lazy");
 
         const contenido = document.createElement("div");
         contenido.classList.add("card_contenido");
 
         const h1 = document.createElement("h1");
-        h1.classList.add("titulo_cards");
+        h1.classList.add("section_categorias");
         h1.textContent = item.title || tema.title;
 
         contenido.appendChild(h1);
@@ -120,7 +116,7 @@ const crearMain = async () => {
 
         return link;
       });
-      // Crear el carrusel usando la función existente, con el título del tema y el conjunto de cards
+
       const carrusel = crearCarrusel(tema.title, cards);
       main.appendChild(carrusel);
     } catch (error) {
@@ -130,5 +126,3 @@ const crearMain = async () => {
 
   return main;
 };
-
-export default crearMain;

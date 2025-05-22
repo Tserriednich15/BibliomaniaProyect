@@ -1,7 +1,7 @@
 import { crearHeader } from "./components/header.js";
 import { crearFooter } from "./components/footer.js";
-import { categoriasView } from "./views/categoriasView.js";
 import { initCategoriasController } from "./controllers/categoriaController.js";
+import { categoriasView } from "./views/categoriasView.js";
 import { crearSidebar } from "./components/sidebar.js";
 // import { obtenerDatosPorGenero } from "./utils/obtenerDatos.js";
 

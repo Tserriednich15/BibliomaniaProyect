@@ -1,4 +1,4 @@
-const crearSidebar = () => {
+export const crearSidebar = () => {
     const aside = document.createElement('aside');
     const container = document.createElement('div');
     
@@ -34,6 +34,3 @@ const crearSidebar = () => {
     aside.appendChild(container);
     return aside;
   };
-  
-  export default crearSidebar;
-  

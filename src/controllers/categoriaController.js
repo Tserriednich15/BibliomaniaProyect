@@ -1,53 +1,48 @@
-
 import { obtenerDatosPorGenero } from "../utils/obtenerDatos.js";
-import { crearCarrusel } from "../components/carruselComponent.js";
+import { genreMapAnime, genreMapManga, additionalGenres } from "../utils/genreMap.js";
 
-export default async function initCategoriasController() {
-  const genres = [
-    { key: "shonen", id: 27, title: "Shonen" },
-    { key: "seinen", id: 37, title: "Seinen" },
-    { key: "shojo", id: 26, title: "Shojo" },
-    { key: "isekai", id: 142, title: "Isekai" },
-    { key: "mecha", id: 18, title: "Mecha" }
-  ];
+export async function initCategoriasController() {
+  const query = new URLSearchParams(window.location.search);
+  const genero = query.get("genero");
+  const tipo = query.get("tipo");
 
-  const container = document.getElementById("contenedor_index");
-  if (!container) {
-    console.error("No se encontró el contenedor_index");
+  let id;
+  if (tipo === "anime") {
+    id = genreMapAnime[genero];
+  } else if (tipo === "manga") {
+    // Primero buscamos en el mapeo de manga; si no existe, buscamos en additionalGenres.
+    id = genreMapManga[genero] || (additionalGenres[genero] && additionalGenres[genero].mal_id);  }
+  if (!id) {
+    console.error("Género no reconocido:", genero, tipo);
     return;
   }
 
-  async function getGenreData(genre) {
-    return await obtenerDatosPorGenero(genre.id);
-  }
 
-  function createCard(item) {
+  //Aquí hice cambios
+  const data = await obtenerDatosPorGenero(id, tipo);
+  const container = document.createElement("div");  container.classList.add("album_cards");
+  container.id = "categoria-content";
+  container.classList.add("album_cards");
+  container.innerHTML = "";
+
+
+  data.forEach(item => {
     const card = document.createElement("div");
-    card.className = "card";
-    card.setAttribute("data-id", item.id);
-    card.setAttribute("data-tipo", item.tipo);
+    card.classList.add("card_item");
 
     const img = document.createElement("img");
-    img.src = item.image || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZPb9KqZvuoBmf71tYhOzxOCar7lKi1b9sag&s";
+    img.src = item.image;
     img.alt = item.title;
+    img.setAttribute("loading", "lazy");
 
     const title = document.createElement("h3");
     title.textContent = item.title;
 
     card.appendChild(img);
     card.appendChild(title);
+    container.appendChild(card);
+  });
 
-    card.addEventListener("click", () => {
-      window.location.href = `lectura.html?tipo=${item.tipo}&id=${item.id}`;
-    });
-
-    return card;
-  }
-
-  for (const genre of genres) {
-    const data = await getGenreData(genre);
-    const cards = data.map(item => createCard(item));
-    const carousel = crearCarrusel(genre.title, cards);
-    container.appendChild(carousel);
-  }
+  // Asumiendo que en tu template de categoria.html haya un <main>
+  document.querySelector("main").appendChild(container);
 }
