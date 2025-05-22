@@ -14,62 +14,6 @@
     color: black;
   }
   
-  /* Sección destacada */
-  
-  .destacada {
-    display: flex;
-    position: relative;
-    margin-top: 20px;
-    height: 250px;
-    background-size: cover;
-    background-position: initial;
-    background-repeat: no-repeat;
-    align-items: center;
-    justify-content: flex-start;
-    color: #fff;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
-}
-
-.destacada_contenido {
-    text-align: start;
-    z-index: 2;
-    margin-left: 20px;
-}
-
-.destacada_contenido h2 {
-    font-size: 2rem;
-    margin-bottom: 10px;
-}
-
-.destacada_contenido p {
-    font-size: 1rem;
-    margin-bottom: 15px;
-}
-
-.btn_ver_mas {
-    padding: 10px 20px;
-    background-color: var(--third-color);
-    color: #fff;
-    border-radius: 5px;
-    text-decoration: none;
-    transition: background-color 0.3s ease;
-}
-
-.btn_ver_mas:hover {
-    background-color: var(--second-color);
-    text-decoration: none;
-}
-
-  /* Cards de contenido */
-  .cards_section { 
-    padding: 20px;
-}
-  
-.cards_section h2 {
-    text-align: center;
-    margin-bottom: 20px;
-}
-  
 .album_cards {
     display: grid;
     grid-template-columns: repeat(3, 1fr);

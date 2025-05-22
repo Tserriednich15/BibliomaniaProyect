@@ -4,12 +4,13 @@
   gap: 20px;
   padding: 2rem;
   justify-content: center;
+  margin-top: 5rem;
 }
 
 .card {
   position: relative;
-  width: min-content;
-  height: 20rem;
+  width: 300px;
+  height: 300px;
   border-radius: 2rem;
   overflow: hidden;
   transition: height 0.5s ease;
@@ -19,7 +20,8 @@
 .card img {
   border-radius: 2rem;
   height: 100%;
-  object-fit: cover;
+  object-fit:cover;
+  width: 100%;
 }
 
 .card_contenido {
@@ -27,7 +29,6 @@
   bottom: 0;
   left: 0;
   width: 100%;
-  /* Ocultar el contenido inicialmente */
   height: 0;
   opacity: 0;
   display: flex;

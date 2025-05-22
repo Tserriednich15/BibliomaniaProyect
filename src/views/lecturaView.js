@@ -19,7 +19,7 @@ function crearElemento(tipo, clases = [], contenido = '', atributos = {}) {
     // === Sección superior ===
     const titulo = crearElemento("h2", ["lectura_titulo"], data.title || "Sin título");
     const imagen = crearElemento("img", ["lectura_imagen"], '', {
-      src: data.image || "https://via.placeholder.com/300x400?text=No+Image",
+      src: data.image || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZPb9KqZvuoBmf71tYhOzxOCar7lKi1b9sag&s",
       alt: data.title || "Sin imagen"
     });
   

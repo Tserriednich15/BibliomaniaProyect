@@ -5,8 +5,13 @@ async function cargarContenidoPorCategoria(categoria) {
   
     datos.forEach(dato => {
       const card = document.createElement('div');
-      card.classList.add('card_categorias');
+      card.classList.add('card');
   
+
+
+
+      //Quitar esto, debo de utilizar create element, set atribute y eso, esto de innerHTML 
+      //Está mal
       card.innerHTML = `
         <img src="${dato.imagen}" alt="${dato.titulo}">
         <div class="card_contenido_categorias">

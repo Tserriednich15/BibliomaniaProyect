@@ -1,6 +1,7 @@
 
 import { obtenerDatosPorGenero } from "../utils/obtenerDatos.js";
 import { crearCarrusel } from "../components/carruselComponent.js";
+
 export default async function initCategoriasController() {
   const genres = [
     { key: "shonen", id: 27, title: "Shonen" },
@@ -16,31 +17,25 @@ export default async function initCategoriasController() {
     return;
   }
 
-  // Función para obtener datos de un género dado
   async function getGenreData(genre) {
     return await obtenerDatosPorGenero(genre.id);
   }
 
-  // Función para crear una card a partir de un item
   function createCard(item) {
     const card = document.createElement("div");
-    card.className = "card_item";
+    card.className = "card";
     card.setAttribute("data-id", item.id);
     card.setAttribute("data-tipo", item.tipo);
 
     const img = document.createElement("img");
-    img.src = item.image;
+    img.src = item.image || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZPb9KqZvuoBmf71tYhOzxOCar7lKi1b9sag&s";
     img.alt = item.title;
 
-    const overlay = document.createElement("div");
-    overlay.classList.add("card_overlay");
-
     const title = document.createElement("h3");
-    title.textContent = item.title || "Sin título";
+    title.textContent = item.title;
 
-    overlay.appendChild(title);
     card.appendChild(img);
-    card.appendChild(overlay);
+    card.appendChild(title);
 
     card.addEventListener("click", () => {
       window.location.href = `lectura.html?tipo=${item.tipo}&id=${item.id}`;
@@ -49,7 +44,6 @@ export default async function initCategoriasController() {
     return card;
   }
 
-  // Recorre cada género y agrega el carrusel al contenedor
   for (const genre of genres) {
     const data = await getGenreData(genre);
     const cards = data.map(item => createCard(item));

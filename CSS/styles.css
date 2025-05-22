@@ -23,7 +23,7 @@
   --fourth-color: #C6C5B4;
 }
 
-body.principal_page {
+#app{
   display: grid;
   grid-template-areas:
     "header header"
@@ -42,7 +42,7 @@ aside.sidebar {
   grid-area: sidebar;
 }
 
-main#app {
+main.content {
   grid-area: main;
   overflow-x: hidden;
   /* Evitamos scroll horizontal global */

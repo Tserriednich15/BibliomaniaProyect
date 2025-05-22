@@ -1,10 +1,7 @@
-// src/utils/fetchData.js
-export async function fetchData(url, options = {}) {
+export async function fetchData(url) {
   try {
-    const response = await fetch(url, options);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
+    const response = await fetch(url);
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     return await response.json();
   } catch (error) {
     console.error("Error in fetchData:", error);

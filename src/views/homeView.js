@@ -1,6 +1,6 @@
 const categoriasView = () => {
     const params = new URLSearchParams(window.location.search);
-    const tipo = params.get("tipo"); // "animes", "peliculas", etc.
+    const tipo = params.get("tipo");
   
     const section = document.createElement("section");
     section.classList.add("categoria");
@@ -15,12 +15,6 @@ const categoriasView = () => {
     switch (tipo) {
       case "animes":
         descripcion.textContent = "Aquí encontrarás los mejores animes recomendados.";
-        break;
-      case "peliculas":
-        descripcion.textContent = "Disfruta de una selección de películas imperdibles.";
-        break;
-      case "series":
-        descripcion.textContent = "Las series más populares están aquí.";
         break;
       case "mangas":
         descripcion.textContent = "Sumérgete en el mundo de los mangas.";

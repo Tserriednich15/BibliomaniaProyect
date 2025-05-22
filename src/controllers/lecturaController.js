@@ -7,10 +7,6 @@ export default function controladorLectura() {
     const tipo = params.get("tipo");
     const id = params.get("id");
 
-    console.log("Parámetros URL:", params.toString());
-    console.log("Tipo:", tipo);
-    console.log("ID:", id);
-
     if (tipo && id) {
       try {
         const datos = await cargarLectura(tipo, id);
@@ -27,9 +23,7 @@ export default function controladorLectura() {
     }
   });
   document.addEventListener("DOMContentLoaded", () => {
-    const params = new URLSearchParams(window.location.search);
-    console.log("Tipo recibido", params.get("tipo"));
-    console.log("ID recibido", params.get("id"));
+    // const params = new URLSearchParams(window.location.search);
     
   });
 }
