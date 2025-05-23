@@ -1,14 +1,14 @@
+/* sidebar_start.css */
 .sidebar {
   display: flex;
-  left: 0;
-  height: 100vh;
-  background-color: var(--main-color); 
-  align-items: flex-start;
+  flex-direction: column;
+  width: 200px;
+  height: 100%;
+  background-color: var(--main-color);
   align-items: center;
   padding: 20px;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
-  position: fixed;
 }
 
 .sidebar-items {
@@ -16,20 +16,14 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 15px;
-  /* border-radius: 8%; */
-  /* transition: background-color 0.3s ease; */
-  /* color: var(--second-color); */
 }
 
 .sidebar-item {
   display: flex;
   align-items: center;
-  /* border-radius: 8%; */
-  /* transition: background-color 0.3s ease; */
   color: var(--second-color);
   padding: 10px;
   width: 100%;
-
 }
 
 .sidebar-item:hover {
@@ -40,16 +34,11 @@
   border-radius: 8px;
 }
 
-
-.sidebar-items:hover {
-  color: var(--main-color);
-}
-
 .sidebar i {
   font-size: 1.5rem;
 }
 
 .sidebar span {
   font-size: 1.5rem;
-  margin-left:2rem;
+  margin-left: 2rem;
 }

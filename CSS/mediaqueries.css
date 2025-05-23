@@ -1,0 +1,46 @@
+/* mediaqueries.css */
+
+/* Estilos para dispositivos móviles (max-width: 768px) */
+@media (max-width: 768px) {
+  /* Ocultar completamente el sidebar y eliminar su espacio en el grid */
+  .sidebar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+
+  /* Reconfigurar el grid para eliminar el espacio del sidebar */
+  #app {
+    display: grid;
+    grid-template-areas:
+      "header"
+      "main"
+      "footer";
+    grid-template-columns: 1fr !important;
+    grid-template-rows: auto 1fr auto;
+    min-height: 100vh;
+  }
+
+  /* Asegurar que el main ocupe todo el espacio disponible */
+  main.content {
+    grid-area: main;
+    width: 100% !important;
+    padding: 20px;
+  }
+
+  /* Asegurar que el footer también ocupe toda la fila */
+  footer.footer {
+    grid-area: footer;
+    width: 100%;
+  }
+}
+
+/* En pantallas mayores a 768px, ocultamos el menú hamburguesa */
+@media (min-width: 769px) {
+  header .hamburger-menu {
+    display: none;
+  }
+}
