@@ -1,45 +1,32 @@
-// lecturaModel.js
-import { getDataByTipoYId } from "./apiModel.js"; // Se asume que esta función envuelve fetch y devuelve JSON
+// src/models/lecturaModel.js
+import { fetchData } from "../utils/fetchData.js";
 
 export async function cargarLectura(tipo, id) {
   try {
-    let url;
-    let options = {}; // Opcional: puedes dejar la configuración por defecto
-
-    if (tipo === "anime") {
-      // Endpoint para obtener la información completa de un anime
-      url = `https://api.jikan.moe/v4/anime/${id}`;
-    } else if (tipo === "manga") {
-      // Endpoint para obtener la información completa de un manga
-      url = `https://api.jikan.moe/v4/manga/${id}`;
-    } else {
-      throw new Error("Tipo de contenido no válido");
-    }
-
-    // Llamada a la API (se asume que 'getDataByTipoYId' se encarga de hacer el fetch)
-    const data = await getDataByTipoYId(url, options);
-    
-    // Verifica que se obtuvo la información correctamente
-    if (data && data.data) {
-      const d = data.data;
-      // Para ambos tipos extraemos datos comunes. Notar que:
-      // - Para anime, usamos 'episodes' para los capítulos.
-      // - Para manga, usamos 'chapters'.
+    // Usamos la ruta de Jikan para anime o manga
+    const url = `https://api.jikan.moe/v4/${tipo}/${id}`;
+    const res = await fetchData(url);
+    if (res && res.data) {
+      const d = res.data;
       return {
-        titulo: d.title || d.title_english || d.title_japanese,
-        descripcion: d.synopsis || "Sin descripción",
-        generos: d.genres ? d.genres.map(g => g.name) : [],
-        capitulos: tipo === "anime" ? (d.episodes !== undefined ? d.episodes : "Desconocido") 
-                                     : (d.chapters !== undefined ? d.chapters : "Desconocido"),
+        titulo: d.title || "Sin título",
+        descripcion: d.synopsis || "Sin descripción disponible.",
+        imagen: d.images?.jpg?.image_url || "https://via.placeholder.com/300x400?text=No+Image",
+        episodios: d.episodes || d.chapters || "Desconocido",
         estado: d.status || "Desconocido",
-        imagenPortada: d.images && d.images.jpg ? d.images.jpg.image_url : ""
+        generos: d.genres ? d.genres.map(g => g.name) : [],
+        rating: d.rating || "No especificado",
+        score: d.score || "No especificado",
+        rank: d.rank || "No especificado",
+        // Para las fechas, Jikan v4 puede usar 'aired' en anime; si no, intentamos con start_date/end_date
+        start_date: d.aired ? d.aired.from : (d.start_date || "No especificado"),
+        end_date: d.aired ? d.aired.to : (d.end_date || "No especificado"),
+        members: d.members || "No especificado"
       };
     }
-    
-    return null; // O lanzar error según convenga
-
+    return null;
   } catch (error) {
-    console.error(`Error al cargar lectura de tipo ${tipo} con ID ${id}:`, error);
+    console.error(`Error al cargar lectura para ${tipo} con ID ${id}:`, error);
     return null;
   }
 }

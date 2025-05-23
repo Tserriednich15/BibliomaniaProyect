@@ -1,76 +1,129 @@
-// src/views/lecturaView.js
+// export function mostrarLectura(data) {
+//   const container = document.getElementById("app");
+//   if (!container) {
+//     console.error("No se encontró el contenedor de lectura con id 'app'.");
+//     return;
+//   }
+  
+//   // Limpiar contenido previo
+//   container.innerHTML = "";
 
-function crearElemento(tipo, clases = [], contenido = '', atributos = {}) {
-    const el = document.createElement(tipo);
-    clases.forEach(c => el.classList.add(c));
-    if (contenido) el.textContent = contenido;
-    for (let attr in atributos) {
-      el.setAttribute(attr, atributos[attr]);
-    }
-    return el;
+//   // Título
+//   const titulo = document.createElement("h2");
+//   titulo.textContent = data.titulo;
+//   container.appendChild(titulo);
+
+//   // Imagen de portada
+//   const img = document.createElement("img");
+//   img.src = data.imagen;
+//   img.alt = data.titulo;
+//   container.appendChild(img);
+
+//   // Descripción
+//   const descripcion = document.createElement("p");
+//   descripcion.textContent = data.descripcion;
+//   container.appendChild(descripcion);
+
+//   // Información extra: episodios/capítulos, estado y géneros
+//   const infoList = document.createElement("ul");
+
+//   const episodiosItem = document.createElement("li");
+//   episodiosItem.textContent = `Episodios/Capítulos: ${data.episodios}`;
+//   infoList.appendChild(episodiosItem);
+
+//   const estadoItem = document.createElement("li");
+//   estadoItem.textContent = `Estado: ${data.estado}`;
+//   infoList.appendChild(estadoItem);
+
+//   if (data.generos.length > 0) {
+//     const generosItem = document.createElement("li");
+//     generosItem.textContent = `Géneros: ${data.generos.join(", ")}`;
+//     infoList.appendChild(generosItem);
+//   }
+
+//   container.appendChild(infoList);
+// }
+
+// src/views/lecturaView.js
+export function mostrarLectura(data) {
+  // Usamos el contenedor "app" según lo has configurado en tu HTML
+  const container = document.getElementById("app");
+  if (!container) {
+    console.error("No se encontró el contenedor con id 'app'.");
+    return;
   }
   
-  export function mostrarLectura(data) {
-    const banner = document.getElementById("lectura_banner");
-    const details = document.getElementById("lectura_details");
+  // Limpiar el contenido previo
+  container.innerHTML = "";
+
+  // Título principal
+  const titleHeader = document.createElement("h1");
+  titleHeader.classList.add("lectura-title");
+  titleHeader.textContent = data.titulo;
+  container.appendChild(titleHeader);
+
+  // Contenedor principal para el contenido (layout en dos columnas)
+  const contentContainer = document.createElement("div");
+  contentContainer.classList.add("lectura-content");
+
+  // Panel izquierdo: imagen (poster)
+  const leftPanel = document.createElement("div");
+  leftPanel.classList.add("lectura-left");
   
-    if (!banner || !details) return;
+  const poster = document.createElement("img");
+  poster.src = data.imagen;
+  poster.alt = data.titulo;
+  poster.classList.add("lectura-poster");
+  leftPanel.appendChild(poster);
+
+  // Panel derecho: detalles en tabla
+  const rightPanel = document.createElement("div");
+  rightPanel.classList.add("lectura-right");
+
+  const detailsTable = document.createElement("table");
+  detailsTable.classList.add("lectura-details-table");
+
+  // Función auxiliar para agregar filas a la tabla
+  function addRow(label, value) {
+    const tr = document.createElement("tr");
+    const tdLabel = document.createElement("td");
+    tdLabel.textContent = label;
+    tdLabel.classList.add("detail-label");
+    const tdValue = document.createElement("td");
+    tdValue.textContent = value;
+    tdValue.classList.add("detail-value");
+    tr.appendChild(tdLabel);
+    tr.appendChild(tdValue);
+    detailsTable.appendChild(tr);
+  }
   
-    // === Sección superior ===
-    const titulo = crearElemento("h2", ["lectura_titulo"], data.title || "Sin título");
-    const imagen = crearElemento("img", ["lectura_imagen"], '', {
-      src: data.image || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZPb9KqZvuoBmf71tYhOzxOCar7lKi1b9sag&s",
-      alt: data.title || "Sin imagen"
-    });
+  addRow("Episodios/Capítulos", data.episodios);
+  addRow("Estado", data.estado);
+  if (data.generos.length > 0) {
+    addRow("Géneros", data.generos.join(", "));
+  }
+  addRow("Rating", data.rating);
+  addRow("Puntaje", data.score);
+  addRow("Ranking", data.rank);
+  addRow("Fecha de Estreno", data.start_date);
+  addRow("Fecha de Finalización", data.end_date);
+  addRow("Miembros", data.members);
   
-    banner.appendChild(imagen);
-    banner.appendChild(titulo);
+  rightPanel.appendChild(detailsTable);
   
-    // === Detalles ===
-    if (data.description) {
-      const descripcion = crearElemento("p", ["lectura_descripcion"], data.description);
-      details.appendChild(descripcion);
-    }
+  // Agregamos ambos paneles al contenedor principal
+  contentContainer.appendChild(leftPanel);
+  contentContainer.appendChild(rightPanel);
+  container.appendChild(contentContainer);
+
+  // Sección de Sinopsis
+  const synopsisHeader = document.createElement("h2");
+  synopsisHeader.classList.add("lectura-synopsis-title");
+  synopsisHeader.textContent = "Sinopsis";
+  container.appendChild(synopsisHeader);
   
-    const infoLista = crearElemento("ul", ["lectura_lista"]);
-  
-    if (data.type) {
-      const tipo = crearElemento("li", [], `Tipo: ${data.type}`);
-      infoLista.appendChild(tipo);
-    }
-  
-    if (data.year) {
-      const anio = crearElemento("li", [], `Año: ${data.year}`);
-      infoLista.appendChild(anio);
-    }
-  
-    if (data.status) {
-      const estado = crearElemento("li", [], `Estado: ${data.status}`);
-      infoLista.appendChild(estado);
-    }
-  
-    if (data.episodes || data.chapters) {
-      const episodios = crearElemento(
-        "li",
-        [],
-        `Episodios/Capítulos: ${data.episodes || data.chapters}`
-      );
-      infoLista.appendChild(episodios);
-    }
-  
-    details.appendChild(infoLista);
-  
-    // === Tags o Géneros (opcional) ===
-    if (data.genres && Array.isArray(data.genres)) {
-      const contenedorGeneros = crearElemento("div", ["lectura_generos"]);
-      const tituloGeneros = crearElemento("h4", [], "Géneros:");
-      contenedorGeneros.appendChild(tituloGeneros);
-  
-      data.genres.forEach(genero => {
-        const tag = crearElemento("span", ["lectura_tag"], genero.name || genero);
-        contenedorGeneros.appendChild(tag);
-      });
-  
-      details.appendChild(contenedorGeneros);
-    }
-  }  
+  const synopsisText = document.createElement("p");
+  synopsisText.classList.add("lectura-synopsis");
+  synopsisText.textContent = data.descripcion;
+  container.appendChild(synopsisText);
+}

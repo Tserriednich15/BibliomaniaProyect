@@ -1,0 +1,60 @@
+/* estilos para la página de lectura */
+
+.lectura-title {
+  font-size: 2.5em;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.lectura-content {
+  display: flex;
+  gap: 20px;
+  margin: 0 auto 20px;
+  max-width: 900px;
+  padding: 0 20px;
+}
+
+.lectura-left {
+  flex: 1;
+}
+
+.lectura-poster {
+  width: 100%;
+  max-width: 300px;
+  border: 1px solid #ccc;
+}
+
+.lectura-right {
+  flex: 2;
+  align-self: flex-start;
+}
+
+.lectura-details-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.lectura-details-table td {
+  padding: 8px;
+  border: 1px solid #ddd;
+}
+
+.detail-label {
+  font-weight: bold;
+  background-color: #f8f8f8;
+}
+
+.lectura-synopsis-title {
+  font-size: 1.8em;
+  margin: 20px auto 10px;
+  text-align: center;
+}
+
+.lectura-synopsis {
+  max-width: 900px;
+  margin: 0 auto;
+  line-height: 1.6;
+  text-align: justify;
+  padding: 0 20px;
+}
