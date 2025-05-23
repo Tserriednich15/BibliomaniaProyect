@@ -3,23 +3,31 @@ import { crearFooter } from "./components/footer.js";
 import { initCategoriasController } from "./controllers/categoriaController.js";
 import { categoriasView } from "./views/categoriasView.js";
 import { crearSidebar } from "./components/sidebar.js";
-// import { obtenerDatosPorGenero } from "./utils/obtenerDatos.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-  const body = document.querySelector("body.principal_page");
+  // Selecciona el contenedor existente #app
+  const app = document.getElementById("app");
 
+  // Crea las partes estáticas
   const header = crearHeader();
   const sidebar = crearSidebar();
-  const mainSection = document.createElement("main");
-  mainSection.id = "app";
-  mainSection.style.overflowX = "hidden";
   const footer = crearFooter();
 
-  const view = categoriasView();
-  mainSection.appendChild(view);
+  // Creamos un contenedor para el contenido principal (main) y le asignamos la clase "content"
+  const contentContainer = document.createElement("main");
+  contentContainer.classList.add("content");
+  
+  // Si tienes una vista base de categorías (por ejemplo, categoraisView)
+  const view = categoriasView();  // Asegúrate de que esta función retorne un contenedor creado con createElement
+  contentContainer.appendChild(view);
 
-  body.innerHTML = "";
-  body.append(header, sidebar, mainSection, footer);
+  // Inyectamos las partes en #app (como hijos directos, para que se respete la grid layout)
+  // Nota: No creamos otro elemento con id "app" aquí.
+  while (app.firstChild) {
+    app.removeChild(app.firstChild);
+  }
+  app.append(header, sidebar, contentContainer, footer);
 
+  // Finalmente iniciamos el controlador de categoría
   initCategoriasController();
 });

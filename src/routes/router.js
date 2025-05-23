@@ -1,14 +1,16 @@
-import { initCategoriasController } from "../controllers/categoriaController";
-import { homeController } from "../controllers/homeController";
+// src/routes/router.js
+import { initCategoriasController } from "../controllers/categoriaController.js";
+import { homeController } from "../controllers/homeController.js";
 
+// Definimos las rutas usando el estilo de tu instructor
 const routes = {
   "/": {
-    template: "homeView", // Puedes usar esta etiqueta para identificar la vista
-    controlador: homeController,
+    template: "homeView",  // Identificador de la vista principal
+    controlador: homeController
   },
   "categoria": {
-    template: "categoriasView",
-    controlador: initCategoriasController,
+    template: "categoriaView",
+    controlador: initCategoriasController
   }
 };
 
@@ -30,20 +32,26 @@ const matchRoute = (hash) => {
   return [null, {}];
 };
 
+// Función loadView comentada (puedes implementarla si la requieres)
+// async function loadView(app, template) {
+  // Podrías cargar un template externo, pero en este ejemplo no se usará.
+  // app.innerHTML = ""; // Limpia el app y crea un contenedor base
+// }
+
 export async function router() {
   const app = document.getElementById("app");
-  // Obtenemos el hash sin el carácter #
   const hash = location.hash.slice(1) || "/";
   const [route, params] = matchRoute(hash);
   if (route) {
-    // Limpiar el contenido previo del app
+    // Limpiar el contenido previo de app
     while (app.firstChild) {
       app.removeChild(app.firstChild);
     }
-    await loadView(app, route.template);
+    // Si deseas usar loadView, la llamarías aquí; de lo contrario se omite.
+    // await loadView(app, route.template);
     route.controlador(params);
   } else {
-    // Si no hay coincidencia, mostramos una vista de "Página no encontrada"
+    // Vista de "Página no encontrada"
     while (app.firstChild) {
       app.removeChild(app.firstChild);
     }

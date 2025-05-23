@@ -1,3 +1,4 @@
+// src/controllers/categoriaController.js
 import { obtenerDatosPorGenero } from "../utils/obtenerDatos.js";
 import { genreMapAnime, genreMapManga, additionalGenres } from "../utils/genreMap.js";
 
@@ -10,39 +11,52 @@ export async function initCategoriasController() {
   if (tipo === "anime") {
     id = genreMapAnime[genero];
   } else if (tipo === "manga") {
-    // Primero buscamos en el mapeo de manga; si no existe, buscamos en additionalGenres.
-    id = genreMapManga[genero] || (additionalGenres[genero] && additionalGenres[genero].mal_id);  }
+    id = genreMapManga[genero] || (additionalGenres[genero] && additionalGenres[genero].mal_id);
+  }
   if (!id) {
     console.error("Género no reconocido:", genero, tipo);
     return;
   }
 
-
-  //Aquí hice cambios
   const data = await obtenerDatosPorGenero(id, tipo);
-  const container = document.createElement("div");  container.classList.add("album_cards");
-  container.id = "categoria-content";
-  container.classList.add("album_cards");
-  container.innerHTML = "";
 
+  // Creamos el contenedor para la galería
+  const gallery = document.createElement("div");
+  gallery.classList.add("gallery");
 
   data.forEach(item => {
+    // Creamos la card con la estructura requerida
     const card = document.createElement("div");
-    card.classList.add("card_item");
+    card.classList.add("card");
 
     const img = document.createElement("img");
-    img.src = item.image;
-    img.alt = item.title;
+    img.setAttribute("src", item.image);
+    img.setAttribute("alt", item.title);
     img.setAttribute("loading", "lazy");
 
-    const title = document.createElement("h3");
-    title.textContent = item.title;
+    // Contenedor para el contenido de la tarjeta
+    const contenido = document.createElement("div");
+    contenido.classList.add("card_contenido");
 
+    // Creamos un h1 para el título con la clase "section_categorias"
+    const h1 = document.createElement("h1");
+    h1.classList.add("section_categorias");
+    h1.textContent = item.title;
+
+    // Armamos la estructura de la card
+    contenido.appendChild(h1);
     card.appendChild(img);
-    card.appendChild(title);
-    container.appendChild(card);
+    card.appendChild(contenido);
+    gallery.appendChild(card);
   });
 
-  // Asumiendo que en tu template de categoria.html haya un <main>
-  document.querySelector("main").appendChild(container);
+  // Seleccionamos el contenedor principal de contenido. Se asume que en categoria.html
+  // ya tienes un <main class="content"> como parte del layout.
+  const mainContent = document.querySelector("main.content");
+  if (mainContent) {
+    // En vez ---------de borrar, simplemente agregamos la galería al final
+    mainContent.appendChild(gallery);
+  } else {
+    console.error("No se encontró el contenedor main.content");
+  }
 }
