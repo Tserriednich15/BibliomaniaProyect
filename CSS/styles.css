@@ -8,6 +8,7 @@
 @import url('cards_horizontales.css');
 @import url('categorias.css');
 @import url('lectura.css');
+@import url(mediaquerys.css);
 
 * {
   margin: 0;
