@@ -1,5 +1,8 @@
 // import { cargarLectura } from "../models/lecturaModel.js";
 // import { mostrarLectura } from "../views/lecturaView.js";
+// import { crearHeader } from "../components/header.js";
+// import { crearSidebar } from "../components/sidebar.js";
+// import { crearFooter } from "../components/footer.js";
 
 // document.addEventListener("DOMContentLoaded", async () => {
 //   const params = new URLSearchParams(window.location.search);
@@ -13,14 +16,36 @@
   
 //   console.log("Parámetros recibidos:", { tipo, id });
   
+//   const app = document.getElementById("app");
+//   if (!app) {
+//     console.error("No se encontró el contenedor 'app'");
+//     return;
+//   }
+//   app.innerHTML = "";
+  
+//   // Inyectar header, sidebar y footer
+//   const header = crearHeader();
+//   const sidebar = crearSidebar();
+//   const footer = crearFooter();
+//   app.appendChild(header);
+//   app.appendChild(sidebar);
+  
+//   // Crear contenedor para la sección de lectura
+//   const mainContainer = document.createElement("main");
+//   mainContainer.classList.add("content");
+//   app.appendChild(mainContainer);
+  
+//   // Cargar los detalles usando el modelo
 //   const data = await cargarLectura(tipo, id);
 //   if (data) {
-//     mostrarLectura(data);
+//     // Renderizar la vista de lectura, pasando mainContainer como área de contenido
+//     mostrarLectura(data, mainContainer);
 //   } else {
-//     console.error("No se pudo cargar la información del título seleccionado.");
+//     mainContainer.innerHTML = "<p>Error al cargar la información. Inténtalo más tarde.</p>";
 //   }
+  
+//   app.appendChild(footer);
 // });
-
 
 // src/controllers/lecturaController.js
 import { cargarLectura } from "../models/lecturaModel.js";
@@ -46,24 +71,27 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.error("No se encontró el contenedor 'app'");
     return;
   }
+  // Limpiar el contenedor principal
   app.innerHTML = "";
-  
-  // Inyectar header, sidebar y footer
+
+  // Insertar header, sidebar y footer con sus respectivas etiquetas y clases
   const header = crearHeader();
   const sidebar = crearSidebar();
   const footer = crearFooter();
   app.appendChild(header);
   app.appendChild(sidebar);
-  
-  // Crear contenedor para la sección de lectura
+
+  // Crea el contenedor principal para la lectura usando la clase "content"
   const mainContainer = document.createElement("main");
-  mainContainer.classList.add("content");
+  mainContainer.classList.add("content");  // Esto aplica grid-area: main desde styles.css
+  // Opcional: agrega padding para separar el contenido de los bordes
+  mainContainer.style.padding = "20px";
   app.appendChild(mainContainer);
-  
-  // Cargar los detalles usando el modelo
+
+  // Cargar la información detallada desde la API
   const data = await cargarLectura(tipo, id);
   if (data) {
-    // Renderizar la vista de lectura, pasando mainContainer como área de contenido
+    // Renderiza la vista de lectura inyectando su contenido en mainContainer
     mostrarLectura(data, mainContainer);
   } else {
     mainContainer.innerHTML = "<p>Error al cargar la información. Inténtalo más tarde.</p>";
