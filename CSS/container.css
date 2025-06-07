@@ -54,12 +54,6 @@
   cursor: pointer;
 }
 
-/* .card card_item h3 {
-  margin: 8px auto;
-  font-size: 1.2rem;
-  color: var(--third-color);
-} */
-
 .card card_item p {
   font-size: 1rem;
   line-height: 1.5;

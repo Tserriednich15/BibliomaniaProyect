@@ -26,58 +26,56 @@ export const crearMain = async () => {
   const categorias = [...categoriasAnime, ...categoriasManga];
 
   async function cargarCategorias() {
-    // Agrupar en bloques de 3 para evitar saturar la API (delay de 5 seg)
-    for (let i = 0; i < categorias.length; i += 3) {
-      const grupo = categorias.slice(i, i + 3);
-      await Promise.all(grupo.map(async (cat) => {
-        try {
-          const data = await obtenerDatosPorGenero(cat.id, cat.tipo);
-          const representative = data.length > 0
-            ? data[0]
-            : {
-                title: cat.title,
-                image:
-                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZPb9KqZvuoBmf71tYhOzxOCar7lKi1b9sag&s",
-              };
+    for (const cat of categorias) {
+      try {
+        // Obtenemos los datos para la categoría actual
+        const data = await obtenerDatosPorGenero(cat.id, cat.tipo);
+        const representative = data.length > 0
+          ? data[0]
+          : {
+            title: cat.title,
+            image:
+              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZPb9KqZvuoBmf71tYhOzxOCar7lKi1b9sag&s",
+          };
 
-          // Enlace hacia la vista de la categoría
-          const link = document.createElement("a");
-          link.setAttribute("href", `categoria.html?genero=${cat.key}&tipo=${cat.tipo}`);
+        // Crear enlace a la vista de la categoría
+        const link = document.createElement("a");
+        link.href = `categoria.html?genero=${cat.key}&tipo=${cat.tipo}`;
 
-          // Crear la card usando la clase "card"
-          const card = document.createElement("div");
-          card.classList.add("card");
+        // Crear la tarjeta (card)
+        const card = document.createElement("div");
+        card.classList.add("card");
 
-          const img = document.createElement("img");
-          img.setAttribute("src", representative.image);
-          img.setAttribute("alt", representative.title);
-          img.setAttribute("loading", "lazy");
+        const img = document.createElement("img");
+        img.setAttribute("src", representative.image);
+        img.setAttribute("alt", representative.title);
+        img.setAttribute("loading", "lazy");
 
-          const contenido = document.createElement("div");
-          contenido.classList.add("card_contenido");
+        const contenido = document.createElement("div");
+        contenido.classList.add("card_contenido");
 
-          const h1 = document.createElement("h1");
-          h1.classList.add("section_categorias");
-          h1.textContent = cat.title;
+        const h1 = document.createElement("h1");
+        h1.classList.add("section_categorias");
+        h1.textContent = cat.title;
 
-          contenido.appendChild(h1);
-          card.appendChild(img);
-          card.appendChild(contenido);
-          link.appendChild(card);
-          gallery.appendChild(link);
-        } catch (error) {
-          console.error("Error al cargar datos para la categoría:", cat, error);
-        }
-      }));
-      await new Promise(resolve => setTimeout(resolve, 5000));
+        contenido.appendChild(h1);
+        card.appendChild(img);
+        card.appendChild(contenido);
+        link.appendChild(card);
+        gallery.appendChild(link);
+      } catch (error) {
+        console.error("Error al cargar datos para la categoría:", cat, error);
+      }
+      // Esperamos 3 segundos (3000 ms) entre cada petición para evitar saturar la API.
+      await new Promise(resolve => setTimeout(resolve, 3000));
     }
   }
+
+
 
   await cargarCategorias();
   main.appendChild(gallery);
 
-  // --- NUEVOS CARRUSELES ADICIONALES ---
-  // Construir el array de nuevos temas usando additionalGenres
   const nuevosTemas = Object.entries(additionalGenres).map(([key, genre]) => {
     return {
       key,

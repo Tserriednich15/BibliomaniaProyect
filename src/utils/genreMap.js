@@ -1,6 +1,3 @@
-// src/utils/genreMap.js
-
-// Géneros para anime (clave: mal_id)
 export const genreMapAnime = {
   shonen: 27,
   seinen: 37,

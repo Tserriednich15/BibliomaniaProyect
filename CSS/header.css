@@ -1,4 +1,3 @@
-/* Header principal */
 .header {
     grid-area: header;
     position: fixed;
@@ -15,7 +14,6 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Contenedor interno del header */
 .header-container {
     width: 100%;
     max-width: 1200px;
@@ -24,14 +22,12 @@
     justify-content: space-between;
 }
 
-/* Logo */
 .logo {
     font-size: 1.8em;
     font-weight: bold;
     color: var(--second-color);
 }
 
-/* Buscador */
 .search-container {
     flex: 1;
     margin: 0 20px;
@@ -51,7 +47,6 @@
     border-radius: 10px;
 }
 
-/* Menú hamburguesa: se muestra siempre, pero el estilo cascara en móvil */
 .hamburger-menu {
     display: flex;
     align-items: center;
@@ -76,7 +71,6 @@
     background-color: var(--fourth-color);
 }
 
-/* Mobile Menu Overlay */
 .mobile-menu {
     display: none;
     position: fixed;
@@ -121,7 +115,6 @@
     font-size: 1.2em;
 }
 
-/* Elementos de perfil y notificaciones permanecen igual */
 .profile-container {
     display: flex;
     align-items: center;

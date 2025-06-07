@@ -1,5 +1,3 @@
-// src/components/destacado.js
-
 export function crearDestacado(destacado) {
     const seccion = document.createElement("section");
     seccion.className = "destacado";
