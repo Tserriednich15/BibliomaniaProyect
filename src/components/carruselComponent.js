@@ -1,4 +1,3 @@
-// src/components/carruselComponent.js
 export function crearCarrusel(genreTitle, cards) {
   // Contenedor global del carrusel (limitará su ancho y se centrará en el layout)
   const sectionCategorias = document.createElement("div");

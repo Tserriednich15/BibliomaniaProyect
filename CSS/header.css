@@ -1,4 +1,3 @@
-/* Header principal */
 .header {
     grid-area: header;
     position: fixed;
@@ -12,7 +11,7 @@
     justify-content: center;
     padding: 0 25px;
     z-index: 100;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 5);
 }
 
 /* Contenedor interno del header */

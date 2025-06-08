@@ -16,11 +16,13 @@ export default function initCategoriasInicioController() {
     { key: "adventure", id: 2, title: "Adventure", image: "adventure.jpg", descripcion: "Exploraciones y grandes viajes." }
   ];
 
+  // Crear un DocumentFragment para minimizar reflow
+  const fragment = document.createDocumentFragment();
+  
   const contenedor = document.createElement("div");
   contenedor.id = "carrusel_container";
-  contenedor.classList.add("carrusel_wrapper"); // Agregar clase para aplicar estilos
-  document.getElementById("app").appendChild(contenedor);
-
+  contenedor.classList.add("carrusel_wrapper");
+  
   categorias.forEach(categoria => {
     const card = document.createElement("div");
     card.classList.add("card");
@@ -28,6 +30,7 @@ export default function initCategoriasInicioController() {
     const img = document.createElement("img");
     img.src = `./images/${categoria.image}`;
     img.alt = categoria.title;
+    img.loading = "lazy";  // Lazy loading
 
     const contenido = document.createElement("div");
     contenido.classList.add("card_contenido");
@@ -49,4 +52,7 @@ export default function initCategoriasInicioController() {
 
     contenedor.appendChild(card);
   });
+  
+  fragment.appendChild(contenedor);
+  document.getElementById("app").appendChild(fragment);
 }

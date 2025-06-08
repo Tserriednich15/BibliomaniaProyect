@@ -1,6 +1,3 @@
-// src/utils/genreMap.js
-
-// Géneros para anime (clave: mal_id)
 export const genreMapAnime = {
   shonen: 27,
   seinen: 37,
@@ -17,7 +14,6 @@ export const genreMapAnime = {
   horror: 14
 };
 
-// Géneros para manga (si deseas separar los que sean para manga; acá puedes definirlos)
 export const genreMapManga = {
   "shonen-manga": 27,
   "shojo-manga": 26

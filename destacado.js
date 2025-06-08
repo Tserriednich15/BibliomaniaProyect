@@ -13,6 +13,7 @@ export function crearDestacado(destacado) {
     const imagen = document.createElement("img");
     imagen.src = destacado.imagen;
     imagen.alt = destacado.titulo;
+    imagen.loading = "lazy";
   
     const nombre = document.createElement("h3");
     nombre.textContent = destacado.titulo;
