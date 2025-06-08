@@ -1,5 +1,4 @@
 async function cargarContenidoPorCategoria(categoria) {
-  // Aquí podrías usar una API real, por ahora simulamos
   const datos = await obtenerDatosFalsos(categoria);
   const contenedor = document.querySelector(`#wrapper-${categoria} .section_content`);
 
@@ -10,7 +9,6 @@ async function cargarContenidoPorCategoria(categoria) {
 
 
 
-    //Quitar esto, debo de utilizar create element, set atribute y eso, esto de innerHTML 
     //Está mal
     card.innerHTML = `
         <img src="${dato.imagen}" alt="${dato.titulo}">

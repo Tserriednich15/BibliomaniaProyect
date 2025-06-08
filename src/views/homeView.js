@@ -9,7 +9,6 @@ const categoriasView = () => {
     h2.textContent = `Estás viendo la categoría: ${tipo?.toUpperCase() || "Desconocida"}`;
     section.appendChild(h2);
   
-    // Aquí puedes poner contenido dinámico según la categoría
     const descripcion = document.createElement("p");
   
     switch (tipo) {

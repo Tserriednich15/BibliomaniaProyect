@@ -2,10 +2,9 @@ import { initCategoriasController } from "../controllers/categoriaController.js"
 import { homeController } from "../controllers/homeController.js";
 import controladorLectura from "../controllers/lecturaController.js";
 
-// Definimos las rutas usando el estilo de tu instructor
 const routes = {
   "/": {
-    template: "homeView",  // Identificador de la vista principal
+    template: "homeView",
     controlador: homeController
   },
   "categoria": {
@@ -36,26 +35,16 @@ const matchRoute = (hash) => {
   return [null, {}];
 };
 
-// Función loadView comentada (puedes implementarla si la requieres)
-// async function loadView(app, template) {
-// Podrías cargar un template externo, pero en este ejemplo no se usará.
-// app.innerHTML = ""; // Limpia el app y crea un contenedor base
-// }
-
 export async function router() {
   const app = document.getElementById("app");
   const hash = location.hash.slice(1) || "/";
   const [route, params] = matchRoute(hash);
   if (route) {
-    // Limpiar el contenido previo de app
     while (app.firstChild) {
       app.removeChild(app.firstChild);
     }
-    // Si deseas usar loadView, la llamarías aquí; de lo contrario se omite.
-    // await loadView(app, route.template);
     route.controlador(params);
   } else {
-    // Vista de "Página no encontrada"
     while (app.firstChild) {
       app.removeChild(app.firstChild);
     }

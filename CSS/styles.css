@@ -42,7 +42,6 @@ aside.sidebar {
 }
 
 main.content {
-  margin-top: 5rem;
   grid-area: main;
   overflow-x: hidden;
 }

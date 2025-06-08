@@ -18,7 +18,7 @@ export default function initCategoriasInicioController() {
 
   const contenedor = document.createElement("div");
   contenedor.id = "carrusel_container";
-  contenedor.classList.add("carrusel_wrapper"); // Agregar clase para aplicar estilos
+  contenedor.classList.add("carrusel_wrapper");
   document.getElementById("app").appendChild(contenedor);
 
   categorias.forEach(categoria => {

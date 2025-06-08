@@ -1,18 +1,14 @@
 export function mostrarLectura(data, container) {
-  // Limpiar el contenedor recibido
   container.innerHTML = "";
 
-  // Título principal
   const titleEl = document.createElement("h1");
   titleEl.classList.add("lectura-title");
   titleEl.textContent = data.titulo;
   container.appendChild(titleEl);
 
-  // Contenedor de detalles en dos columnas
   const detailContainer = document.createElement("div");
   detailContainer.classList.add("lectura-detail-container");
 
-  // Panel izquierdo: imagen (poster)
   const leftPanel = document.createElement("div");
   leftPanel.classList.add("lectura-left");
 
@@ -22,7 +18,6 @@ export function mostrarLectura(data, container) {
   poster.alt = data.titulo;
   leftPanel.appendChild(poster);
 
-  // Panel derecho: detalles en forma de tabla
   const rightPanel = document.createElement("div");
   rightPanel.classList.add("lectura-right");
 
@@ -93,7 +88,6 @@ export function mostrarLectura(data, container) {
   detailContainer.appendChild(rightPanel);
   container.appendChild(detailContainer);
 
-  // Sección de Sinopsis
   const synopsisHeader = document.createElement("h2");
   synopsisHeader.classList.add("lectura-synopsis-header");
   synopsisHeader.textContent = "Sinopsis";
@@ -104,7 +98,6 @@ export function mostrarLectura(data, container) {
   synopsisPara.textContent = data.synopsis;
   container.appendChild(synopsisPara);
 
-  // Sección de Background (si existe)
   if (data.background) {
     const backgroundHeader = document.createElement("h2");
     backgroundHeader.classList.add("lectura-background-header");
