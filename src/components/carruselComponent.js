@@ -1,34 +1,26 @@
 export function crearCarrusel(genreTitle, cards) {
-  // Contenedor global del carrusel (limitará su ancho y se centrará en el layout)
   const sectionCategorias = document.createElement("div");
   sectionCategorias.classList.add("section_categorias");
 
-  // Título del carrusel (aparece arriba, en una línea separada)
-  // Ahora lo hacemos clickable para redirigir a la página de categoría
   const titulo = document.createElement("h1");
   titulo.textContent = genreTitle;
   titulo.style.cursor = "pointer";
   titulo.addEventListener("click", () => {
-    // Se redirige a categoria.html con los parámetros de género y tipo.
     window.location.href = `categoria.html?genero=${encodeURIComponent(genreTitle.toLowerCase())}&tipo=anime`;
   });
   sectionCategorias.appendChild(titulo);
 
-  // Contenedor interno que agrupa el viewport del carrusel y los botones
   const carouselContainer = document.createElement("div");
   carouselContainer.classList.add("carrusel_container");
 
-  // Botón izquierdo
   const btnLeft = document.createElement("button");
   btnLeft.classList.add("scroll-btn", "left");
   btnLeft.innerHTML = `<i class="ri-arrow-left-line"></i>`;
   carouselContainer.appendChild(btnLeft);
 
-  // "Ventana" del carrusel que mostrará las cards y ocultará lo desbordado
   const sectionContent = document.createElement("div");
   sectionContent.classList.add("section_content");
 
-  // Wrapper que contendrá las cards; su ancho se ajusta al contenido (width: max-content)
   const wrapper = document.createElement("div");
   wrapper.classList.add("carrusel_wrapper");
   cards.forEach(card => {
@@ -38,7 +30,6 @@ export function crearCarrusel(genreTitle, cards) {
   sectionContent.appendChild(wrapper);
   carouselContainer.appendChild(sectionContent);
 
-  // Botón derecho
   const btnRight = document.createElement("button");
   btnRight.classList.add("scroll-btn", "right");
   btnRight.innerHTML = `<i class="ri-arrow-right-line"></i>`;
@@ -46,7 +37,6 @@ export function crearCarrusel(genreTitle, cards) {
 
   sectionCategorias.appendChild(carouselContainer);
 
-  // Lógica de desplazamiento (sin cambios sustanciales)
   let scrollPosition = 0;
   function getVisibleCount() {
     let count = 0;

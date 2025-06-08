@@ -1,75 +1,73 @@
-// export const crearSidebar = () => {
-//     const aside = document.createElement('aside');
-//     const container = document.createElement('div');
-    
-//     aside.classList.add('sidebar');
-//     container.classList.add('sidebar-items');
-  
-//     const items = [
-//       { icon: 'ri-home-line', label: 'Home' },
-//       { icon: 'ri-question-line', label: 'Anime' },
-//       { icon: 'ri-question-line', label: 'Mangas' },
-//       { icon: 'ri-settings-3-line', label: 'Settings' }
-//     ];
-  
-//     items.forEach(({ icon, label }) => {
-//       const a = document.createElement('a');
-//       a.href = '#';
-//       a.classList.add('sidebar-item');
-  
-//       const i = document.createElement('i');
-//       i.id = 'item';
-//       i.classList.add(icon);
-  
-//       const span = document.createElement('span');
-//       span.textContent = label;
-  
-//       a.appendChild(i);
-//       a.appendChild(span);
-//       container.appendChild(a);
-//     });
-//     aside.appendChild(container);
-//     return aside;
-//   };
+import { fetchData } from "../utils/fetchData.js";
 
-export const crearSidebar = () => {
-    const aside = document.createElement('aside');
-    const container = document.createElement('div');
+export const crearSidebar = async () => {
+  const aside = document.createElement('aside');
+  aside.classList.add('sidebar');
 
-    // Agregar las clases adecuadas
-    aside.classList.add('sidebar');
-    container.classList.add('sidebar-items');
+  const container = document.createElement('div');
+  container.classList.add('sidebar-items');
 
-    // Lista de ítems del sidebar
-    const items = [
-      { icon: 'ri-home-line', label: 'Home' },
-      { icon: 'ri-question-line', label: 'Anime' },
-      { icon: 'ri-question-line', label: 'Mangas' },
-      { icon: 'ri-settings-3-line', label: 'Settings' }
-    ];
+  // Creamos el item de "Inicio" (Home)
+  const inicioLink = document.createElement('a');
+  inicioLink.href = "index.html"; // Cambia este URL si es necesario
+  inicioLink.classList.add('sidebar-item');
 
-    // Crear los ítems dinámicamente
-    items.forEach(({ icon, label }) => {
-      const a = document.createElement('a');
-      a.href = '#';
-      a.classList.add('sidebar-item');
+  const inicioIcon = document.createElement('i');
+  inicioIcon.classList.add('ri-home-line');
 
-      const i = document.createElement('i');
-      i.classList.add(icon);
+  const inicioSpan = document.createElement('span');
+  inicioSpan.textContent = 'Inicio';
 
-      const span = document.createElement('span');
-      span.textContent = label;
+  inicioLink.appendChild(inicioIcon);
+  inicioLink.appendChild(inicioSpan);
+  container.appendChild(inicioLink);
 
-      a.appendChild(i);
-      a.appendChild(span);
-      container.appendChild(a);
-    });
+  // Creamos un contenedor para los items dinámicos y lo separamos con un margen superior
+  const dynamicContainer = document.createElement('div');
+  dynamicContainer.classList.add('sidebar-dynamic-items');
+  dynamicContainer.style.marginTop = '20px'; // Esto baja un poco los items dinámicos para que "Inicio" se vea bien
 
-    aside.appendChild(container);
+  // Definimos el número máximo de items dinámicos (11 total: 1 de Inicio + 10 dinámicos)
+  const maxSidebarItems = 10;
 
-    // Agregar el sidebar dentro de #app
-    const app = document.getElementById('app');
+  // Se obtiene dinámicamente los géneros de manga de la API de Jikan.
+  try {
+    const url = "https://api.jikan.moe/v4/genres/manga";
+    const res = await fetchData(url);
+    if (res && res.data) {
+      res.data.slice(0, maxSidebarItems).forEach(genre => {
+        const a = document.createElement('a');
+        // Construimos la URL para la categoría
+        a.href = `categoria.html?genero=${encodeURIComponent(genre.name)}&tipo=manga`;
+        a.classList.add('sidebar-item');
+
+        // Usamos un icono genérico para representar el género
+        const i = document.createElement('i');
+        i.classList.add('ri-book-line');
+
+        const span = document.createElement('span');
+        span.textContent = genre.name;
+
+        a.appendChild(i);
+        a.appendChild(span);
+        dynamicContainer.appendChild(a);
+      });
+    } else {
+      console.warn("No se pudieron obtener los géneros de manga.");
+    }
+  } catch (error) {
+    console.error("Error fetching manga genres for sidebar:", error);
+  }
+
+  // Se añade el contenedor dinámico al container principal
+  container.appendChild(dynamicContainer);
+  aside.appendChild(container);
+
+  const app = document.getElementById('app');
+  if (app) {
     app.appendChild(aside);
-
-    return aside;
+  } else {
+    console.error("No se encontró el elemento con id 'app'");
+  }
+  return aside;
 };

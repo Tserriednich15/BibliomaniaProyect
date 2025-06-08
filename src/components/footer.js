@@ -5,7 +5,6 @@ export const crearFooter = () => {
   const footerContent = document.createElement("div");
   footerContent.classList.add("footer_content");
 
-  // Sección WikiSheep
   const section1 = document.createElement("div");
   section1.classList.add("footer_section");
 
@@ -17,7 +16,6 @@ export const crearFooter = () => {
   section1.appendChild(h3_1);
   section1.appendChild(p1);
 
-  // Sección Enlaces Rápidos
   const section2 = document.createElement("div");
   section2.classList.add("footer_section");
 
@@ -37,7 +35,6 @@ export const crearFooter = () => {
   section2.appendChild(h3_2);
   section2.appendChild(ul1);
 
-  // Sección Redes Sociales
   const section3 = document.createElement("div");
   section3.classList.add("footer_section");
 

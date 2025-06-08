@@ -19,7 +19,6 @@ export function mostrarLectura(data, container) {
   poster.loading = "lazy";
   leftPanel.appendChild(poster);
 
-  // Panel derecho: detalles en forma de tabla
   const rightPanel = document.createElement("div");
   rightPanel.classList.add("lectura-right");
 
@@ -38,7 +37,7 @@ export function mostrarLectura(data, container) {
     tr.appendChild(tdValue);
     detailsTable.appendChild(tr);
   }
-  
+
   if (data.tipo === "anime") {
     addRow("Tipo", data.tipo);
     addRow("Episodios", data.episodes);
@@ -84,30 +83,28 @@ export function mostrarLectura(data, container) {
     addRow("Relaciones", data.relations);
     addRow("Externos", data.external);
   }
-  
+
   rightPanel.appendChild(detailsTable);
   detailContainer.appendChild(leftPanel);
   detailContainer.appendChild(rightPanel);
   container.appendChild(detailContainer);
 
-  // Sección de Sinopsis
   const synopsisHeader = document.createElement("h2");
   synopsisHeader.classList.add("lectura-synopsis-header");
   synopsisHeader.textContent = "Sinopsis";
   container.appendChild(synopsisHeader);
-  
+
   const synopsisPara = document.createElement("p");
   synopsisPara.classList.add("lectura-synopsis");
   synopsisPara.textContent = data.synopsis;
   container.appendChild(synopsisPara);
-  
-  // Sección de Background (si existe)
+
   if (data.background) {
     const backgroundHeader = document.createElement("h2");
     backgroundHeader.classList.add("lectura-background-header");
     backgroundHeader.textContent = "Background";
     container.appendChild(backgroundHeader);
-  
+
     const backgroundPara = document.createElement("p");
     backgroundPara.classList.add("lectura-background");
     backgroundPara.textContent = data.background;

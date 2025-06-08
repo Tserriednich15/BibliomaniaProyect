@@ -2,18 +2,15 @@ import { fetchData } from "../utils/fetchData.js";
 
 export async function cargarLectura(tipo, id) {
   try {
-    // Usamos la ruta de Jikan para anime o manga
     const url = `https://api.jikan.moe/v4/${tipo}/${id}`;
     const res = await fetchData(url);
     if (res && res.data) {
       const d = res.data;
-      // Usamos alguna prioridad para el título.
       const titulo = d.title || d.title_english || d.title_japanese || "Sin título";
-      // Seleccionar imagen principal
-      const imagen = d.images && d.images.jpg && d.images.jpg.image_url 
-        ? d.images.jpg.image_url 
+      const imagen = d.images && d.images.jpg && d.images.jpg.image_url
+        ? d.images.jpg.image_url
         : "https://via.placeholder.com/300x400?text=No+Image";
-      
+
       if (tipo === "anime") {
         return {
           tipo,

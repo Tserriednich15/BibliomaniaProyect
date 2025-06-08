@@ -22,7 +22,12 @@ export default function initCategoriasInicioController() {
   const contenedor = document.createElement("div");
   contenedor.id = "carrusel_container";
   contenedor.classList.add("carrusel_wrapper");
+<<<<<<< HEAD
   
+=======
+  document.getElementById("app").appendChild(contenedor);
+
+>>>>>>> 264bbdace8f3a4a59c66e7f4e62da273ced73362
   categorias.forEach(categoria => {
     const card = document.createElement("div");
     card.classList.add("card");

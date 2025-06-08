@@ -1,16 +1,15 @@
 import { fetchData } from "./fetchData.js";
 
 export async function obtenerDatosPorGenero(genreId, tipo = "anime") {
-  // Validar que genreId sea un número válido antes de proceder
   if (!genreId || isNaN(genreId)) {
     console.error("ID de género no válido:", genreId);
     return [];
   }
 
-  const url = tipo === "manga" 
+  const url = tipo === "manga"
     ? `https://api.jikan.moe/v4/manga?genres=${genreId}&order_by=score&sort=desc`
     : `https://api.jikan.moe/v4/anime?genres=${genreId}&order_by=score&sort=desc`;
-    
+
   try {
     const res = await fetchData(url);
 
