@@ -1,0 +1,14 @@
+import express from "express";
+import autorController from "../controllers/autorController.js";
+import { verifyToken } from "../middlewares/auth/tokenMiddleware.js";
+
+const router = express.Router();
+
+// Rutas protegidas por JWT
+router.get("/", verifyToken, autorController.obtenerAutores);
+router.get("/:id", verifyToken, autorController.obtenerAutorPorId);
+router.post("/", verifyToken, autorController.crearAutor);
+router.put("/:id", verifyToken, autorController.actualizarAutor);
+router.delete("/:id", verifyToken, autorController.eliminarAutor);
+
+export default router;

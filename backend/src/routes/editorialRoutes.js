@@ -1,0 +1,13 @@
+import express from "express";
+import EditorialController from "../controllers/editorialController.js";
+import { verifyToken } from "../middlewares/auth/tokenMiddleware.js";
+
+const router = express.Router();
+
+router.get("/", verifyToken, EditorialController.obtenerEditoriales);
+router.get("/:id", verifyToken, EditorialController.obtenerEditorialPorId);
+router.post("/", verifyToken, EditorialController.crearEditorial);
+router.put("/:id", verifyToken, EditorialController.actualizarEditorial);
+router.delete("/:id", verifyToken, EditorialController.eliminarEditorial);
+
+export default router;
