@@ -1,4 +1,4 @@
-import { obtenerCategorias } from "../helpers/api.js";
+// import { obtenerCategorias } from "../helpers/api.js";
 
 export const crearMain = async () => {
   const main = document.createElement("main");
@@ -13,8 +13,7 @@ export const crearMain = async () => {
 };
 
 async function mostrarCategorias() {
-  const categorias = await obtenerCategorias();
-  console.log("Categorías obtenidas:", categorias);
+  // const categorias = await obtenerCategorias();
 }
 
 

@@ -7,14 +7,14 @@ export function crearHeader() {
 
   const logo = document.createElement("div");
   logo.classList.add("logo");
-  logo.textContent = "WikiSheep";
+  logo.textContent = "Bibliomania";
   headerContainer.appendChild(logo);
 
   const searchContainer = document.createElement("div");
   searchContainer.classList.add("search-container");
   const searchInput = document.createElement("input");
   searchInput.type = "search";
-  searchInput.placeholder = "Buscar anime o manga...";
+  searchInput.placeholder = "Search...";
   searchContainer.appendChild(searchInput);
   headerContainer.appendChild(searchContainer);
 

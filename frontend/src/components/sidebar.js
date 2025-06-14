@@ -1,14 +1,13 @@
 
-export const crearSidebar = async () => {
+export const crearSidebar = () => {
   const aside = document.createElement('aside');
   aside.classList.add('sidebar');
 
   const container = document.createElement('div');
   container.classList.add('sidebar-items');
 
-  // Creamos el item de "Inicio" (Home)
   const inicioLink = document.createElement('a');
-  inicioLink.href = "index.html"; // Cambia este URL si es necesario
+  inicioLink.href = "index.html";
   inicioLink.classList.add('sidebar-item');
 
   const inicioIcon = document.createElement('i');
