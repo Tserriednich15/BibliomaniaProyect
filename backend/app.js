@@ -39,8 +39,8 @@ app.get("/", (req, res) => {
 });
 
 // Rutas
-app.use("/api/usuarios", router);
 app.use("/api/auth", authRoutes);
+app.use("/api/usuarios", router);
 app.use("/api/categorias", categoriasRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/libros", libroRoutes);

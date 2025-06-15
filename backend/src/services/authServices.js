@@ -11,8 +11,10 @@ const tokenExpiration = process.env.TOKEN_EXPIRATION;
 const refreshExpiration = process.env.REFRESH_EXPIRATION;
 
 class AuthService {
-  static async register(usuario, contrasena) {
+  static async register(datos) {
     try {
+      const { usuario, contrasena, nombre, apellido, cedula, correo, telefono } = datos;
+
       const userExists = await Usuario.findByUsername(usuario);
       if (userExists) {
         return {
@@ -23,7 +25,16 @@ class AuthService {
       }
 
       const hashedPassword = await bcrypt.hash(contrasena, 10);
-      const userId = await Usuario.create(usuario, hashedPassword);
+
+      const userId = await Usuario.create({
+        usuario,
+        contrasena: hashedPassword,
+        nombre,
+        apellido,
+        cedula,
+        correo,
+        telefono
+      });
 
       return {
         error: false,
@@ -31,6 +42,7 @@ class AuthService {
         message: "Usuario registrado exitosamente",
         userId,
       };
+
     } catch (error) {
       console.error("Error al registrar:", error);
       return {
@@ -40,6 +52,7 @@ class AuthService {
       };
     }
   }
+
 
   static async login(usuario, contrasena) {
     try {

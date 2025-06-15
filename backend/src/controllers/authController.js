@@ -2,17 +2,27 @@ import AuthService from "../services/authServices.js";
 
 class AuthController {
 
-  static async register  (req, res) {
-    const { usuario, contrasena } = req.body;
-    if (!usuario || !contrasena) {
-      return res.status(400).json({ message: "Todos los campos son obligatorios" });
+  static async register(req, res) {
+    const { usuario, contrasena, nombre, apellido, cedula, correo, telefono } = req.body;
+
+    if (!usuario || !contrasena || !nombre || !apellido || !cedula || !correo) {
+      return res.status(400).json({ message: "Todos los campos obligatorios deben ser completados" });
     }
 
-    const result = await AuthService.register(usuario, contrasena);
-    return res.status(result.code).json({ message: result.message });
-  };
+    const result = await AuthService.register({
+      usuario,
+      contrasena,
+      nombre,
+      apellido,
+      cedula,
+      correo,
+      telefono
+    });
 
-  static async login  (req, res) {
+    return res.status(result.code).json({ message: result.message });
+  }
+
+  static async login(req, res) {
     const { usuario, contrasena } = req.body;
     if (!usuario || !contrasena) {
       return res.status(400).json({ message: "Todos los campos son obligatorios" });
@@ -31,7 +41,7 @@ class AuthController {
     });
   };
 
-  static async refreshToken  (req, res) {
+  static async refreshToken(req, res) {
     const { refreshToken } = req.body;
     if (!refreshToken) {
       return res.status(400).json({ message: "Token de refresco requerido" });
@@ -50,7 +60,7 @@ class AuthController {
     });
   };
 
-  static async logout  (req, res) {
+  static async logout(req, res) {
     const userId = req.user?.id;
     if (!userId) {
       return res.status(401).json({ message: "Usuario no autenticado" });

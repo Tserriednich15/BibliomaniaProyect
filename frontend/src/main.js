@@ -1,6 +1,6 @@
 import { crearFooter } from "./components/footer.js";
 import { crearHeader } from "./components/header.js";
-import { crearMain } from "./components/mainSection.js";
+// import { crearMain } from "./components/mainSection.js";
 import { crearSidebar } from "./components/sidebar.js";
 // import { obtenerCategorias } from "./helpers/api.js";
 
