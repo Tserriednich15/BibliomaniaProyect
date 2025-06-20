@@ -1,36 +1,38 @@
+// scripts/menu.js
 import protegerVista from './protegerVista.js';
 
 const menuController = () => {
   protegerVista();
 
-  const main = document.querySelector('.contenedor_menu');
+  const btnLibros = document.getElementById('btnLibros');
+  const btnLogout = document.getElementById('btnLogout');
 
-  const contenedor = document.createElement('section');
-  contenedor.setAttribute('class', 'menu');
+  if (btnLibros) {
+    btnLibros.addEventListener('click', (e) => {
+      e.preventDefault();
+      history.pushState(null, '', '/libros');
+      window.dispatchEvent(new Event('popstate'));
+    });
+  }
 
-  const titulo = document.createElement('h1');
-  titulo.textContent = 'Bienvenido al Menú Principal';
+  if (btnLogout) {
+    btnLogout.addEventListener('click', () => {
+      localStorage.removeItem('accessToken');
+      history.pushState(null, '', '/login');
+      window.dispatchEvent(new Event('popstate'));
+    });
+  }
 
-  const parrafo = document.createElement('p');
-  parrafo.textContent = 'Selecciona una opción para continuar:';
+  document.getElementById('goLibros')?.addEventListener('click', () => {
+  history.pushState(null, '', '/libros');
+  window.dispatchEvent(new Event('popstate'));
+});
 
-  const botonLibros = document.createElement('a');
-  botonLibros.setAttribute('href', '../views/libros/listado.html');
-  botonLibros.setAttribute('class', 'btn');
-  botonLibros.textContent = 'Ver Libros';
+document.getElementById('goCategorias')?.addEventListener('click', () => {
+  history.pushState(null, '', '/categorias');
+  window.dispatchEvent(new Event('popstate'));
+});
 
-  const botonCerrarSesion = document.createElement('button');
-  botonCerrarSesion.setAttribute('class', 'btn btn-logout');
-  botonCerrarSesion.textContent = 'Cerrar sesión';
-
-  botonCerrarSesion.addEventListener('click', () => {
-    localStorage.removeItem('accessToken');
-    window.location.href = '../views/autenticacion/login.html';
-  });
-
-  contenedor.append(titulo, parrafo, botonLibros, botonCerrarSesion);
-
-  main.append(contenedor);
 };
 
-export default menuController();
+export default menuController;

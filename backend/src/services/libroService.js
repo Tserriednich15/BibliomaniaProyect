@@ -36,14 +36,22 @@ class LibroService {
 
   static async actualizarLibro(id, datosLibro) {
     try {
+      if (datosLibro.cantidad_disponible > datosLibro.cantidad_total) {
+        return {
+          code: 400,
+          message: "La cantidad disponible no puede ser mayor que la cantidad total.",
+          error: true
+        };
+      }
+
       const actualizado = await Libro.update(id, datosLibro);
       if (!actualizado) {
-        return { code: 404, message: "Libro no encontrado o sin cambios" };
+        return { code: 404, message: "Libro no encontrado o sin cambios", error: true };
       }
       return { code: 200, message: "Libro actualizado correctamente" };
     } catch (error) {
       console.error("Error al actualizar libro:", error);
-      return { code: 500, message: "Error interno al actualizar el libro" };
+      return { code: 500, message: "Error interno al actualizar el libro", error: true };
     }
   }
 

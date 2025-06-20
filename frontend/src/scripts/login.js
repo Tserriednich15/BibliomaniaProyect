@@ -1,56 +1,77 @@
 import Swal from "sweetalert2";
 
-const form = document.querySelector('#formLogin');
-const usuario = document.querySelector('.usuario');
-const contrasena = document.querySelector('.contrasena');
+console.log("✅ login.js cargado");
 
-const enviar = async (e) => {
-  e.preventDefault();
+export default function mostrarLogin(main) {
+  console.log("✅ Ejecutando login desde main.js");
 
-  try {
-    const response = await fetch('http://localhost:3000/api/auth/login', {
-      method: 'POST',
-      body: JSON.stringify({
-        usuario: usuario.value,
-        contrasena: contrasena.value
-      }),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
+  main.innerHTML = "";
 
-    const data = await response.json();
+  const section = document.createElement("section");
+  section.classList.add("login_section");
 
-    if (!response.ok) {
-      return Swal.fire({
-        title: 'Error al iniciar sesión',
-        text: data.message || 'Credenciales incorrectas',
-        icon: 'error',
-        confirmButtonText: 'OK'
+  const title = document.createElement("h2");
+  title.textContent = "Iniciar Sesión";
+
+  const form = document.createElement("form");
+  form.id = "form_login";
+
+  const labelUser = document.createElement("label");
+  labelUser.setAttribute("for", "usuario");
+  labelUser.textContent = "Usuario";
+
+  const inputUser = document.createElement("input");
+  inputUser.type = "text";
+  inputUser.id = "usuario";
+  inputUser.required = true;
+
+  const labelPass = document.createElement("label");
+  labelPass.setAttribute("for", "contrasena");
+  labelPass.textContent = "Contraseña";
+
+  const inputPass = document.createElement("input");
+  inputPass.type = "password";
+  inputPass.id = "contrasena";
+  inputPass.required = true;
+
+  const boton = document.createElement("button");
+  boton.type = "submit";
+  boton.textContent = "Iniciar sesión";
+
+  form.append(labelUser, inputUser, labelPass, inputPass, boton);
+  section.append(title, form);
+  main.appendChild(section);
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch("http://localhost:3000/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          usuario: inputUser.value,
+          contrasena: inputPass.value,
+        }),
       });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        return Swal.fire("Error", data.message || "Credenciales incorrectas", "error");
+      }
+
+      localStorage.setItem("accessToken", data.accessToken);
+      localStorage.setItem("refreshToken", data.refreshToken);
+
+      Swal.fire("Bienvenido", `Hola ${inputUser.value}`, "success").then(() => {
+        window.location.href = "views/visitantes/menu.html";
+      });
+    } catch (error) {
+      console.error("❌ Error en login:", error);
+      Swal.fire("Error", "No se pudo conectar al servidor", "error");
     }
-
-    localStorage.setItem('accessToken', data.accessToken);
-    localStorage.setItem('refreshToken', data.refreshToken);
-
-    Swal.fire({
-      title: 'Inicio de sesión exitoso',
-      text: `Bienvenido ${usuario.value}`,
-      icon: 'success',
-      confirmButtonText: 'Entrar'
-    }).then(() => {
-      window.location.href = '../../menu.html';
-    });
-
-  } catch (error) {
-    console.error(error);
-    Swal.fire({
-      title: 'Error del servidor',
-      text: 'No se pudo conectar con el backend',
-      icon: 'error',
-      confirmButtonText: 'OK'
-    });
-  }
-};
-
-form.addEventListener('submit', enviar);
+  });
+}

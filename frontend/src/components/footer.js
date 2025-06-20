@@ -9,7 +9,7 @@ export const crearFooter = () => {
   section1.classList.add("footer_section");
 
   const h3_1 = document.createElement("h3");
-  h3_1.textContent = "WikiSheep";
+  h3_1.textContent = "Bibliomania";
   const p1 = document.createElement("p");
   p1.textContent = "Tu fuente de conocimiento compartido.";
 
@@ -72,7 +72,7 @@ export const crearFooter = () => {
   footerBottom.classList.add("footer_bottom");
 
   const pBottom = document.createElement("p");
-  pBottom.textContent = "© 2024 WikiSheep. Todos los derechos reservados.";
+  pBottom.textContent = "© 2024 Bibliomania. Todos los derechos reservados.";
 
   footerBottom.appendChild(pBottom);
   footer.appendChild(footerContent);

@@ -1,13 +1,14 @@
 import LibroService from "../services/libroService.js";
+import ResponseProvider from "../providers/responseProvider.js"
 
 class libroController {
 
   static listarLibros = async (req, res) => {
     const result = await LibroService.listarLibros();
     if (result.error) {
-      return res.status(result.code).json({ message: result.message });
+      return ResponseProvider.error(res, result.message, result.code);
     }
-    return res.status(result.code).json(result.data);
+    return ResponseProvider.success(res, result.data, "Libros listados");
   };
 
   static obtenerLibroPorId = async (req, res) => {

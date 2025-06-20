@@ -2,12 +2,27 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Libros disponibles</title>
+  <title>Listado de Libros</title>
   <link rel="stylesheet" href="../../CSS/styles.css" />
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
-  <h1>Libros disponibles</h1>
-  <main class="contenedor_libros"></main>
+
+  <main class="container">
+    <h1>📚 Listado de Libros</h1>
+    <table class="tabla" id="tabla_libros">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Título</th>
+          <th>Género</th>
+          <th>Año</th>
+          <th>Disponibles</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </main>
 
   <script type="module" src="../../scripts/libros.js"></script>
 </body>

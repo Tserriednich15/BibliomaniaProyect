@@ -1,4 +1,4 @@
-  .section_categorias {
+  /* .section_categorias {
     max-width: 180vh;
     margin: 5rem auto;
     width: 100%;
@@ -9,9 +9,9 @@
     text-align: center;
     flex-direction: column;
     /* font-size: 1.5rem; */
-   }
+   /* } */
 
-  .carrusel_container {
+  /* .carrusel_container {
     position: relative;
     width: 100%;
   }
@@ -56,8 +56,8 @@
 
   .scroll-btn.right {
     right: 10px;
-  }
-
+  } */
+/* 
   @media (max-width: 768px) {
     .section_categorias h1 {
       font-size: 1.2rem;
@@ -76,4 +76,4 @@
     .section_content {
       height: 18rem;
     }
-  }
+  } */
