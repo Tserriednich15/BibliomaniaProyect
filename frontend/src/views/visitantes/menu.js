@@ -1,5 +1,5 @@
 // scripts/menu.js
-import protegerVista from './protegerVista.js';
+import protegerVista from '../../scripts/protegerVista.js';
 
 const menuController = () => {
   protegerVista();
