@@ -1,4 +1,4 @@
-import protegerVista from "../../scripts/protegerVista.js"
+import protegerVista from "../autenticacion/protegerVista.js"
 protegerVista();
 
 const token = localStorage.getItem("accessToken");

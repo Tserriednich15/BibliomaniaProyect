@@ -1,7 +1,4 @@
-// src/components/sidebar.js
-
-// La función ahora acepta un parámetro que indica el estado de autenticación
-export const crearSidebar = (isAuthenticated = false) => {
+function crearSidebar(isAuthenticated = false){
     const aside = document.createElement("aside");
     aside.classList.add("sidebar");
 
@@ -37,3 +34,5 @@ export const crearSidebar = (isAuthenticated = false) => {
     aside.appendChild(container);
     return aside;
 };
+
+export default crearSidebar;

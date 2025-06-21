@@ -1,4 +1,4 @@
-export function crearHeader() {
+function crearHeader() {
   const header = document.createElement("header");
   header.classList.add("header");
 
@@ -77,3 +77,5 @@ export function crearHeader() {
 
   return header;
 }
+
+export default crearHeader;

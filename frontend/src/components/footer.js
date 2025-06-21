@@ -1,4 +1,4 @@
-export const crearFooter = () => {
+function crearFooter() {
   const footer = document.createElement("footer");
   footer.classList.add("footer");
 
@@ -80,3 +80,5 @@ export const crearFooter = () => {
 
   return footer;
 };
+
+export default crearFooter;
