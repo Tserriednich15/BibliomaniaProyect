@@ -1,0 +1,112 @@
+/* src/CSS/sidebar.css */
+
+.sidebar_overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 1999;
+  opacity: 0;
+  pointer-events: none; 
+  transition: opacity 0.3s ease-in-out;
+}
+
+.sidebar_overlay.is_open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.sidebar_menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 300px;
+  height: 100%;
+  z-index: 2000;
+  /* CORRECCIÓN: Fondo más transparente y oscuro */
+  background: rgba(25, 27, 31, 0.85); 
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  color: #f0f0f0;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar_menu.is_open {
+  transform: translateX(0);
+}
+
+.sidebar_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar_header h2 {
+  font-family: var(--font-serif);
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.sidebar_close_btn {
+  background: none;
+  border: none;
+  color: #f0f0f0;
+  font-size: 1.8rem;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  transition: transform 0.2s, color 0.2s;
+}
+
+.sidebar_close_btn:hover {
+    transform: rotate(90deg);
+    color: white;
+}
+
+.sidebar_nav {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.sidebar_link {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.8rem 1rem;
+  border-radius: 5px;
+  transition: background-color 0.2s, color 0.2s;
+  /* CORRECCIÓN: Color de texto claro */
+  color: #e2e2e2;
+}
+
+.sidebar_link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  text-decoration: none; /* CORRECCIÓN: Eliminamos el subrayado */
+}
+
+/* CORRECCIÓN: Color de icono claro */
+.sidebar_link i {
+  font-size: 1.2rem;
+  color: #a7a7a7; /* Tono hueso/nieve */
+  transition: color 0.2s;
+}
+
+.sidebar_link:hover i {
+    color: white;
+}
+
+.sidebar_link span {
+  font-weight: 600;
+  color: #a7a7a7;
+}

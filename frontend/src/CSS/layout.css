@@ -1,19 +1,31 @@
-/* i {
-  font-size: 1.5rem;
-  color: var(--fourth-color);
-  transition: 0.5s;
-  color: var(--third-color);
+/* src/CSS/layout.css */
+
+body {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
+  margin: 0;
+  background-color: #f8f9fa; /* Color de fondo general */
 }
 
-a {
-  text-decoration: none;
+#header {
+  grid-row: 1;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-a:hover {
-  text-decoration: underline;
+#app {
+  grid-row: 2;
+  overflow-y: auto;
+  /* --- ESTA ES LA CORRECCIÓN CLAVE --- */
+  /* Añade un padding generoso para separar el contenido del header y los bordes */
+  padding: 2rem; 
 }
 
-p,
-a {
-  font-size: 0.9rem;
-} */
+/* Si usas un footer, asígnale la tercera fila */
+#footer {
+  grid-row: 3;
+}

@@ -1,29 +1,23 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <title>Listado de Libros</title>
-  <link rel="stylesheet" href="../../CSS/styles.css" />
-  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</head>
-<body>
+<section class="content_section">
+  <div class="section_header">
+    <h1>Gestión de Libros</h1>
+    <a href="#nuevo_libro" class="btn btn_primary">Nuevo Libro</a>
+  </div>
 
-  <main class="container">
-    <h1>📚 Listado de Libros</h1>
-    <table class="tabla" id="tabla_libros">
+  <div class="table_container">
+    <table>
       <thead>
         <tr>
           <th>ID</th>
           <th>Título</th>
+          <th>Año Publicación</th>
           <th>Género</th>
-          <th>Año</th>
-          <th>Disponibles</th>
+          <th>Acciones</th>
         </tr>
       </thead>
-      <tbody></tbody>
+      <tbody id="libros_table_body">
+        <!-- Las filas de la tabla se insertarán aquí con JavaScript -->
+      </tbody>
     </table>
-  </main>
-
-  <script type="module" src="../../scripts/libros.js"></script>
-</body>
-</html>
+  </div>
+</section>

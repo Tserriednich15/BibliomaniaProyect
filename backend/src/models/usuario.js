@@ -1,6 +1,6 @@
 import db from "../utils/db.js";
 
-export class Usuario {
+class Usuario {
   // Buscar usuario por nombre de usuario
   static async findByUsername(usuario) {
     const [rows] = await db.query(
@@ -42,3 +42,5 @@ export class Usuario {
     );
   }
 }
+
+export default Usuario;

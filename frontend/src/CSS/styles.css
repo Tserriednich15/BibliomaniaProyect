@@ -1,53 +1,59 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
-@import url('header.css');
-@import url('layout.css');
-@import url('container.css');
-@import url('sidebar_start.css');
-@import url('footer.css');
-@import url('cards_horizontales.css');
-@import url('lectura.css');
-@import url('mediaqueries.css');
-@import url('login.css');
-@import url('registro.css');
+/* src/CSS/styles.css */
 
+/* Importamos los demás archivos de estilo. El orden es importante. */
+@import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Source+Sans+3:wght@400;600&display=swap');
+@import url('layout.css'); /* La estructura que acabamos de corregir */
+@import url('header.css'); /* Estilos específicos del header */
+@import url('components.css'); /* Un nuevo archivo para tablas, botones y tarjetas */
+@import url('login.css'); /* Estilos específicos del login */
+@import url('mediaqueries.css'); /* Tus media queries al final */
+@import url('sidebar.css');
+/* --- TEMA WIKIPEDIA --- */
+:root {
+  /* Paleta de colores inspirada en Wikipedia */
+  --font-serif: 'Lora', serif;
+  --font-sans: 'Source Sans 3', sans-serif;
+  
+  --color_texto: #202122;
+  --color_enlace: #3366cc;
+  --color_enlace_visitado: #5a369b;
+  --color_fondo: #f8f9fa;
+  --color_borde: #a2a9b1;
+  --color_fondo_cabecera_tabla: #eaecf0;
+  --color_fila_alterna: #f8f9fa;
+
+  --color_primario: #36c;
+  --color_secundario: #6c757d;
+  --color_peligro: #d33;
+}
+
+/* Estilos Globales */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Times New Roman', Times, serif;
 }
 
-:root {
-  --main-color: #21324B;
-  --second-color: #78b9BA;
-  --third-color: #CE472F;
-  --fourth-color: #C6C5B4;
+body {
+  font-family: var(--font-sans);
+  color: var(--color_texto);
+  background-color: var(--color_fondo);
 }
 
-#app {
-  display: grid;
-  grid-template-areas:
-    "header header"
-    "sidebar main"
-    "footer footer";
-  grid-template-columns: 200px 1fr;
-  grid-template-rows: auto 1fr auto;
-  min-height: 100vh;
+h1, h2, h3 {
+  font-family: var(--font-serif);
+  margin-bottom: 1rem;
 }
 
-header.header {
-  grid-area: header;
+a {
+  color: var(--color_enlace);
+  text-decoration: none;
 }
 
-aside.sidebar {
-  grid-area: sidebar;
+a:hover {
+  text-decoration: underline;
 }
 
-main.content {
-  grid-area: main;
-  overflow-x: hidden;
-}
-
-footer.footer {
-  grid-area: footer;
+a:visited {
+  color: var(--color_enlace_visitado);
 }

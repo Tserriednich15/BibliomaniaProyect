@@ -1,25 +1,24 @@
 import fetchWithAuth from '../../helpers/fetchWithAuth.js';
 
-function autoresController() {
-  const tbody = document.querySelector("#autores_table_body");
+function libroController() {
+  const tbody = document.querySelector("#libros_table_body");
   if (!tbody) {
-    console.error("No se encontró el cuerpo de la tabla para los autores.");
+    console.error("No se encontró el cuerpo de la tabla para los libros.");
     return;
   }
 
-  const listarAutores = async () => {
+  const listarLibros = async () => {
     try {
-      // --- CORRECCIÓN ---
-      // Llamamos a fetchWithAuth directamente.
-      const request = await fetchWithAuth("http://localhost:3000/api/autores");
-      
+      // Usamos nuestro ayudante en lugar del fetch nativo
+      const request = await fetchWithAuth("http://localhost:3000/api/libros");
+
       const responseData = await request.json();
 
       if (!request.ok) {
-        throw new Error(responseData.message || "No se pudieron cargar los autores");
+        throw new Error(responseData.message || "No se pudieron cargar los libros");
       }
-      
-      // Limpiamos la tabla
+
+      // Limpiamos la tabla de forma segura
       while (tbody.firstChild) {
         tbody.removeChild(tbody.firstChild);
       }
@@ -27,54 +26,57 @@ function autoresController() {
       if (!responseData.data || responseData.data.length === 0) {
         const tr = document.createElement('tr');
         const td = document.createElement('td');
-        td.setAttribute('colspan', '4');
+        td.setAttribute('colspan', '5');
         td.style.textAlign = 'center';
-        td.textContent = 'No hay autores para mostrar.';
+        td.textContent = 'No hay libros para mostrar.';
         tr.appendChild(td);
         tbody.appendChild(tr);
         return;
       }
-      
+
       // Creamos las filas programáticamente
-      responseData.data.forEach(autor => {
+      responseData.data.forEach(libro => {
         const tr = document.createElement('tr');
 
         const tdId = document.createElement('td');
-        tdId.textContent = autor.id;
+        tdId.textContent = libro.id;
 
-        const tdNombre = document.createElement('td');
-        tdNombre.textContent = autor.nombre;
+        const tdTitulo = document.createElement('td');
+        tdTitulo.textContent = libro.titulo;
 
-        const tdNacionalidad = document.createElement('td');
-        tdNacionalidad.textContent = autor.nacionalidad || 'No especificada';
+        const tdAnio = document.createElement('td');
+        tdAnio.textContent = libro.anio_publicacion || 'N/A';
+
+        const tdGenero = document.createElement('td');
+        tdGenero.textContent = libro.genero || 'N/A';
 
         const tdAcciones = document.createElement('td');
         tdAcciones.classList.add('actions');
 
         const btnEditar = document.createElement('a');
         btnEditar.textContent = "Editar";
-        btnEditar.href = `#editar_autor/${autor.id}`;
+        btnEditar.href = `#editar_libro/${libro.id}`;
         btnEditar.classList.add('btn', 'btn_secondary');
-        
+
         const btnEliminar = document.createElement('button');
         btnEliminar.textContent = "Eliminar";
         btnEliminar.classList.add('btn', 'btn_danger');
-        btnEliminar.dataset.id = autor.id;
-        
+        btnEliminar.dataset.id = libro.id;
+
         tdAcciones.append(btnEditar, btnEliminar);
-        tr.append(tdId, tdNombre, tdNacionalidad, tdAcciones);
+        tr.append(tdId, tdTitulo, tdAnio, tdGenero, tdAcciones);
         tbody.appendChild(tr);
       });
 
     } catch (error) {
-      console.error("❌ Error al listar autores:", error);
+      console.error("❌ Error al listar libros:", error);
       if (error.message !== "Tu sesión ha expirado. Por favor, inicia sesión de nuevo.") {
-        tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;">Error: ${error.message}</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;">Error: ${error.message}</td></tr>`;
       }
     }
   };
-  
-  listarAutores();
+
+  listarLibros();
 }
 
-export default autoresController;
+export default libroController;

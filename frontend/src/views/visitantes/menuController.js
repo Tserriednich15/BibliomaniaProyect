@@ -1,38 +1,27 @@
-// scripts/menu.js
-import protegerVista from '../autenticacion/protegerVista.js';
+// src/views/visitantes/menuController.js
 
-const menuController = () => {
-  protegerVista();
+export default function menuController() {
+  const cardLibros = document.querySelector('#card_libros');
+  const cardAutores = document.querySelector('#card_autores');
+  const cardCategorias = document.querySelector('#card_categorias');
 
-  const btnLibros = document.getElementById('btnLibros');
-  const btnLogout = document.getElementById('btnLogout');
-
-  if (btnLibros) {
-    btnLibros.addEventListener('click', (e) => {
-      e.preventDefault();
-      history.pushState(null, '', '/libros');
-      window.dispatchEvent(new Event('popstate'));
+  if (cardLibros) {
+    cardLibros.addEventListener('click', () => {
+      // CORREGIDO: Usamos la ruta sin la barra inicial
+      location.hash = 'libros'; 
+    });
+  }
+  
+  if (cardAutores) {
+    cardAutores.addEventListener('click', () => {
+      location.hash = 'autores';
     });
   }
 
-  if (btnLogout) {
-    btnLogout.addEventListener('click', () => {
-      localStorage.removeItem('accessToken');
-      history.pushState(null, '', '/login');
-      window.dispatchEvent(new Event('popstate'));
+  if (cardCategorias) {
+    cardCategorias.addEventListener('click', () => {
+      // Recuerda añadir esta ruta en tu router.js cuando la necesites
+      location.hash = 'categorias';
     });
   }
-
-  document.getElementById('goLibros')?.addEventListener('click', () => {
-  history.pushState(null, '', '/libros');
-  window.dispatchEvent(new Event('popstate'));
-});
-
-document.getElementById('goCategorias')?.addEventListener('click', () => {
-  history.pushState(null, '', '/categorias');
-  window.dispatchEvent(new Event('popstate'));
-});
-
-};
-
-export default menuController;
+}

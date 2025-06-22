@@ -1,0 +1,105 @@
+/* src/CSS/components.css */
+
+/* --- ESTILOS DE TABLAS (WIKIPEDIA) --- */
+.table_container {
+  width: 100%;
+  border: 1px solid var(--color_borde);
+  background-color: white;
+  margin-top: 1rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid var(--color_borde);
+  padding: 0.75rem;
+  text-align: left;
+}
+
+thead th {
+  background-color: var(--color_fondo_cabecera_tabla);
+  font-weight: 600;
+}
+
+tbody tr:nth-child(even) {
+  background-color: var(--color_fila_alterna);
+}
+
+/* --- ESTILOS DE BOTONES --- */
+.btn {
+  display: inline-block;
+  padding: 0.6rem 1.2rem;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.btn:hover {
+  opacity: 0.85;
+  text-decoration: none;
+}
+
+.btn_primary {
+  background-color: var(--color_primario);
+  color: white;
+}
+
+.btn_secondary {
+  background-color: var(--color_secundario);
+  color: white;
+}
+
+.btn_danger {
+    background-color: var(--color_peligro);
+    color: white;
+}
+
+/* --- ESTILOS DE TARJETAS (PARA EL MENÚ) --- */
+.dashboard {
+  max-width: 900px;
+  margin: auto;
+}
+
+.card_container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.card {
+  background-color: white;
+  border: 1px solid var(--color_borde);
+  padding: 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.card:hover {
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transform: translateY(-3px);
+}
+
+.card h3 {
+  color: var(--color_enlace);
+}
+
+/* --- ESTRUCTURA GENERAL DE LAS VISTAS --- */
+.content_section {
+  padding: 1rem;
+}
+
+.section_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--color_borde);
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
+}
