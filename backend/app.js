@@ -15,6 +15,9 @@ import reservaRoutes from "./src/routes/reservaRoutes.js"
 import devolucionRoutes from "./src/routes/devolucionRoutes.js"
 import multaRoutes from "./src/routes/multaRoutes.js"
 import ejemplarRoutes from "./src/routes/ejemplarRoutes.js"
+import usuarioRoutes from './src/routes/usuarioRoutes.js';
+import rolRoutes from './src/routes/rolRoutes.js';
+
 
 dotenv.config();
 
@@ -52,6 +55,8 @@ app.use("/api/reservas", reservaRoutes);
 app.use("/api/devoluciones", devolucionRoutes);
 app.use("/api/multas", multaRoutes);
 app.use("/api/ejemplares", ejemplarRoutes);
+app.use('/api/usuarios', usuarioRoutes);
+app.use('/api/roles', rolRoutes); 
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
