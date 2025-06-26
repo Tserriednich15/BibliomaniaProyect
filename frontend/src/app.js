@@ -22,3 +22,7 @@ const startApp = () => {
 
 window.addEventListener('hashchange', startApp);
 window.addEventListener('DOMContentLoaded', startApp);
+
+
+
+// detallitos
