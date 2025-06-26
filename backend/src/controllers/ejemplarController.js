@@ -1,28 +1,36 @@
 import EjemplarService from "../services/ejemplarService.js";
+import ResponseProvider from "../providers/responseProvider.js";
 
 class EjemplarController {
-
     static async getAllEjemplares(req, res) {
         try {
-            const ejemplares = await EjemplarService.obtenerTodos();
-            res.json(ejemplares);
+            const result = await EjemplarService.obtenerTodos();
+            return ResponseProvider.success(res, result.data, "Ejemplares listados");
         } catch (error) {
-            res.status(500).json({ mensaje: "Error al obtener los ejemplares", error });
+            return ResponseProvider.error(res, error.message);
         }
-    };
+    }
+
+    static async getEjemplaresDisponibles(req, res) {
+        try {
+            const result = await EjemplarService.obtenerDisponibles();
+            return ResponseProvider.success(res, result.data, "Ejemplares disponibles listados");
+        } catch (error) {
+            return ResponseProvider.error(res, error.message);
+        }
+    }
 
     static async getEjemplarById(req, res) {
         try {
-            const { id } = req.params;
-            const ejemplar = await EjemplarService.obtenerPorId(id);
-            if (!ejemplar) {
-                return res.status(404).json({ mensaje: "Ejemplar no encontrado" });
+            const result = await EjemplarService.obtenerPorId(req.params.id);
+            if (!result.success) {
+                return ResponseProvider.error(res, result.message, result.code);
             }
-            res.json(ejemplar);
+            return ResponseProvider.success(res, result.data);
         } catch (error) {
-            res.status(500).json({ mensaje: "Error al obtener el ejemplar", error });
+            return ResponseProvider.error(res, error.message);
         }
-    };
+    }
 
     static async createEjemplar(req, res) {
         try {
@@ -52,6 +60,19 @@ class EjemplarController {
             res.status(500).json({ mensaje: "Error al eliminar el ejemplar", error });
         }
     };
+    static async buscarEjemplaresDisponibles(req, res) {
+        try {
+            const query = req.query.q;
+            if (!query) {
+                return ResponseProvider.error(res, "El término de búsqueda es requerido.", 400);
+            }
+
+            const result = await EjemplarService.buscarDisponibles(query);
+            return ResponseProvider.success(res, result.data, "Búsqueda de ejemplares completada");
+        } catch (error) {
+            return ResponseProvider.error(res, error.message);
+        }
+    }
 }
 
 export default EjemplarController;

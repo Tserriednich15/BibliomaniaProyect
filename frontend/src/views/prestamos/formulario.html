@@ -1,0 +1,49 @@
+<section class="form-container">
+    <h2 id="form-title">Registrar Nuevo Préstamo</h2>
+    <p>Completa los datos del visitante y busca un libro para continuar.</p>
+
+    <form id="prestamo-form">
+        <fieldset class="form-group-set">
+            <legend>Datos del Visitante</legend>
+            <p class="form-hint">
+                Si la cédula ya existe, se usará el visitante existente. Si no, se creará uno nuevo.
+            </p>
+            <div class="form-group">
+                <label for="visitante-cedula">Cédula:</label>
+                <input type="text" id="visitante-cedula" name="visitante-cedula" placeholder="Ej: 12345678" required>
+            </div>
+            <div class="form-group">
+                <label for="visitante-nombre">Nombre:</label>
+                <input type="text" id="visitante-nombre" name="visitante-nombre" placeholder="Ej: Juan" required>
+            </div>
+            <div class="form-group">
+                <label for="visitante-apellido">Apellido:</label>
+                <input type="text" id="visitante-apellido" name="visitante-apellido" placeholder="Ej: Pérez" required>
+            </div>
+            <div class="form-group">
+                <label for="visitante-telefono">Teléfono (Opcional):</label>
+                <input type="tel" id="visitante-telefono" name="visitante-telefono" placeholder="Ej: 3001234567">
+            </div>
+            <div class="form-group">
+                <label for="visitante-correo">Correo (Opcional):</label>
+                <input type="email" id="visitante-correo" name="visitante-correo" placeholder="Ej: juan.perez@correo.com">
+            </div>
+        </fieldset>
+
+        <fieldset class="form-group-set">
+            <legend>Búsqueda del Libro</legend>
+            <div class="form-group">
+                <label for="libro-search">Buscar Libro (por título):</label>
+                <input type="text" id="libro-search" name="libro-search" placeholder="Empieza a escribir para buscar..." autocomplete="off" required>
+                <div id="search-results-container" class="search-results"></div>
+            </div>
+        </fieldset>
+        
+        <input type="hidden" id="selected-ejemplar-id">
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Registrar Préstamo</button>
+            <a href="#prestamos" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </form>
+</section>

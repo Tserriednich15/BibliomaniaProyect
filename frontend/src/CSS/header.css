@@ -1,63 +1,60 @@
-/* src/CSS/header.css */
-
 .header_container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 1200px;
+  max-width: 100%;
   margin: 0 auto;
   padding: 0 2rem;
-  height: 60px; 
+  height: 60px;
+  background-color: var(--color_texto);
 }
 
-/* Contenedor para el lado izquierdo (hamburguesa + logo) */
 .header_left {
   display: flex;
   align-items: center;
-  gap: 1rem; /* Espacio entre el botón y el logo */
+  gap: 1rem;
 }
 
 .logo {
   font-family: var(--font-serif);
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--color_texto);
+  color: var(--color_fondo);
 }
 
-/* Estilos para el nuevo botón hamburguesa prominente */
 .hamburger_btn {
   background: none;
   border: none;
-  color: var(--color_texto);
+  color: var(--color_fondo);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 0.5rem;
-  border-radius: 50%; /* Lo hacemos redondo */
+  border-radius: 50%;
   transition: background-color 0.2s;
 }
 
 .hamburger_btn i {
-  font-size: 2rem; /* Icono grande */
+  font-size: 2rem;
   line-height: 1;
 }
 
 .hamburger_btn:hover {
-  background-color: var(--color_fondo_cabecera_tabla);
+  background-color: var(--color_secundario);
 }
 
-/* Contenedor para la navegación principal a la derecha */
+
 .main_nav {
   display: flex;
   align-items: center;
-  gap: 1.5rem; 
+  gap: 1.5rem;
 }
 
 .main_nav a {
   font-family: var(--font-sans);
   font-weight: 600;
-  color: var(--color_texto);
+  color: var(--color_fondo);
   font-size: 1rem;
   padding: 0.5rem 0;
   position: relative;

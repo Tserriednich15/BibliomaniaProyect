@@ -1,34 +1,43 @@
-import loadView from '../helpers/loadView.js';
 import loginController from '../views/autenticacion/loginController.js';
-// import registroController from '../views/autenticacion/registroController.js';
-import menuController from '../views/visitantes/menuController.js';
-import autoresController from '../views/autores/autoresController.js';
-import librosController from '../views/libros/libroController.js';
+import loadView from '../helpers/loadView.js';
+import menuController from '../views/menu/menuController.js';
+
+import librosController from '../views/libros/librosController.js';
+import { nuevoLibroController } from '../views/libros/nuevoLibroController.js';
+import { editarLibroController } from '../views/libros/editarLibroController.js';
+
+import autorController from '../views/autor/autorController.js';
+import nuevoAutorController from '../views/autor/nuevoAutorController.js';
+import editarAutorController from '../views/autor/editarAutorController.js';
+
+import categoriasController from '../views/categorias/categoriasController.js';
+import nuevoCategoriaController from '../views/categorias/nuevoCategoriasController.js';
+import editarCategoriaController from '../views/categorias/editarCategoriasController.js';
+
+import editorialesController from '../views/editoriales/editorialesController.js';
+import nuevoEditorialController from '../views/editoriales/nuevoEditorialController.js';
+import editarEditorialController from '../views/editoriales/editarEditorialController.js';
+
+import visitantesController from '../views/visitantes/visitantesController.js';
+import nuevoVisitanteController from '../views/visitantes/nuevoVisitanteController.js';
+import editarVisitanteController from '../views/visitantes/editarVisitanteController.js';
+
+import prestamosController from '../views/prestamos/prestamosController.js';
+import nuevoPrestamoController from '../views/prestamos/nuevoPrestamoController.js';
+
 
 const routes = {
   '/': {
     template: 'src/views/autenticacion/login.html',
     controller: loginController
   },
-
   'login': {
     template: 'src/views/autenticacion/login.html',
     controller: loginController
   },
-
-  'registro': {
-    template: 'src/views/autenticacion/registro.html',
-    // controller: registroController
-  },
-
   'menu': {
-    template: 'src/views/visitantes/menu.html',
+    template: 'src/views/menu/menu.html',
     controller: menuController,
-    protected: true
-  },
-  'autores': {
-    template: 'src/views/autores/autores.html',
-    controller: autoresController,
     protected: true
   },
   'libros': {
@@ -36,14 +45,91 @@ const routes = {
     controller: librosController,
     protected: true
   },
+  'nuevo_libro': {
+    template: 'src/views/libros/formulario.html',
+    controller: nuevoLibroController,
+    protected: true
+  },
+  'editar_libro/:id': {
+    template: 'src/views/libros/formulario.html',
+    controller: editarLibroController,
+    protected: true
+  }, 'autores': {
+    template: 'src/views/autor/autor.html',
+    controller: autorController,
+    protected: true
+  },
+  'nuevo_autor': {
+    template: 'src/views/autor/formulario.html',
+    controller: nuevoAutorController,
+    protected: true
+  },
+  'editar_autor/:id': {
+    template: 'src/views/autor/formulario.html',
+    controller: editarAutorController,
+    protected: true
+  },
+  'categorias': {
+    template: 'src/views/categorias/categorias.html',
+    controller: categoriasController,
+    protected: true
+  },
+  'nueva_categoria': {
+    template: 'src/views/categorias/formulario.html',
+    controller: nuevoCategoriaController,
+    protected: true
+  },
+  'editar_categoria/:id': {
+    template: 'src/views/categorias/formulario.html',
+    controller: editarCategoriaController,
+    protected: true
+  },
+  'editoriales': {
+    template: 'src/views/editoriales/editoriales.html',
+    controller: editorialesController,
+    protected: true
+  },
+  'nueva_editorial': {
+    template: 'src/views/editoriales/formulario.html',
+    controller: nuevoEditorialController,
+    protected: true
+  },
+  'editar_editorial/:id': {
+    template: 'src/views/editoriales/formulario.html',
+    controller: editarEditorialController,
+    protected: true
+  },
+  'visitantes': {
+    template: 'src/views/visitantes/visitantes.html',
+    controller: visitantesController,
+    protected: true
+  },
+  'nuevo_visitante': {
+    template: 'src/views/visitantes/formulario.html',
+    controller: nuevoVisitanteController,
+    protected: true
+  },
+  'editar_visitante/:id': {
+    template: 'src/views/visitantes/formulario.html',
+    controller: editarVisitanteController,
+    protected: true
+  },
+  'prestamos': {
+    template: 'src/views/prestamos/prestamos.html',
+    controller: prestamosController,
+    protected: true
 
-  'editar_autor/:id': { template: 'src/views/autores/editar.html', /*controller: editarAutorController,*/ protected: true }
+  },
+  'nuevo_prestamo': {
+    template: 'src/views/prestamos/formulario.html',
+    controller: nuevoPrestamoController,
+    protected: true
+  },
+
 };
 
 const matchRoute = (hash) => {
-  if (hash === '' || hash === '/') {
-    return [routes['/'], {}];
-  }
+  if (hash === '' || hash === '/') return [routes['/'], {}];
   const arreglo = hash.split('/');
   for (const routePath in routes) {
     const routeParts = routePath.split('/');
@@ -56,14 +142,12 @@ const matchRoute = (hash) => {
       }
       return part === arreglo[i];
     });
-    if (isMatch) {
-      return [routes[routePath], params];
-    }
+    if (isMatch) return [routes[routePath], params];
   }
   return [null, null];
 };
 
-async function router(app) {
+export const router = async (app) => {
   const hash = location.hash.slice(1);
   const [route, params] = matchRoute(hash);
 
@@ -82,6 +166,6 @@ async function router(app) {
   if (route.controller) {
     route.controller(params);
   }
-}
+};
 
 export default router;

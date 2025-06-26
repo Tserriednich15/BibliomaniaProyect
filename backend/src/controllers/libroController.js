@@ -1,40 +1,66 @@
 import LibroService from "../services/libroService.js";
-import ResponseProvider from "../providers/responseProvider.js"
+import ResponseProvider from "../providers/responseProvider.js";
 
-class libroController {
-
-  static listarLibros = async (req, res) => {
-    const result = await LibroService.listarLibros();
-    if (result.error) {
-      return ResponseProvider.error(res, result.message, result.code);
+class LibroController {
+  static async listarLibros(req, res) {
+    try {
+      const result = await LibroService.listarTodos();
+      return ResponseProvider.success(res, result.data, "Libros listados");
+    } catch (error) {
+      return ResponseProvider.error(res, error.message, 500);
     }
-    return ResponseProvider.success(res, result.data, "Libros listados");
-  };
+  }
 
-  static obtenerLibroPorId = async (req, res) => {
-    const { id } = req.params;
-    const result = await LibroService.obtenerLibroPorId(id);
-    return res.status(result.code).json(result.data || { message: result.message });
-  };
+  static async obtenerLibroPorId(req, res) {
+    try {
+      const { id } = req.params;
+      const result = await LibroService.obtenerPorId(id);
+      if (!result.success) {
+        return ResponseProvider.error(res, result.message, result.code);
+      }
+      return ResponseProvider.success(res, result.data, "Libro encontrado");
+    } catch (error) {
+      return ResponseProvider.error(res, error.message, 500);
+    }
+  }
 
-  static crearLibro = async (req, res) => {
-    const datosLibro = req.body;
-    const result = await LibroService.crearLibro(datosLibro);
-    return res.status(result.code).json(result.data || { message: result.message });
-  };
+  static async crearLibro(req, res) {
+    try {
+      const result = await LibroService.crear(req.body);
+      if (!result.success) {
+        return ResponseProvider.error(res, result.message, result.code);
+      }
+      return ResponseProvider.success(res, result.data, result.message, 201);
+    } catch (error) {
+      return ResponseProvider.error(res, error.message, 500);
+    }
+  }
 
-  static actualizarLibro = async (req, res) => {
-    const { id } = req.params;
-    const datosLibro = req.body;
-    const result = await LibroService.actualizarLibro(id, datosLibro);
-    return res.status(result.code).json({ message: result.message });
-  };
+  static async actualizarLibro(req, res) {
+    try {
+      const { id } = req.params;
+      const result = await LibroService.actualizar(id, req.body);
+      if (!result.success) {
+        return ResponseProvider.error(res, result.message, result.code);
+      }
+      return ResponseProvider.success(res, null, result.message);
+    } catch (error) {
+      return ResponseProvider.error(res, error.message, 500);
+    }
+  }
 
-  static eliminarLibro = async (req, res) => {
-    const { id } = req.params;
-    const result = await LibroService.eliminarLibro(id);
-    return res.status(result.code).json({ message: result.message });
-  };
+  static async eliminarLibro(req, res) {
+    try {
+      const { id } = req.params;
+      const result = await LibroService.eliminar(id);
+      if (!result.success) {
+        return ResponseProvider.error(res, result.message, result.code);
+      }
+      return ResponseProvider.success(res, null, result.message);
+    } catch (error) {
+      return ResponseProvider.error(res, error.message, 500);
+    }
+  }
 }
 
-export default libroController;
+export default LibroController;

@@ -38,7 +38,10 @@ function crearSidebar() {
   const navItems = [
     { text: 'Autores', href: '#autores', icon: 'ri-user-heart-line' },
     { text: 'Libros', href: '#libros', icon: 'ri-book-line' },
-    { text: 'Categorías', href: '#categorias', icon: 'ri-bookmark-line' }
+    { text: 'Categorías', href: '#categorias', icon: 'ri-bookmark-line' },
+    { text: 'Editoriales', href: '#editoriales', icon: 'ri-building-line' },
+    { text: 'Visitantes', href: '#visitantes', icon: 'ri-send-plane-2-line' },
+    { text: 'Prestamos', href: '#prestamos', icon: 'ri-book-marked-line' }
   ];
   navItems.forEach(item => {
     const link = document.createElement('a');

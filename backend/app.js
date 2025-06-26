@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import router from "./src/routes/usuarioRoutes.js";
-import categoriasRoutes from "./src/routes/categoriasRoutes.js";
+import categoriaRoutes from "./src/routes/categoriaRoutes.js";
 import authRoutes from "./src/routes/authRoutes.js";
 import adminRoutes from "./src/routes/adminRoutes.js";
 import libroRoutes from "./src/routes/libroRoutes.js"
@@ -42,7 +42,7 @@ app.get("/", (req, res) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/usuarios", router);
 app.use("/api/admin", adminRoutes);
-app.use("/api/categorias", categoriasRoutes);
+app.use("/api/categorias", categoriaRoutes);
 app.use("/api/libros", libroRoutes);
 app.use("/api/autores", autorRoutes);
 app.use("/api/editoriales", editorialRoutes);

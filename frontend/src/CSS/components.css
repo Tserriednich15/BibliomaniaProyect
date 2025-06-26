@@ -103,3 +103,24 @@ tbody tr:nth-child(even) {
   padding-bottom: 1rem;
   margin-bottom: 1.5rem;
 }
+
+/* src/CSS/components.css */
+
+/* ... (tus estilos existentes para tablas, botones, etc.) ... */
+
+/* --- ESTILOS DE VALIDACIÓN DE FORMULARIOS --- */
+
+.crud_form input.is_invalid,
+.crud_form select.is_invalid,
+.crud_form textarea.is_invalid {
+  border-color: #d33; /* Usando tu variable --color_peligro */
+  background-color: #fff2f2;
+}
+
+.error_message {
+  color: #d33;
+  font-size: 0.85rem;
+  display: block;
+  margin-top: 0.25rem;
+  font-weight: 600;
+}

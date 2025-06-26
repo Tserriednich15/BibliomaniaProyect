@@ -1,0 +1,37 @@
+<section class="content_section">
+  <div class="section_header">
+    <h1 id="form_title"></h1> <!-- Título dinámico -->
+    <a href="#autores" class="btn btn_secondary">Volver a la Lista</a>
+  </div>
+
+  <form id="autor_form" class="crud_form" novalidate>
+    <input type="hidden" id="autor_id" name="id">
+
+    <div class="form_group">
+      <label for="nombre">Nombre Completo</label>
+      <input type="text" id="nombre" name="nombre">
+    </div>
+
+    <div class="form_group">
+      <label for="nacionalidad">Nacionalidad</label>
+      <input type="text" id="nacionalidad" name="nacionalidad">
+    </div>
+
+    <div class="form_group">
+      <label for="fecha_nacimiento">Fecha de Nacimiento</label>
+      <input type="date" id="fecha_nacimiento" name="fecha_nacimiento">
+    </div>
+    
+    <div class="form_group">
+      <label for="biografia">Biografía</label>
+      <textarea id="biografia" name="biografia" rows="4"></textarea>
+    </div>
+    
+    <div class="form_group">
+      <label for="sitio_web">Sitio Web</label>
+      <input type="url" id="sitio_web" name="sitio_web" placeholder="https://ejemplo.com">
+    </div>
+
+    <button type="submit" id="submit_btn" class="btn btn_primary"></button> <!-- Botón dinámico -->
+  </form>
+</section>

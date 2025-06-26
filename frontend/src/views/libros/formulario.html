@@ -1,0 +1,35 @@
+<section class="content_section">
+  <div class="section_header">
+    <h1 id="form_title"></h1> <a href="#libros" class="btn btn_secondary">Volver a la Lista</a>
+  </div>
+  <form id="libro_form" class="crud_form">
+    <input type="hidden" id="libro_id" name="id">
+    <div class="form_group">
+      <label for="titulo">Título del Libro</label>
+      <input type="text" id="titulo" name="titulo" required>
+    </div>
+    <div class="form_group">
+      <label for="anio_publicacion">Año de Publicación</label>
+      <input type="text" id="anio_publicacion" name="anio_publicacion">
+    </div>
+    <div class="form_group">
+      <label for="categoria_id">Categoría</label>
+      <select id="categoria_id" name="categoria_id" required>
+        <option value="">Cargando...</option>
+      </select>
+    </div>
+    <div class="form_group">
+      <label for="autor_id">Autor</label>
+      <select id="autor_id" name="autor_id" required>
+        <option value="">Cargando...</option>
+      </select>
+    </div>
+    <div class="form_group">
+      <label for="editorial_id">Editorial</label>
+      <select id="editorial_id" name="editorial_id" required>
+        <option value="">Cargando...</option>
+      </select>
+    </div>
+    <button type="submit" id="submit_btn" class="btn btn_primary"></button>
+  </form>
+</section>

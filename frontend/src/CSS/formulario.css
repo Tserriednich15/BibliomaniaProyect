@@ -1,0 +1,81 @@
+/* src/CSS/formulario.css */
+
+/* --- Contenedor Principal del Formulario CRUD --- */
+.crud_form {
+  max-width: 700px; /* Un ancho cómodo para formularios */
+  margin: 1rem auto; /* Centra el formulario en la sección de contenido */
+  padding: 2rem;
+  background-color: #ffffff; /* Fondo blanco limpio */
+  border: 1px solid var(--color_borde, #a2a9b1);
+  border-radius: 5px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* --- Grupo de Formulario (Label + Input) --- */
+.form_group {
+  margin-bottom: 1.5rem; /* Espacio vertical entre cada campo */
+}
+
+/* --- Estilo para las Etiquetas (Labels) --- */
+.form_group label {
+  display: block;
+  font-family: var(--font-sans, sans-serif);
+  font-weight: 600;
+  color: var(--color_texto, #202122);
+  margin-bottom: 0.5rem; /* Espacio entre la etiqueta y el campo */
+  font-size: 0.9rem;
+}
+
+/* --- Estilo General para Todos los Campos de Entrada --- */
+.form_group input[type="text"],
+.form_group input[type="number"],
+.form_group input[type="url"],
+.form_group input[type="email"],
+.form_group input[type="tel"],
+.form_group input[type="date"],
+.form_group select,
+.form_group textarea {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  font-size: 1rem;
+  font-family: var(--font-sans, sans-serif);
+  color: var(--color_texto, #202122);
+  background-color: #f8f9fa; /* Un fondo muy sutil para los campos */
+  border: 1px solid var(--color_borde, #a2a9b1);
+  border-radius: 4px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+/* --- Efecto de Foco para Mejorar la Usabilidad --- */
+.form_group input:focus,
+.form_group select:focus,
+.form_group textarea:focus {
+  outline: none;
+  border-color: var(--color_enlace, #3366cc);
+  box-shadow: 0 0 0 3px rgba(51, 102, 204, 0.15);
+}
+
+/* --- Estilo específico para Textarea --- */
+.form_group textarea {
+  resize: vertical; /* Permite al usuario cambiar la altura */
+  min-height: 100px;
+}
+
+/* --- Estilo para el Botón de Envío --- */
+#submit_btn {
+  width: 100%;
+  padding: 0.9rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #ffffff;
+  background-color: var(--color_primario, #3366cc);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-top: 1rem;
+}
+
+#submit_btn:hover {
+  background-color: #2a57a5; /* Un tono ligeramente más oscuro del primario */
+}

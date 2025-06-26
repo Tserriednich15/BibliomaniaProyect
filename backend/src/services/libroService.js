@@ -1,72 +1,79 @@
 import Libro from "../models/libro.js";
-
+import connection from "../utils/db.js"; 
+import Ejemplar from "../models/ejemplar.js";
 class LibroService {
-  static async listarLibros() {
+  static async listarTodos() {
     try {
       const libros = await Libro.findAll();
-      return { code: 200, data: libros };
+      return { success: true, data: libros };
     } catch (error) {
-      console.error("Error al listar libros:", error);
-      return { code: 500, message: "Error interno al obtener los libros" };
+      console.error("Error en servicio al listar libros:", error);
+      throw new Error("Error interno al obtener los libros.");
     }
   }
-
-  static async obtenerLibroPorId(id) {
+  static async obtenerPorId(id) {
     try {
       const libro = await Libro.findById(id);
       if (!libro) {
-        return { code: 404, message: "Libro no encontrado" };
+        return { success: false, code: 404, message: "Libro no encontrado." };
       }
-      return { code: 200, data: libro };
+      return { success: true, data: libro };
     } catch (error) {
-      console.error("Error al buscar libro:", error);
-      return { code: 500, message: "Error interno al buscar el libro" };
+      console.error("Error en servicio al obtener libro por ID:", error);
+      throw new Error("Error interno al buscar el libro.");
     }
   }
-
-  static async crearLibro(datosLibro) {
+  static async crear(libroData) {
+    const conn = await connection.getConnection(); 
     try {
-      const nuevoLibro = await Libro.create(datosLibro);
-      return { code: 201, message: "Libro creado exitosamente", data: nuevoLibro };
+      await conn.beginTransaction();
+
+      // 1. Creamos el libro
+      const nuevoLibroId = await Libro.create(libroData, conn);
+      
+      // 2. Preparamos los datos para su primer ejemplar
+      const datosEjemplar = {
+        libro_id: nuevoLibroId,
+        estado: 'disponible'
+      };
+
+      // 3. Creamos el ejemplar
+      await Ejemplar.create(datosEjemplar, conn);
+
+      await conn.commit();
+      return { success: true, data: { id: nuevoLibroId }, message: "Libro y primer ejemplar creados." };
+
     } catch (error) {
-      console.error("Error al crear libro:", error);
-      return { code: 500, message: "Error interno al crear el libro" };
+      await conn.rollback();
+      console.error("Error al crear libro y ejemplar:", error);
+      throw new Error("Error en el servicio al crear el libro.");
+    } finally {
+      conn.release();
     }
   }
-
-  static async actualizarLibro(id, datosLibro) {
+  static async actualizar(id, datosLibro) {
     try {
-      if (datosLibro.cantidad_disponible > datosLibro.cantidad_total) {
-        return {
-          code: 400,
-          message: "La cantidad disponible no puede ser mayor que la cantidad total.",
-          error: true
-        };
+      const affectedRows = await Libro.update(id, datosLibro);
+      if (affectedRows === 0) {
+        return { success: false, code: 404, message: "Libro no encontrado o sin cambios para actualizar." };
       }
-
-      const actualizado = await Libro.update(id, datosLibro);
-      if (!actualizado) {
-        return { code: 404, message: "Libro no encontrado o sin cambios", error: true };
-      }
-      return { code: 200, message: "Libro actualizado correctamente" };
+      return { success: true, message: "Libro actualizado exitosamente." };
     } catch (error) {
-      console.error("Error al actualizar libro:", error);
-      return { code: 500, message: "Error interno al actualizar el libro", error: true };
+      console.error("Error en servicio al actualizar libro:", error);
+      throw new Error("Error interno al actualizar el libro.");
     }
   }
-
-  static async eliminarLibro(id) {
+  static async eliminar(id) {
     try {
-      const eliminado = await Libro.delete(id);
-      if (!eliminado) {
-        return { code: 404, message: "Libro no encontrado para eliminar" };
+      const affectedRows = await Libro.delete(id);
+      if (affectedRows === 0) {
+        return { success: false, code: 404, message: "Libro no encontrado para eliminar." };
       }
-      return { code: 200, message: "Libro eliminado correctamente" };
+      return { success: true, message: "Libro eliminado exitosamente." };
     } catch (error) {
-      console.error("Error al eliminar libro:", error);
-      return { code: 500, message: "Error interno al eliminar el libro" };
+      console.error("Error en servicio al eliminar libro:", error);
+      throw new Error("Error interno al eliminar el libro.");
     }
   }
 }
-
 export default LibroService;

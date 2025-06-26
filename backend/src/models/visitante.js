@@ -31,6 +31,22 @@ class Visitante {
   static async delete(id) {
     await connection.query("DELETE FROM visitantes WHERE id = ?", [id]);
   }
+  static async findOrCreateByDetails(visitanteData, conn = connection) {
+    const { cedula, nombre, apellido, telefono, correo } = visitanteData;
+
+    const [rows] = await conn.query("SELECT id FROM visitantes WHERE cedula = ?", [cedula]);
+
+    if (rows.length > 0) {
+        return rows[0].id;
+    }
+
+    const [result] = await conn.query(
+        "INSERT INTO visitantes (cedula, nombre, apellido, telefono, correo) VALUES (?, ?, ?, ?, ?)",
+        [cedula, nombre, apellido, telefono, correo]
+    );
+    
+    return result.insertId;
+  }
 }
 
 export default Visitante;

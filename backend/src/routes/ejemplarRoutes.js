@@ -1,13 +1,12 @@
 import express from "express";
-import EjemplarController from "../controllers/ejemplarController.js"
-import { verifyToken } from "../middlewares/auth/tokenMiddleware.js";
-
+import EjemplarController from "../controllers/ejemplarController.js";
+import { verifyToken } from "../middlewares/auth/index.js";
 const router = express.Router();
-
+router.get("/disponibles/buscar", verifyToken, EjemplarController.buscarEjemplaresDisponibles);
+router.get("/disponibles", verifyToken, EjemplarController.getEjemplaresDisponibles);
 router.get("/", verifyToken, EjemplarController.getAllEjemplares);
 router.get("/:id", verifyToken, EjemplarController.getEjemplarById);
 router.post("/", verifyToken, EjemplarController.createEjemplar);
 router.put("/:id", verifyToken, EjemplarController.updateEjemplar);
 router.delete("/:id", verifyToken, EjemplarController.deleteEjemplar);
-
 export default router;

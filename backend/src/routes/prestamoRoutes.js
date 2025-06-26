@@ -1,13 +1,8 @@
-import { Router } from "express";
+import express from "express";
 import PrestamoController from "../controllers/prestamoController.js";
-import { verifyToken } from "../middlewares/auth/tokenMiddleware.js";
-
-const router = Router();
-
-router.get("/", verifyToken, PrestamoController.obtenerTodos);
-router.get("/:id", verifyToken, PrestamoController.obtenerPorId);
-router.post("/", verifyToken, PrestamoController.crearPrestamo);
-router.put("/:id", verifyToken, PrestamoController.actualizarPrestamo);
-router.delete("/:id", verifyToken, PrestamoController.eliminarPrestamo);
-
+import { verifyToken } from "../middlewares/auth/index.js";
+const router = express.Router();
+router.get("/", verifyToken, PrestamoController.getPrestamosActivos);
+router.post("/", verifyToken, PrestamoController.createPrestamo);
+router.post("/:id/devolver", verifyToken, PrestamoController.procesarDevolucion);
 export default router;

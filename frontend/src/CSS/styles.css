@@ -1,19 +1,16 @@
-/* src/CSS/styles.css */
-
-/* Importamos los demás archivos de estilo. El orden es importante. */
 @import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Source+Sans+3:wght@400;600&display=swap');
-@import url('layout.css'); /* La estructura que acabamos de corregir */
-@import url('header.css'); /* Estilos específicos del header */
-@import url('components.css'); /* Un nuevo archivo para tablas, botones y tarjetas */
-@import url('login.css'); /* Estilos específicos del login */
-@import url('mediaqueries.css'); /* Tus media queries al final */
+@import url('layout.css');
+@import url('header.css');
+@import url('components.css');
+@import url('login.css');
+@import url('mediaqueries.css');
 @import url('sidebar.css');
-/* --- TEMA WIKIPEDIA --- */
+@import url('formulario.css');
+@import url('footer.css');
+
 :root {
-  /* Paleta de colores inspirada en Wikipedia */
   --font-serif: 'Lora', serif;
   --font-sans: 'Source Sans 3', sans-serif;
-  
   --color_texto: #202122;
   --color_enlace: #3366cc;
   --color_enlace_visitado: #5a369b;
@@ -21,13 +18,11 @@
   --color_borde: #a2a9b1;
   --color_fondo_cabecera_tabla: #eaecf0;
   --color_fila_alterna: #f8f9fa;
-
   --color_primario: #36c;
   --color_secundario: #6c757d;
   --color_peligro: #d33;
 }
 
-/* Estilos Globales */
 * {
   margin: 0;
   padding: 0;
@@ -52,8 +47,4 @@ a {
 
 a:hover {
   text-decoration: underline;
-}
-
-a:visited {
-  color: var(--color_enlace_visitado);
 }

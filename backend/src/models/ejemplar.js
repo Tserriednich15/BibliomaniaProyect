@@ -1,35 +1,69 @@
+// src/models/ejemplar.js
+
 import connection from "../utils/db.js";
 
 class Ejemplar {
+  // ... tus métodos getAll, buscarDisponiblesPorTitulo y getById se mantienen igual ...
   static async getAll() {
-    const [rows] = await connection.query("SELECT * FROM ejemplares");
+    const query = `
+      SELECT e.id, e.estado, l.titulo AS libro_titulo 
+      FROM ejemplares AS e
+      JOIN libros AS l ON e.libro_id = l.id
+      ORDER BY l.titulo, e.id;
+    `;
+    const [rows] = await connection.query(query);
     return rows;
   }
+  static async buscarDisponiblesPorTitulo(query) {
+    const searchQuery = `%${query}%`;
+    const sql = `
+      SELECT 
+        e.id,
+        l.titulo
+      FROM ejemplares AS e
+      JOIN libros AS l ON e.libro_id = l.id
+      WHERE e.estado = 'disponible' AND l.titulo LIKE ?
+      ORDER BY l.titulo;
+    `;
+    const [rows] = await connection.query(sql, [searchQuery]);
 
-  static async getById(id) {
-    const [rows] = await connection.query("SELECT * FROM ejemplares WHERE id = ?", [id]);
-    return rows[0];
+    return rows.map(row => ({
+      id: row.id,
+      libro: {
+        titulo: row.titulo
+      }
+    }));
+  }
+  static async getById(id, conn = connection) {
+    const [rows] = await conn.query("SELECT * FROM ejemplares WHERE id = ?", [id]);
+    return rows[0] || null;
   }
 
-  static async create({ libro_id, estado }) {
-    const [result] = await connection.query(
+  static async create({ libro_id, estado }, conn = connection) { 
+    const [result] = await conn.query(
       "INSERT INTO ejemplares (libro_id, estado) VALUES (?, ?)",
       [libro_id, estado || "disponible"]
     );
     return { id: result.insertId, libro_id, estado: estado || "disponible" };
   }
 
-  static async update(id, { libro_id, estado }) {
-    await connection.query(
-      "UPDATE ejemplares SET libro_id = ?, estado = ? WHERE id = ?",
-      [libro_id, estado, id]
+  /**
+   * Actualiza el estado de un ejemplar.
+   * @param {number} id - El ID del ejemplar.
+   * @param {string} estado - El nuevo estado ('disponible', 'prestado', etc.).
+   * @param {object} conn - Conexión de BD para transacciones.
+   */
+  static async actualizarEstado(id, estado, conn = connection) {
+    const [result] = await conn.query(
+      "UPDATE ejemplares SET estado = ? WHERE id = ?",
+      [estado, id]
     );
-    return { id, libro_id, estado };
+    return result.affectedRows;
   }
 
   static async delete(id) {
-    await connection.query("DELETE FROM ejemplares WHERE id = ?", [id]);
-    return { id };
+    const [result] = await connection.query("DELETE FROM ejemplares WHERE id = ?", [id]);
+    return result.affectedRows;
   }
 }
 
