@@ -17,6 +17,7 @@ function menuController() {
   addNavigationEvent('card_editoriales', 'editoriales');
   addNavigationEvent('card_visitantes', 'visitantes');
   addNavigationEvent('card_prestamos', 'prestamos');
+  addNavigationEvent('card_multas', 'multas');
 
 }
 

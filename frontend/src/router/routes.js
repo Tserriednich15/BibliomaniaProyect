@@ -25,6 +25,7 @@ import editarVisitanteController from '../views/visitantes/editarVisitanteContro
 import prestamosController from '../views/prestamos/prestamosController.js';
 import nuevoPrestamoController from '../views/prestamos/nuevoPrestamoController.js';
 
+import multasController from '../views/multas/multasController.js';
 
 const routes = {
   '/': {
@@ -125,7 +126,11 @@ const routes = {
     controller: nuevoPrestamoController,
     protected: true
   },
-
+  'multas': {
+    template: 'src/views/multas/multas.html',
+    controller: multasController,
+    protected: true
+  },
 };
 
 const matchRoute = (hash) => {
