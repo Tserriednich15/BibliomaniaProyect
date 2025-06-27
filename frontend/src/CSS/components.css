@@ -1,58 +1,95 @@
-/* src/CSS/components.css */
+/* ==========================================================================
+   ESTILOS DE COMPONENTES GENERALES (v5 - Tablas Anchas)
+   ========================================================================== */
 
-/* --- ESTILOS DE TABLAS (WIKIPEDIA) --- */
+/* --- ESTRUCTURA GENERAL DE LAS VISTAS --- */
+.content_section {
+    padding: 1rem;
+}
+
+.section_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--color_borde);
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+/* --- ESTILOS DE TABLAS (CORREGIDOS PARA ANCHO Y ALINEACIÓN) --- */
 .table_container {
-  width: 100%;
-  border: 1px solid var(--color_borde);
-  background-color: white;
-  margin-top: 1rem;
+    width: 100%;
+    overflow-x: auto; /* El scroll aparecerá si la pantalla es más pequeña que la tabla, lo cual es esperado con este enfoque */
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+    border: none;
 }
 
 table {
-  width: 100%;
-  border-collapse: collapse;
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
 }
 
 th, td {
-  border: 1px solid var(--color_borde);
-  padding: 0.75rem;
-  text-align: left;
+    border: none;
+    border-bottom: 1px solid var(--color_borde, #e0e0e0);
+    padding: 0.8rem 1rem;
+    
+    /* ✨ MODIFICACIÓN 1: Forzamos que el contenido no se divida. */
+    /* Esto AUMENTA EL ANCHO de la tabla y ALINEA LAS LÍNEAS de las filas. */
+    
+    /* ✨ MODIFICACIÓN 2: Aseguramos la alineación vertical. */
+    /* Esto centra el contenido (texto y botones) en el medio de la celda. */
+    /* vertical-align: middle; */
 }
 
 thead th {
-  background-color: var(--color_fondo_cabecera_tabla);
-  font-weight: 600;
+    background-color: var(--color_fondo_cabecera_tabla);
+    font-weight: 600;
+    text-align: left;
 }
 
-tbody tr:nth-child(even) {
-  background-color: var(--color_fila_alterna);
+tbody tr:hover {
+    background-color: #f5f5f5;
 }
+
+/* Celda de acciones con Flexbox */
+.actions-cell {
+    /* La alineación vertical ya es manejada por 'vertical-align: middle' en el 'td' */
+    display: flex;
+    gap: 0.5rem;
+}
+
 
 /* --- ESTILOS DE BOTONES --- */
 .btn {
-  display: inline-block;
-  padding: 0.6rem 1.2rem;
-  border: 1px solid transparent;
-  border-radius: 4px;
-  font-weight: 600;
-  text-align: center;
-  cursor: pointer;
-  transition: opacity 0.2s;
+    display: inline-block;
+    padding: 0.6rem 1.2rem;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    white-space: nowrap;
 }
 
+/* ... El resto de tus estilos se mantienen igual ... */
 .btn:hover {
-  opacity: 0.85;
-  text-decoration: none;
+    opacity: 0.85;
+    text-decoration: none;
 }
 
 .btn_primary {
-  background-color: var(--color_primario);
-  color: white;
+    background-color: var(--color_primario);
+    color: white;
 }
 
 .btn_secondary {
-  background-color: var(--color_secundario);
-  color: white;
+    background-color: var(--color_secundario);
+    color: white;
 }
 
 .btn_danger {
@@ -60,67 +97,34 @@ tbody tr:nth-child(even) {
     color: white;
 }
 
-/* --- ESTILOS DE TARJETAS (PARA EL MENÚ) --- */
+/* ... (pega aquí el resto de tus estilos: .dashboard, .card, etc.) ... */
+
+/* Cards menu */
 .dashboard {
-  max-width: 900px;
-  margin: auto;
+    max-width: 900px;
+    margin: auto;
 }
 
 .card_container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
 }
 
 .card {
-  background-color: white;
-  border: 1px solid var(--color_borde);
-  padding: 1.5rem;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: box-shadow 0.2s, transform 0.2s;
+    background-color: white;
+    border: 1px solid var(--color_borde);
+    padding: 1.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: box-shadow 0.2s, transform 0.2s;
 }
 
 .card:hover {
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transform: translateY(-3px);
 }
 
 .card h3 {
-  color: var(--color_enlace);
-}
-
-/* --- ESTRUCTURA GENERAL DE LAS VISTAS --- */
-.content_section {
-  padding: 1rem;
-}
-
-.section_header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid var(--color_borde);
-  padding-bottom: 1rem;
-  margin-bottom: 1.5rem;
-}
-
-/* src/CSS/components.css */
-
-/* ... (tus estilos existentes para tablas, botones, etc.) ... */
-
-/* --- ESTILOS DE VALIDACIÓN DE FORMULARIOS --- */
-
-.crud_form input.is_invalid,
-.crud_form select.is_invalid,
-.crud_form textarea.is_invalid {
-  border-color: #d33; /* Usando tu variable --color_peligro */
-  background-color: #fff2f2;
-}
-
-.error_message {
-  color: #d33;
-  font-size: 0.85rem;
-  display: block;
-  margin-top: 0.25rem;
-  font-weight: 600;
+    color: var(--color_enlace);
 }

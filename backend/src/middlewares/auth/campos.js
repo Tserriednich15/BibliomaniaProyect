@@ -11,7 +11,6 @@ export const campos = [
     required: true,
     minLength: 8,
     maxLength: 40,
-    // min 8 caracteres, una letra mayúscula y al menos un número.
     pattern: /^(?=.*[A-Z])(?=.*\d).{8,}$/,
   },
   {

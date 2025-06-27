@@ -28,15 +28,15 @@ function autorController() {
       responseData.data.forEach(autor => {
         const tr = document.createElement('tr');
         tr.setAttribute('id', `autor_row_${autor.id}`);
-        
         const celdas = [autor.id, autor.nombre, autor.nacionalidad];
         celdas.forEach(texto => {
           const td = document.createElement('td');
           td.textContent = texto || 'N/A';
           tr.appendChild(td);
         });
-
+        
         const tdAcciones = document.createElement('td');
+        tdAcciones.className = 'actions-cell';
         const btnEditar = document.createElement('a');
         btnEditar.textContent = "Editar";
         btnEditar.setAttribute('href', `#editar_autor/${autor.id}`);

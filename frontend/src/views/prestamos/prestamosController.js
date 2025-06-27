@@ -120,13 +120,10 @@ function prestamosController() {
 
                 // Creamos la celda de acciones y el botón
                 const accionesCell = document.createElement('td');
-                accionesCell.className = 'px-6 py-4 whitespace-nowrap text-right';
-                
+                accionesCell.className = 'actions-cell';
                 const btnDevolver = document.createElement('button');
                 btnDevolver.textContent = 'Devolver';
-                btnDevolver.classList.add('btn', 'btn_devolver'); // Clase específica para estilizar
-                
-                // Le pasamos los datos necesarios a la función handleDevolucion
+                btnDevolver.classList.add('btn', 'btn_devolver');
                 btnDevolver.addEventListener('click', () => handleDevolucion(prestamo.id, prestamo.libro_titulo, tr));
                 
                 accionesCell.appendChild(btnDevolver);

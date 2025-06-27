@@ -41,7 +41,9 @@ function crearSidebar() {
     { text: 'Categorías', href: '#categorias', icon: 'ri-bookmark-line' },
     { text: 'Editoriales', href: '#editoriales', icon: 'ri-building-line' },
     { text: 'Visitantes', href: '#visitantes', icon: 'ri-send-plane-2-line' },
-    { text: 'Prestamos', href: '#prestamos', icon: 'ri-book-marked-line' }
+    { text: 'Prestamos', href: '#prestamos', icon: 'ri-book-marked-line' },
+    { text: 'Multas', href: '#multas', icon: 'ri-alarm-warning-line' },
+    { text: 'Usuarios', href: '#usuarios', icon: 'ri-group-line' }
   ];
   navItems.forEach(item => {
     const link = document.createElement('a');

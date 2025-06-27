@@ -52,6 +52,7 @@ function usuariosController() {
                 `;
 
                 const accionesCell = document.createElement('td');
+                accionesCell.className = 'actions-cell';
                 if (usuario.id !== 1) {
                     const btnEliminar = document.createElement('button');
                     btnEliminar.textContent = 'Eliminar';
@@ -61,7 +62,7 @@ function usuariosController() {
                 } else {
                     accionesCell.textContent = '---';
                 }
-                
+
                 tr.appendChild(accionesCell);
                 tbody.appendChild(tr);
             });

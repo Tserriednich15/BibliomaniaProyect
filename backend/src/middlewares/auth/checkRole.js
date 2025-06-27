@@ -1,10 +1,5 @@
-// middlewares/auth/checkRole.js
 import ResponseProvider from "../../providers/responseProvider.js";
 
-/**
- * Middleware para verificar si el usuario tiene el rol requerido.
- * @param {Array} requiredRoles - Arreglo de roles permitidos (por nombre: 'administrador', 'usuario', etc.)
- */
 export function checkRole(requiredRoles = []) {
   return (req, res, next) => {
     const userRole = req.user?.rol;

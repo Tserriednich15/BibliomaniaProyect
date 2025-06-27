@@ -37,6 +37,7 @@ function categoriasController() {
         });
 
         const tdAcciones = document.createElement('td');
+        tdAcciones.className = 'actions-cell';
         const btnEditar = document.createElement('a');
         btnEditar.textContent = "Editar";
         btnEditar.setAttribute('href', `#editar_categoria/${categoria.id}`);
