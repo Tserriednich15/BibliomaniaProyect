@@ -1,5 +1,6 @@
 import connection from "../utils/db.js";
 import bcrypt from 'bcrypt';
+
 class Usuario {
   static async findAll() {
     const query = `
@@ -11,6 +12,17 @@ class Usuario {
     const [rows] = await connection.query(query);
     return rows;
   }
+  static async findByUsername(username) {
+    const query = `
+      SELECT u.*, r.nombre AS rol 
+      FROM usuarios AS u
+      JOIN roles AS r ON u.rol_id = r.id
+      WHERE u.usuario = ?
+    `;
+    const [rows] = await connection.query(query, [username]);
+    return rows[0];
+  }
+  
   static async create(data) {
     const { usuario, contrasena, rol_id } = data;
     const saltRounds = 10;
@@ -22,12 +34,14 @@ class Usuario {
     );
     return { id: result.insertId, usuario, rol_id };
   }
-  static async findByUsername(username) {
-    const [rows] = await connection.query("SELECT * FROM usuarios WHERE usuario = ?", [username]);
-    return rows[0];
+  static async updateRefreshToken(id, token) {
+    const [result] = await connection.query(
+        "UPDATE usuarios SET refresh_token = ? WHERE id = ?",
+        [token, id]
+    );
+    return result.affectedRows;
   }
   static async delete(id) {
-    // Para evitar que el admin se elimine a sí mismo
     if (id === 1) {
         throw new Error("No se puede eliminar al administrador principal.");
     }
@@ -35,4 +49,5 @@ class Usuario {
     return result.affectedRows;
   }
 }
+
 export default Usuario;

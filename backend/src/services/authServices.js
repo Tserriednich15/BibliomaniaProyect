@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import bcrypt from "bcryptjs";
 import Usuario from "../models/usuario.js";
-
+import Rol from "../models/rol.js";
 dotenv.config();
 
 const secretKey = process.env.ACCESS_TOKEN_SECRET;
@@ -11,6 +11,7 @@ const tokenExpiration = process.env.TOKEN_EXPIRATION;
 const refreshExpiration = process.env.REFRESH_EXPIRATION;
 
 class AuthService {
+
   static async register(datos) {
     try {
       const { usuario, contrasena, nombre, apellido, cedula, correo, telefono } = datos;
@@ -51,31 +52,24 @@ class AuthService {
         message: "Error interno al registrar el usuario",
       };
     }
-  }
 
+  }
 
   static async login(usuario, contrasena) {
     try {
       const user = await Usuario.findByUsername(usuario);
       if (!user) {
-        return {
-          error: true,
-          code: 401,
-          message: "Usuario o contraseña incorrectos",
-        };
+        return { error: true, code: 401, message: "Usuario o contraseña incorrectos" };
       }
 
       const validPassword = await bcrypt.compare(contrasena, user.contrasena);
       if (!validPassword) {
-        return {
-          error: true,
-          code: 401,
-          message: "Usuario o contraseña incorrectos",
-        };
+        return { error: true, code: 401, message: "Usuario o contraseña incorrectos" };
       }
 
       const accessToken = this.generateAccessToken(user);
       const refreshToken = this.generateRefreshToken(user);
+
       await Usuario.updateRefreshToken(user.id, refreshToken);
 
       return {
@@ -85,15 +79,12 @@ class AuthService {
         data: {
           accessToken,
           refreshToken,
+          rol: user.rol
         },
       };
     } catch (error) {
       console.error("Error en login:", error);
-      return {
-        error: true,
-        code: 500,
-        message: "Error interno al iniciar sesión",
-      };
+      return { error: true, code: 500, message: "Error interno al iniciar sesión" };
     }
   }
 
@@ -102,11 +93,14 @@ class AuthService {
       {
         id: user.id,
         usuario: user.usuario,
+        rol: user.rol
       },
       secretKey,
       { expiresIn: tokenExpiration }
     );
   }
+
+
 
   static generateRefreshToken(user) {
     return jwt.sign(
@@ -130,7 +124,7 @@ class AuthService {
 
       const accessToken = this.generateAccessToken(user);
 
-      // Calcular tiempo restante del refreshToken
+
       const decodedToken = jwt.decode(refreshToken);
       const tiempoRestante = decodedToken.exp - Math.floor(Date.now() / 1000);
 

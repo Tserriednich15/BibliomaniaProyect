@@ -1,0 +1,31 @@
+<section class="form-container">
+    <!-- El título cambiará dinámicamente -->
+    <h2 id="form-title">Crear Nuevo Usuario</h2>
+    <p>Completa los datos para registrar un nuevo usuario en el sistema.</p>
+
+    <form id="generic-form">
+        <!-- Contenedor para los campos del formulario -->
+        <div id="form-fields">
+            <!-- Los campos se insertarán aquí con JavaScript -->
+            <div class="form-group">
+                <label for="usuario">Nombre de Usuario:</label>
+                <input type="text" id="usuario" name="usuario" placeholder="Ej: bhernandez" required>
+            </div>
+            <div class="form-group">
+                <label for="contrasena">Contraseña:</label>
+                <input type="password" id="contrasena" name="contrasena" placeholder="Mínimo 8 caracteres" required>
+            </div>
+            <div class="form-group">
+                <label for="rol">Rol:</label>
+                <select id="rol" name="rol_id" required>
+                    <option value="">Cargando roles...</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Crear Usuario</button>
+            <a href="#usuarios" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </form>
+</section>

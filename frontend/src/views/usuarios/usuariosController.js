@@ -1,4 +1,3 @@
-// frontend/src/controllers/usuariosController.js
 import fetchWithAuth from '../../helpers/fetchWithAuth.js';
 import Swal from 'sweetalert2';
 
@@ -53,7 +52,6 @@ function usuariosController() {
                 `;
 
                 const accionesCell = document.createElement('td');
-                // No permitimos editar o eliminar al primer usuario (super admin)
                 if (usuario.id !== 1) {
                     const btnEliminar = document.createElement('button');
                     btnEliminar.textContent = 'Eliminar';

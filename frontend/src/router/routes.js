@@ -1,31 +1,27 @@
 import loginController from '../views/autenticacion/loginController.js';
 import loadView from '../helpers/loadView.js';
 import menuController from '../views/menu/menuController.js';
-
 import librosController from '../views/libros/librosController.js';
 import { nuevoLibroController } from '../views/libros/nuevoLibroController.js';
 import { editarLibroController } from '../views/libros/editarLibroController.js';
-
 import autorController from '../views/autor/autorController.js';
 import nuevoAutorController from '../views/autor/nuevoAutorController.js';
 import editarAutorController from '../views/autor/editarAutorController.js';
-
 import categoriasController from '../views/categorias/categoriasController.js';
 import nuevoCategoriaController from '../views/categorias/nuevoCategoriasController.js';
 import editarCategoriaController from '../views/categorias/editarCategoriasController.js';
-
 import editorialesController from '../views/editoriales/editorialesController.js';
 import nuevoEditorialController from '../views/editoriales/nuevoEditorialController.js';
 import editarEditorialController from '../views/editoriales/editarEditorialController.js';
-
 import visitantesController from '../views/visitantes/visitantesController.js';
 import nuevoVisitanteController from '../views/visitantes/nuevoVisitanteController.js';
 import editarVisitanteController from '../views/visitantes/editarVisitanteController.js';
-
 import prestamosController from '../views/prestamos/prestamosController.js';
 import nuevoPrestamoController from '../views/prestamos/nuevoPrestamoController.js';
-
 import multasController from '../views/multas/multasController.js';
+import usuariosController from '../views/usuarios/usuariosController.js';
+import nuevoUsuarioController from '../views/usuarios/nuevoUsuarioController.js';
+
 
 const routes = {
   '/': {
@@ -129,6 +125,16 @@ const routes = {
   'multas': {
     template: 'src/views/multas/multas.html',
     controller: multasController,
+    protected: true
+  },
+  'usuarios': {
+    template: 'src/views/usuarios/usuarios.html',
+    controller: usuariosController,
+    protected: true
+  },
+  'nuevo_usuario': {
+    template: 'src/views/usuarios/formulario.html',
+    controller: nuevoUsuarioController,
     protected: true
   },
 };
