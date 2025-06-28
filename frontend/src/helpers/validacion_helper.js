@@ -24,6 +24,7 @@ export function validarFormularioAutor(formElement) {
 
   const nombre = formElement.querySelector('#nombre');
   const nacionalidad = formElement.querySelector('#nacionalidad');
+  const fecha_nacimiento = formElement.querySelector('#fecha_nacimiento'); // <-- Seleccionamos el campo
   const sitioWeb = formElement.querySelector('#sitio_web');
 
   const REGEX_NOMBRE = /^[a-zA-Z\sñÑáéíóúÁÉÍÓÚüÜ]+$/;
@@ -41,6 +42,13 @@ export function validarFormularioAutor(formElement) {
     mostrarErrorCampo(nacionalidad, 'La nacionalidad es obligatoria.');
     esValido = false;
   }
+
+  // --- ¡NUEVA VALIDACIÓN! ---
+  if (fecha_nacimiento.value.trim() === '') {
+    mostrarErrorCampo(fecha_nacimiento, 'La fecha de nacimiento es obligatoria.');
+    esValido = false;
+  }
+  // -------------------------
 
   if (sitioWeb.value.trim() !== '' && !REGEX_URL.test(sitioWeb.value)) {
       mostrarErrorCampo(sitioWeb, 'Por favor, introduce una URL válida.');
@@ -308,37 +316,37 @@ export function validarFormularioEditorial(formElement) {
   const REGEX_URL = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/;
   const REGEX_EMAIL = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-  // 1. Validar Nombre (obligatorio)
   if (nombre.value.trim() === '') {
     mostrarErrorCampo(nombre, 'El nombre de la editorial es obligatorio.');
     esValido = false;
   }
 
-  // 2. Validar País (¡AHORA ES OBLIGATORIO!)
-  if (pais.value.trim() === '') { // <-- CAMBIO 1: Primero verificamos si está vacío.
+  if (pais.value.trim() === '') {
     mostrarErrorCampo(pais, 'El país es obligatorio.');
     esValido = false;
-  } else if (!REGEX_LETRAS_ESPACIOS.test(pais.value)) { // <-- CAMBIO 2: Luego verificamos el formato.
+  } else if (!REGEX_LETRAS_ESPACIOS.test(pais.value)) {
     mostrarErrorCampo(pais, 'El país solo puede contener letras y espacios.');
     esValido = false;
   }
 
-  // 3. Validar Año de Fundación (opcional)
-  if (fundacion.value.trim() !== '') {
+  // --- VALIDACIÓN MODIFICADA ---
+  if (fundacion.value.trim() === '') {
+      mostrarErrorCampo(fundacion, 'El año de fundación es obligatorio.');
+      esValido = false;
+  } else {
     const anioNum = parseInt(fundacion.value, 10);
     if (isNaN(anioNum) || anioNum < 1901 || anioNum > 2155) {
       mostrarErrorCampo(fundacion, 'Debe ser un año válido (ej. 1901-2155).');
       esValido = false;
     }
   }
+  // ---------------------------
 
-  // 4. Validar Sitio Web (opcional)
   if (sitioWeb.value.trim() !== '' && !REGEX_URL.test(sitioWeb.value)) {
     mostrarErrorCampo(sitioWeb, 'Por favor, introduce una URL válida.');
     esValido = false;
   }
   
-  // 5. Validar Email (opcional)
   if (email.value.trim() !== '' && !REGEX_EMAIL.test(email.value)) {
     mostrarErrorCampo(email, 'El formato del correo electrónico no es válido.');
     esValido = false;
