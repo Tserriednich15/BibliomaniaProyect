@@ -1,5 +1,9 @@
+// Archivo: editarEditorialesController.js (Refactorizado)
+
 import fetchWithAuth from '../../helpers/fetchWithAuth.js';
-import Swal from 'sweetalert2';
+// Importamos los helpers que necesitamos
+import { mostrarExito, mostrarError } from '../../helpers/notificaciones_helper.js';
+import { validarFormularioEditorial } from '../../helpers/validacion_helper.js';
 
 function editarEditorialController(params) {
   const editorialId = params.id;
@@ -30,19 +34,22 @@ function editarEditorialController(params) {
       document.querySelector("#form_title").textContent = "Editar Editorial";
       document.querySelector("#submit_btn").textContent = "Actualizar Editorial";
     } catch (error) {
-      Swal.fire('Error', error.message, 'error');
+      mostrarError('Error al Cargar', error.message);
       location.hash = '#editoriales';
     }
   };
 
   const handleUpdate = async (e) => {
     e.preventDefault();
+
+    // 1. Reemplazamos la validación manual con una llamada a nuestro helper
+    if (!validarFormularioEditorial(form)) {
+      mostrarError('Formulario Incompleto', 'Por favor, corrige los errores señalados.');
+      return; // Detenemos si hay errores
+    }
+
     const formData = new FormData(form);
     const editorialData = Object.fromEntries(formData.entries());
-
-    if (!editorialData.nombre.trim()) {
-      return Swal.fire('Atención', 'El nombre es obligatorio.', 'warning');
-    }
 
     try {
       const request = await fetchWithAuth(`http://localhost:3000/api/editoriales/${editorialId}`, {
@@ -52,10 +59,10 @@ function editarEditorialController(params) {
       const responseData = await request.json();
       if (!request.ok) throw new Error(responseData.message);
       
-      await Swal.fire('¡Éxito!', 'Editorial actualizada correctamente.', 'success');
+      await mostrarExito('¡Éxito!', 'Editorial actualizada correctamente.');
       location.hash = '#editoriales';
     } catch (error) {
-      Swal.fire('Error', error.message, 'error');
+      mostrarError('Error al Actualizar', error.message);
     }
   };
 

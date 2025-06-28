@@ -10,7 +10,6 @@ function mostrarErrorCampo(inputElement, message) {
   errorContainer.textContent = message;
   inputElement.classList.add('is-invalid');
 }
-
 function limpiarErrores(formElement) {
     formElement.querySelectorAll('.is-invalid').forEach(input => {
         input.classList.remove('is-invalid');
@@ -19,8 +18,6 @@ function limpiarErrores(formElement) {
         error.remove();
     });
 }
-
-// --- VALIDACIÓN PARA AUTORES ---
 export function validarFormularioAutor(formElement) {
   let esValido = true;
   limpiarErrores(formElement);
@@ -52,8 +49,6 @@ export function validarFormularioAutor(formElement) {
 
   return esValido;
 }
-
-// --- VALIDACIÓN PARA VISITANTES ---
 export function validarFormularioVisitante(formElement) {
   let esValido = true;
   limpiarErrores(formElement);
@@ -104,8 +99,6 @@ export function validarFormularioVisitante(formElement) {
 
   return esValido;
 }
-
-// --- VALIDACIÓN PARA CATEGORÍAS ---
 export function validarFormularioCategoria(formElement) {
   let esValido = true;
   limpiarErrores(formElement);
@@ -122,7 +115,6 @@ export function validarFormularioCategoria(formElement) {
 
   return esValido;
 }
-// --- VALIDACIÓN PARA LIBROS ---
 export function validarFormularioLibro(formElement) {
   let esValido = true;
   limpiarErrores(formElement);
@@ -278,6 +270,77 @@ export function validarFormularioUsuario(formElement) {
   // Validación de Rol
   if (rol.value === '') {
     mostrarErrorCampo(rol, 'Debes seleccionar un rol para el usuario.');
+    esValido = false;
+  }
+
+  return esValido;
+}
+export function validarFormularioLogin(formElement) {
+  let esValido = true;
+  limpiarErrores(formElement); // [cite: 6, 9]
+
+  const usuario = formElement.querySelector('#usuario');
+  const contrasena = formElement.querySelector('#contrasena');
+
+  if (usuario.value.trim() === '') {
+    mostrarErrorCampo(usuario, 'El nombre de usuario es obligatorio.'); // [cite: 6, 7, 8]
+    esValido = false;
+  }
+
+  if (contrasena.value.trim() === '') {
+    mostrarErrorCampo(contrasena, 'La contraseña es obligatoria.'); // [cite: 6, 7, 8]
+    esValido = false;
+  }
+
+  return esValido;
+}
+export function validarFormularioEditorial(formElement) {
+  let esValido = true;
+  limpiarErrores(formElement);
+
+  const nombre = formElement.querySelector('#nombre');
+  const pais = formElement.querySelector('#pais');
+  const fundacion = formElement.querySelector('#fundacion');
+  const sitioWeb = formElement.querySelector('#sitio_web');
+  const email = formElement.querySelector('#contacto_email');
+
+  const REGEX_LETRAS_ESPACIOS = /^[a-zA-Z\sñÑáéíóúÁÉÍÓÚüÜ]+$/;
+  const REGEX_URL = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/;
+  const REGEX_EMAIL = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+  // 1. Validar Nombre (obligatorio)
+  if (nombre.value.trim() === '') {
+    mostrarErrorCampo(nombre, 'El nombre de la editorial es obligatorio.');
+    esValido = false;
+  }
+
+  // 2. Validar País (¡AHORA ES OBLIGATORIO!)
+  if (pais.value.trim() === '') { // <-- CAMBIO 1: Primero verificamos si está vacío.
+    mostrarErrorCampo(pais, 'El país es obligatorio.');
+    esValido = false;
+  } else if (!REGEX_LETRAS_ESPACIOS.test(pais.value)) { // <-- CAMBIO 2: Luego verificamos el formato.
+    mostrarErrorCampo(pais, 'El país solo puede contener letras y espacios.');
+    esValido = false;
+  }
+
+  // 3. Validar Año de Fundación (opcional)
+  if (fundacion.value.trim() !== '') {
+    const anioNum = parseInt(fundacion.value, 10);
+    if (isNaN(anioNum) || anioNum < 1901 || anioNum > 2155) {
+      mostrarErrorCampo(fundacion, 'Debe ser un año válido (ej. 1901-2155).');
+      esValido = false;
+    }
+  }
+
+  // 4. Validar Sitio Web (opcional)
+  if (sitioWeb.value.trim() !== '' && !REGEX_URL.test(sitioWeb.value)) {
+    mostrarErrorCampo(sitioWeb, 'Por favor, introduce una URL válida.');
+    esValido = false;
+  }
+  
+  // 5. Validar Email (opcional)
+  if (email.value.trim() !== '' && !REGEX_EMAIL.test(email.value)) {
+    mostrarErrorCampo(email, 'El formato del correo electrónico no es válido.');
     esValido = false;
   }
 

@@ -1,5 +1,5 @@
 import fetchWithAuth from '../../helpers/fetchWithAuth.js';
-import eliminarEditorial from './eliminarEditorialController.js';
+import { eliminarEditorial } from './eliminarEditorialController.js';
 
 function editorialesController() {
   const tbody = document.querySelector("#editoriales_table_body");
@@ -19,11 +19,11 @@ function editorialesController() {
         tbody.innerHTML = `<tr><td colspan="5">No hay editoriales para mostrar.</td></tr>`;
         return;
       }
-      
+
       responseData.data.forEach(editorial => {
         const tr = document.createElement('tr');
         tr.setAttribute('id', `editorial_row_${editorial.id}`);
-        
+
         const celdas = [editorial.id, editorial.nombre, editorial.pais, editorial.sitio_web];
         celdas.forEach(texto => {
           const td = document.createElement('td');
@@ -37,15 +37,15 @@ function editorialesController() {
         btnEditar.textContent = "Editar";
         btnEditar.setAttribute('href', `#editar_editorial/${editorial.id}`);
         btnEditar.classList.add('btn', 'btn_secondary');
-        
+
         const btnEliminar = document.createElement('button');
         btnEliminar.textContent = "Eliminar";
         btnEliminar.classList.add('btn', 'btn_danger');
         btnEliminar.addEventListener('click', () => eliminarEditorial(editorial.id));
-        
+
         tdAcciones.append(btnEditar, btnEliminar);
         tr.appendChild(tdAcciones);
-        
+
         tbody.appendChild(tr);
       });
     } catch (error) {
@@ -53,7 +53,7 @@ function editorialesController() {
       tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;">Error: ${error.message}</td></tr>`;
     }
   };
-  
+
   listarEditoriales();
 }
 

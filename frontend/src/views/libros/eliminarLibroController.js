@@ -1,16 +1,10 @@
-import fetchWithAuth     from '../../helpers/fetchWithAuth.js';
-// import Swal from 'sweetalert2';
+import { manejarEliminacion } from '../../helpers/delete_helper.js';
 
-export async function eliminarLibro(libroId) {
-  if (!confirm("¿Estás seguro de que deseas eliminar este libro?")) return;
-  try {
-    const request = await fetchWithAuth(`http://localhost:3000/api/libros/${libroId}`, { method: 'DELETE' });
-    const responseData = await request.json();
-    if (!request.ok) throw new Error(responseData.message);
-    alert("Libro eliminado exitosamente.");
-    document.querySelector(`#libro_row_${libroId}`).remove();
-  } catch (error) {
-    console.error("Error al eliminar libro:", error);
-    alert(error.message);
-  }
+export function eliminarLibro(libroId) {
+  manejarEliminacion({
+    id: libroId,
+    endpoint: 'libros',
+    nombre: 'libro',
+    filaId: `libro_row_${libroId}`
+  });
 }

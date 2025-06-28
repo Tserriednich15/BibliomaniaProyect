@@ -1,5 +1,5 @@
 import fetchWithAuth from '../../helpers/fetchWithAuth.js';
-import eliminarAutor from './eliminarAutorController.js';
+import { eliminarAutor } from './eliminarAutorController.js';
 
 function autorController() {
   const tbody = document.querySelector("#autores_table_body");
@@ -24,7 +24,7 @@ function autorController() {
         tbody.appendChild(tr);
         return;
       }
-      
+
       responseData.data.forEach(autor => {
         const tr = document.createElement('tr');
         tr.setAttribute('id', `autor_row_${autor.id}`);
@@ -34,22 +34,22 @@ function autorController() {
           td.textContent = texto || 'N/A';
           tr.appendChild(td);
         });
-        
+
         const tdAcciones = document.createElement('td');
         tdAcciones.className = 'actions-cell';
         const btnEditar = document.createElement('a');
         btnEditar.textContent = "Editar";
         btnEditar.setAttribute('href', `#editar_autor/${autor.id}`);
         btnEditar.classList.add('btn', 'btn_secondary');
-        
+
         const btnEliminar = document.createElement('button');
         btnEliminar.textContent = "Eliminar";
         btnEliminar.classList.add('btn', 'btn_danger');
         btnEliminar.addEventListener('click', () => eliminarAutor(autor.id));
-        
+
         tdAcciones.append(btnEditar, btnEliminar);
         tr.appendChild(tdAcciones);
-        
+
         tbody.appendChild(tr);
       });
     } catch (error) {
@@ -57,7 +57,7 @@ function autorController() {
       tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;">Error: ${error.message}</td></tr>`;
     }
   };
-  
+
   listarAutores();
 }
 
