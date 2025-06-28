@@ -1,4 +1,6 @@
 import fetchWithAuth from '../../helpers/fetchWithAuth.js';
+import { mostrarExito, mostrarError } from '../../helpers/notificaciones_helper.js';
+import { validarFormularioLibro } from '../../helpers/validacion_helper.js';
 
 async function populateSelect(selectId, endpoint) {
     const select = document.querySelector(`#${selectId}`);
@@ -12,6 +14,7 @@ async function populateSelect(selectId, endpoint) {
         });
     } catch(error) {
         select.innerHTML = `<option value="">Error al cargar</option>`;
+        console.error(`Error poblando ${selectId}:`, error);
     }
 }
 
@@ -19,13 +22,22 @@ export function nuevoLibroController() {
     document.querySelector('#form_title').textContent = "Nuevo Libro";
     document.querySelector('#submit_btn').textContent = "Guardar Libro";
 
+    // Poblar todos los selects
     populateSelect('categoria_id', 'categorias');
     populateSelect('autor_id', 'autores');
     populateSelect('editorial_id', 'editoriales');
 
     const form = document.querySelector("#libro_form");
+    if (!form) return;
+
     form.addEventListener('submit', async e => {
         e.preventDefault();
+
+        if (!validarFormularioLibro(form)) {
+            mostrarError('Formulario Incompleto', 'Por favor, corrige los errores señalados.');
+            return;
+        }
+
         const formData = new FormData(form);
         const libroData = Object.fromEntries(formData.entries());
 
@@ -36,10 +48,11 @@ export function nuevoLibroController() {
             });
             const responseData = await request.json();
             if(!request.ok) throw new Error(responseData.message);
-            alert('Libro creado con éxito');
+
+            await mostrarExito('¡Éxito!', 'Libro creado correctamente.');
             location.hash = '#libros';
         } catch(error) {
-            alert(error.message);
+            mostrarError('Error al Crear', error.message);
         }
     });
 }

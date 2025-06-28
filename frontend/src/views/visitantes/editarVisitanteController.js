@@ -1,5 +1,6 @@
 import fetchWithAuth from '../../helpers/fetchWithAuth.js';
-import Swal from 'sweetalert2';
+import { mostrarExito, mostrarError } from '../../helpers/notificaciones_helper.js';
+import { validarFormularioVisitante } from '../../helpers/validacion_helper.js';
 
 function editarVisitanteController(params) {
   const visitanteId = params.id;
@@ -10,6 +11,33 @@ function editarVisitanteController(params) {
 
   const form = document.querySelector("#visitante_form");
   if (!form) return;
+
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+
+    // Llama a la nueva función de validación específica para visitantes
+    if (!validarFormularioVisitante(form)) {
+      mostrarError('Formulario Incompleto', 'Por favor, corrige los errores señalados.');
+      return;
+    }
+
+    const formData = new FormData(form);
+    const visitanteData = Object.fromEntries(formData.entries());
+
+    try {
+      const request = await fetchWithAuth(`http://localhost:3000/api/visitantes/${visitanteId}`, {
+        method: 'PUT',
+        body: JSON.stringify(visitanteData)
+      });
+      const responseData = await request.json();
+      if (!request.ok) throw new Error(responseData.message);
+      
+      await mostrarExito('¡Éxito!', 'Visitante actualizado correctamente.');
+      location.hash = '#visitantes';
+    } catch (error) {
+      mostrarError('Error al Actualizar', error.message);
+    }
+  };
 
   const loadVisitanteData = async () => {
     try {
@@ -30,32 +58,8 @@ function editarVisitanteController(params) {
       document.querySelector("#form_title").textContent = "Editar Visitante";
       document.querySelector("#submit_btn").textContent = "Actualizar Visitante";
     } catch (error) {
-      Swal.fire('Error', error.message, 'error');
+      mostrarError('Error al Cargar', error.message);
       location.hash = '#visitantes';
-    }
-  };
-
-  const handleUpdate = async (e) => {
-    e.preventDefault();
-    const formData = new FormData(form);
-    const visitanteData = Object.fromEntries(formData.entries());
-
-    if (!visitanteData.nombre || !visitanteData.apellido || !visitanteData.cedula) {
-      return Swal.fire('Atención', 'Nombre, apellido y cédula son obligatorios.', 'warning');
-    }
-
-    try {
-      const request = await fetchWithAuth(`http://localhost:3000/api/visitantes/${visitanteId}`, {
-        method: 'PUT',
-        body: JSON.stringify(visitanteData)
-      });
-      const responseData = await request.json();
-      if (!request.ok) throw new Error(responseData.message);
-      
-      await Swal.fire('¡Éxito!', 'Visitante actualizado correctamente.', 'success');
-      location.hash = '#visitantes';
-    } catch (error) {
-      Swal.fire('Error', error.message, 'error');
     }
   };
 

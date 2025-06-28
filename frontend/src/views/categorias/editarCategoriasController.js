@@ -1,5 +1,6 @@
 import fetchWithAuth from '../../helpers/fetchWithAuth.js';
-import Swal from 'sweetalert2';
+import { mostrarExito, mostrarError } from '../../helpers/notificaciones_helper.js';
+import { validarFormularioCategoria } from '../../helpers/validacion_helper.js';
 
 function editarCategoriaController(params) {
   const categoriaId = params.id;
@@ -10,6 +11,33 @@ function editarCategoriaController(params) {
 
   const form = document.querySelector("#categoria_form");
   if (!form) return;
+
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+
+    // Llama a la nueva función de validación específica para categorías
+    if (!validarFormularioCategoria(form)) {
+      mostrarError('Formulario Incompleto', 'Por favor, corrige los errores señalados.');
+      return;
+    }
+
+    const formData = new FormData(form);
+    const categoriaData = Object.fromEntries(formData.entries());
+
+    try {
+      const request = await fetchWithAuth(`http://localhost:3000/api/categorias/${categoriaId}`, {
+        method: 'PUT',
+        body: JSON.stringify(categoriaData)
+      });
+      const responseData = await request.json();
+      if (!request.ok) throw new Error(responseData.message);
+      
+      await mostrarExito('¡Éxito!', 'Categoría actualizada correctamente.');
+      location.hash = '#categorias';
+    } catch (error) {
+      mostrarError('Error al Actualizar', error.message);
+    }
+  };
 
   const loadCategoriaData = async () => {
     try {
@@ -27,32 +55,8 @@ function editarCategoriaController(params) {
       document.querySelector("#form_title").textContent = "Editar Categoría";
       document.querySelector("#submit_btn").textContent = "Actualizar Categoría";
     } catch (error) {
-      Swal.fire('Error', error.message, 'error');
+      mostrarError('Error al Cargar', error.message);
       location.hash = '#categorias';
-    }
-  };
-
-  const handleUpdate = async (e) => {
-    e.preventDefault();
-    const formData = new FormData(form);
-    const categoriaData = Object.fromEntries(formData.entries());
-
-    if (!categoriaData.nombre.trim()) {
-      return Swal.fire('Atención', 'El nombre es obligatorio.', 'warning');
-    }
-
-    try {
-      const request = await fetchWithAuth(`http://localhost:3000/api/categorias/${categoriaId}`, {
-        method: 'PUT',
-        body: JSON.stringify(categoriaData)
-      });
-      const responseData = await request.json();
-      if (!request.ok) throw new Error(responseData.message);
-      
-      await Swal.fire('¡Éxito!', 'Categoría actualizada correctamente.', 'success');
-      location.hash = '#categorias';
-    } catch (error) {
-      Swal.fire('Error', error.message, 'error');
     }
   };
 

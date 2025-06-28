@@ -128,3 +128,18 @@ tbody tr:hover {
 .card h3 {
     color: var(--color_enlace);
 }
+
+.form_group input.is-invalid,
+.form_group textarea.is-invalid,
+.form_group select.is-invalid {
+  border-color: #d33; /* Color de peligro */
+  background-color: #fff2f2;
+}
+
+/* Estilo para el mensaje de texto del error */
+.error-message {
+  color: #d33;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  font-weight: 600;
+}

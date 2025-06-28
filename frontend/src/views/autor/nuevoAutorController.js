@@ -1,34 +1,39 @@
 import fetchWithAuth from '../../helpers/fetchWithAuth.js';
-import Swal from 'sweetalert2';
+import { mostrarExito, mostrarError } from '../../helpers/notificaciones_helper.js';
+import { validarFormularioAutor } from '../../helpers/validacion_helper.js';
 
 function nuevoAutorController() {
   document.querySelector('#form_title').textContent = "Nuevo Autor";
   document.querySelector('#submit_btn').textContent = "Guardar Autor";
-
+  
   const form = document.querySelector("#autor_form");
   if (!form) return;
 
   form.addEventListener('submit', async e => {
     e.preventDefault();
+
+    // Llama a la nueva función de validación específica para autores
+    if (!validarFormularioAutor(form)) {
+      mostrarError('Formulario Incompleto', 'Por favor, corrige los errores señalados.');
+      return;
+    }
+
     const formData = new FormData(form);
     const autorData = Object.fromEntries(formData.entries());
-
-    if (!autorData.nombre.trim()) {
-      return Swal.fire('Atención', 'El nombre del autor es obligatorio.', 'warning');
-    }
 
     try {
       const request = await fetchWithAuth("http://localhost:3000/api/autores", {
         method: 'POST',
         body: JSON.stringify(autorData)
       });
+       
       const responseData = await request.json();
       if (!request.ok) throw new Error(responseData.message);
 
-      await Swal.fire('¡Éxito!', 'Autor creado correctamente.', 'success');
+      await mostrarExito('¡Éxito!', 'Autor creado correctamente.');
       location.hash = '#autores';
     } catch (error) {
-      Swal.fire('Error', error.message, 'error');
+      mostrarError('Error al Crear', error.message);
     }
   });
 }

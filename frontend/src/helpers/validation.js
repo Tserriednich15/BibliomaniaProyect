@@ -1,5 +1,3 @@
-// src/helpers/validation.js
-
 const validationRules = {
   libro: {
     titulo: {
@@ -7,7 +5,6 @@ const validationRules = {
       errorMessage: "El título debe tener entre 3 y 100 caracteres."
     },
     anio_publicacion: {
-      // CORREGIDO: Regex más robusta y chequeo de año futuro.
       validate: (value) => /^\d{4}$/.test(value) && parseInt(value) > 1000 && parseInt(value) <= new Date().getFullYear() + 1,
       errorMessage: "Debe ser un año válido de 4 dígitos (ej. 1997)."
     },
@@ -32,7 +29,6 @@ function validateForm(form, ruleSetName) {
 
   let isFormValid = true;
 
-  // Primero, limpiamos todos los errores antiguos
   form.querySelectorAll('.error_message').forEach(el => el.remove());
   form.querySelectorAll('.is_invalid').forEach(el => el.classList.remove('is_invalid'));
 

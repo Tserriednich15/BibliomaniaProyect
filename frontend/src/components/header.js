@@ -1,4 +1,6 @@
 import crearSidebar from './sidebar.js';
+import fetchWithAuth, { clearAuthTokens } from '../helpers/fetchWithAuth.js';
+import { mostrarExito } from '../helpers/notificaciones_helper.js';
 
 function crearHeader() {
   const header = document.createElement("header");
@@ -6,7 +8,6 @@ function crearHeader() {
 
   const headerContainer = document.createElement("div");
   headerContainer.classList.add("header_container");
-
 
   const leftSide = document.createElement("div");
   leftSide.classList.add("header_left");
@@ -21,7 +22,6 @@ function crearHeader() {
   const token = localStorage.getItem('accessToken');
 
   if (token) {
-
     const hamburgerBtn = document.createElement("button");
     hamburgerBtn.classList.add("hamburger_btn");
 
@@ -41,23 +41,33 @@ function crearHeader() {
 
     const linkLogout = document.createElement("a");
     linkLogout.textContent = "Cerrar Sesión";
-    linkLogout.href = "#logout";
-    linkLogout.id = 'logout_btn';
-
+    linkLogout.href = "#";
+    linkLogout.id = 'logout-btn';
     rightSideNav.append(linkMenu, linkLogout);
 
   } else {
     leftSide.appendChild(logo);
   }
+  
   headerContainer.append(leftSide, rightSideNav);
   header.appendChild(headerContainer);
 
-  const logoutBtn = header.querySelector('#logout_btn');
+  const logoutBtn = header.querySelector('#logout-btn');
   if (logoutBtn) {
-    logoutBtn.addEventListener('click', (e) => {
+    logoutBtn.addEventListener('click', async (e) => {
       e.preventDefault();
-      localStorage.clear();
-      window.dispatchEvent(new Event('hashchange'));
+
+      try {
+        await fetchWithAuth('http://localhost:3000/api/auth/logout', {
+          method: 'POST'
+        });
+      } catch (error) {
+        console.error('Error al contactar al servidor para logout, cerrando sesión localmente de todas formas.', error);
+      } finally {
+        clearAuthTokens();
+        await mostrarExito('Sesión Cerrada', 'Has cerrado sesión exitosamente.');
+        location.hash = '#login';
+      }
     });
   }
 

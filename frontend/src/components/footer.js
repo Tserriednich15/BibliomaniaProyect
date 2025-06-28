@@ -27,9 +27,9 @@ export const crearFooter = () => {
 
     // ✨ CAMBIO: Los enlaces ahora apuntan a rutas de la SPA
     const enlaces = [
-        { texto: "Inicio", href: "#/menu" },
-        { texto: "Libros", href: "#/libros" },
-        { texto: "Autores", href: "#/autores" }
+        { texto: "Inicio", href: "#menu" },
+        { texto: "Libros", href: "#libros" },
+        { texto: "Autores", href: "#autores" }
     ];
 
     enlaces.forEach(enlace => {

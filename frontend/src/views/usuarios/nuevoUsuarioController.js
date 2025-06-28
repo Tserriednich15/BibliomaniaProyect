@@ -1,8 +1,6 @@
-// frontend/src/controllers/usuarios/nuevoUsuarioController.js
-
 import fetchWithAuth from '../../helpers/fetchWithAuth.js';
-import Swal from 'sweetalert2';
-import usuariosController from './usuariosController.js';
+import { mostrarExito, mostrarError } from '../../helpers/notificaciones_helper.js';
+import { validarFormularioUsuario } from '../../helpers/validacion_helper.js';
 
 const API_URL = "http://localhost:3000/api";
 
@@ -14,18 +12,16 @@ async function populateRolesDropdown() {
 
     if (!responseData.success) throw new Error(responseData.message);
     
-    selectRol.innerHTML = '<option value="">Seleccione un rol...</option>'; 
-
+    selectRol.innerHTML = '<option value="">Seleccione un rol...</option>';
     responseData.data.forEach(rol => {
-
+        // Asumiendo que no quieres que se puedan crear Administradores desde aquí
         if (rol.nombre.toLowerCase() !== 'administrador') {
-        const option = document.createElement('option');
-        option.value = rol.id;
-        option.textContent = rol.nombre;
-        selectRol.appendChild(option);
-      }
+            const option = document.createElement('option');
+            option.value = rol.id;
+            option.textContent = rol.nombre;
+            selectRol.appendChild(option);
+        }
     });
-
   } catch (error) {
     console.error("Error al cargar roles:", error);
     selectRol.innerHTML = '<option value="">Error al cargar roles</option>';
@@ -36,25 +32,23 @@ function nuevoUsuarioController() {
   const form = document.getElementById('generic-form');
   if (!form) return;
 
+  // Poblar el dropdown de roles al cargar la vista
   populateRolesDropdown();
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    const usuario = document.getElementById('usuario').value.trim();
-    const contrasena = document.getElementById('contrasena').value.trim();
-    const rol_id = document.getElementById('rol').value;
-
-    if (!usuario || !contrasena || !rol_id) {
-      Swal.fire('Campos incompletos', 'Por favor, rellene todos los campos.', 'warning');
-      return;
-    }
-    if (contrasena.length < 8) {
-      Swal.fire('Contraseña insegura', 'La contraseña debe tener al menos 8 caracteres.', 'warning');
-      return;
+    // Usamos nuestro nuevo validador específico para usuarios
+    if (!validarFormularioUsuario(form)) {
+        mostrarError('Formulario Incompleto', 'Por favor, corrige los errores señalados.');
+        return;
     }
 
-    const payload = { usuario, contrasena, rol_id };
+    const payload = {
+        usuario: document.getElementById('usuario').value.trim(),
+        contrasena: document.getElementById('contrasena').value.trim(),
+        rol_id: document.getElementById('rol').value
+    };
 
     try {
       const response = await fetchWithAuth(`${API_URL}/usuarios`, {
@@ -66,12 +60,14 @@ function nuevoUsuarioController() {
       const responseData = await response.json();
       if (!response.ok) throw new Error(responseData.message);
       
-      await Swal.fire('¡Usuario Creado!', 'El nuevo usuario ha sido registrado exitosamente.', 'success');
+      await mostrarExito('¡Usuario Creado!', 'El nuevo usuario ha sido registrado exitosamente.');
       
+      // Limpiar formulario y redirigir
+      form.reset();
       location.hash = '#usuarios';
 
     } catch (error) {
-      Swal.fire('Error', `No se pudo crear el usuario: ${error.message}`, 'error');
+      mostrarError('Error', `No se pudo crear el usuario: ${error.message}`);
     }
   });
 }

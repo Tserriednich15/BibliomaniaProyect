@@ -1,21 +1,24 @@
 import fetchWithAuth from '../../helpers/fetchWithAuth.js';
-import Swal from 'sweetalert2';
+import { mostrarExito, mostrarError } from '../../helpers/notificaciones_helper.js';
+import { validarFormularioPrestamo } from '../../helpers/validacion_helper.js';
 
 const API_URL = 'http://localhost:3000/api';
 
 export default async function nuevoPrestamoController() {
     const form = document.getElementById('prestamo-form');
+    if (!form) return;
+
     const libroSearchInput = document.getElementById('libro-search');
     const resultsContainer = document.getElementById('search-results-container');
     const selectedEjemplarIdInput = document.getElementById('selected-ejemplar-id');
 
     let debounceTimer;
 
+    // Lógica de búsqueda de libros (sin cambios)
     libroSearchInput.addEventListener('input', (e) => {
         const query = e.target.value;
         resultsContainer.innerHTML = '';
         selectedEjemplarIdInput.value = '';
-
         clearTimeout(debounceTimer);
 
         if (query.length < 3) {
@@ -29,7 +32,6 @@ export default async function nuevoPrestamoController() {
             try {
                 const response = await fetchWithAuth(`${API_URL}/ejemplares/disponibles/buscar?q=${query}`);
                 if (!response.ok) throw new Error(`Error del servidor: ${response.status}`);
-
                 const responseData = await response.json();
                 const librosDisponibles = responseData.data;
 
@@ -57,7 +59,6 @@ export default async function nuevoPrestamoController() {
 
                     resultsContainer.appendChild(item);
                 });
-
             } catch (error) {
                 console.error('Error buscando libros:', error);
                 resultsContainer.innerHTML = `<div class="search-result-item error">Error al buscar: ${error.message}</div>`;
@@ -65,31 +66,34 @@ export default async function nuevoPrestamoController() {
         }, 300);
     });
 
+    // Lógica del envío del formulario (actualizada)
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        const visitanteData = {
-            cedula: document.getElementById('visitante-cedula').value.trim(),
-            nombre: document.getElementById('visitante-nombre').value.trim(),
-            apellido: document.getElementById('visitante-apellido').value.trim(),
-            telefono: document.getElementById('visitante-telefono').value.trim() || null,
-            correo: document.getElementById('visitante-correo').value.trim() || null,
-        };
-
-        const ejemplarId = selectedEjemplarIdInput.value;
-
-        if (!visitanteData.cedula || !visitanteData.nombre || !visitanteData.apellido || !ejemplarId) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Campos obligatorios',
-                text: 'La cédula, nombre, apellido del visitante y la selección de un libro son obligatorios.'
-            });
+        // Usamos nuestro nuevo validador
+        if (!validarFormularioPrestamo(form)) {
+            mostrarError('Formulario Incompleto', 'Por favor, corrige los errores señalados.');
             return;
         }
+        
+        // --- MODIFICACIÓN CLAVE ---
+        // Hacemos la recolección de datos "a prueba de nulos"
+        const cedulaEl = document.getElementById('visitante-cedula');
+        const nombreEl = document.getElementById('visitante-nombre');
+        const apellidoEl = document.getElementById('visitante-apellido');
+        const telefonoEl = document.getElementById('visitante-telefono');
+        const correoEl = document.getElementById('visitante-correo');
 
         const payload = {
-            visitante: visitanteData,
-            ejemplar_id: parseInt(ejemplarId, 10)
+            visitante: {
+                cedula: cedulaEl ? cedulaEl.value.trim() : '',
+                nombre: nombreEl ? nombreEl.value.trim() : '',
+                apellido: apellidoEl ? apellidoEl.value.trim() : '',
+                // Para campos opcionales, asignamos null si el elemento no existe
+                telefono: telefonoEl ? telefonoEl.value.trim() : null,
+                correo: correoEl ? correoEl.value.trim() : null,
+            },
+            ejemplar_id: parseInt(selectedEjemplarIdInput.value, 10)
         };
 
         try {
@@ -104,21 +108,12 @@ export default async function nuevoPrestamoController() {
                 throw new Error(errorData.message || `Error del servidor: ${response.status}`);
             }
 
-            Swal.fire({
-                icon: 'success',
-                title: 'Préstamo Registrado',
-                text: 'El préstamo se ha creado exitosamente.'
-            }).then(() => {
-                location.hash = '#prestamos';
-            });
+            await mostrarExito('¡Préstamo Registrado!', 'El préstamo se ha creado exitosamente.');
+            location.hash = '#prestamos';
 
         } catch (error) {
             console.error('Error al registrar el préstamo:', error);
-            Swal.fire({
-                icon: 'error',
-                title: 'Error de Registro',
-                text: error.message || 'No se pudo registrar el préstamo.'
-            });
+            mostrarError('Error de Registro', error.message || 'No se pudo registrar el préstamo.');
         }
     });
 }
