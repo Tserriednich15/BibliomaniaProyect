@@ -22,7 +22,6 @@ export function nuevoLibroController() {
     document.querySelector('#form_title').textContent = "Nuevo Libro";
     document.querySelector('#submit_btn').textContent = "Guardar Libro";
 
-    // Poblar todos los selects
     populateSelect('categoria_id', 'categorias');
     populateSelect('autor_id', 'autores');
     populateSelect('editorial_id', 'editoriales');

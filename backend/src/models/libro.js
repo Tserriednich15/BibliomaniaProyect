@@ -25,7 +25,7 @@ class Libro {
     const [rows] = await connection.query(query, [id]);
     return rows[0] || null;
   }
-  static async create(libroData, conn = connection) { // Acepta 'conn' como parámetro
+  static async create(libroData, conn = connection) {
     const {
       titulo, anio_publicacion, categoria_id, autor_id, editorial_id
     } = libroData;
@@ -35,12 +35,10 @@ class Libro {
       VALUES (?, ?, ?, ?, ?);
     `;
     
-    // Usa 'conn' para la consulta, no la conexión global
     const [result] = await conn.query(query, [
       titulo, anio_publicacion, categoria_id, autor_id, editorial_id
     ]);
     
-    // Devolvemos solo el ID, que es lo que el servicio necesita para crear el ejemplar
     return result.insertId;
   }
   static async update(id, libroData) {

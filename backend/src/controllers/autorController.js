@@ -1,4 +1,3 @@
-// src/controllers/autorController.js
 import Autor from "../models/autor.js";
 import ResponseProvider from "../providers/responseProvider.js";
 

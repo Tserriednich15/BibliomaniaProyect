@@ -1,5 +1,3 @@
-// middlewares/auth/tokenMiddleware.js
-
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import ResponseProvider from "../../providers/responseProvider.js";

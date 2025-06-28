@@ -6,7 +6,6 @@ export const crearFooter = () => {
     const footerContent = document.createElement("div");
     footerContent.classList.add("footer_content");
 
-    // --- Sección 1: Sobre el Proyecto ---
     const section1 = document.createElement("div");
     section1.classList.add("footer_section");
 
@@ -17,7 +16,6 @@ export const crearFooter = () => {
 
     section1.append(h3_1, p1);
 
-    // --- Sección 2: Enlaces Rápidos ---
     const section2 = document.createElement("div");
     section2.classList.add("footer_section");
 
@@ -25,7 +23,6 @@ export const crearFooter = () => {
     h3_2.textContent = "Enlaces Rápidos";
     const ul1 = document.createElement("ul");
 
-    // ✨ CAMBIO: Los enlaces ahora apuntan a rutas de la SPA
     const enlaces = [
         { texto: "Inicio", href: "#menu" },
         { texto: "Libros", href: "#libros" },
@@ -43,7 +40,6 @@ export const crearFooter = () => {
 
     section2.append(h3_2, ul1);
 
-    // --- Sección 3: Redes Sociales ---
     const section3 = document.createElement("div");
     section3.classList.add("footer_section");
 
@@ -63,9 +59,9 @@ export const crearFooter = () => {
         const li = document.createElement("li");
         const a = document.createElement("a");
         a.href = red.url;
-        a.target = "_blank"; // Abrir en nueva pestaña
+        a.target = "_blank";
         a.rel = "noopener noreferrer";
-        a.title = red.title; // Buena práctica para accesibilidad
+        a.title = red.title;
         const i = document.createElement("i");
         i.className = red.icono;
         a.appendChild(i);
@@ -77,12 +73,10 @@ export const crearFooter = () => {
 
     footerContent.append(section1, section2, section3);
 
-    // --- Sección Inferior: Copyright ---
     const footerBottom = document.createElement("div");
     footerBottom.classList.add("footer_bottom");
 
     const pBottom = document.createElement("p");
-    // ✨ CAMBIO: El año se calcula dinámicamente
     pBottom.textContent = `© ${new Date().getFullYear()} Bibliomania. Todos los derechos reservados.`;
 
     footerBottom.appendChild(pBottom);

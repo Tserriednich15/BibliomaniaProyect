@@ -1,5 +1,5 @@
 import AuthService from "../services/authServices.js";
-import ResponseProvider from "../providers/responseProvider.js"; // ¡Importante!
+import ResponseProvider from "../providers/responseProvider.js";
 
 class AuthController {
   static async register(req, res) {
@@ -15,23 +15,18 @@ class AuthController {
     try {
       const { usuario, contrasena } = req.body;
       if (!usuario || !contrasena) {
-        // Usamos el ResponseProvider para errores de validación
         return ResponseProvider.error(res, "Usuario y contraseña son obligatorios", 400);
       }
 
       const result = await AuthService.login(usuario, contrasena);
 
       if (result.error) {
-        // Si el servicio devuelve un error (ej. credenciales incorrectas), usamos el ResponseProvider
         return ResponseProvider.error(res, result.message, result.code);
       }
-      
-      // Si el servicio tiene éxito, pasamos el resultado al ResponseProvider.
-      // result.data ya contiene los tokens, así que la respuesta será { success: true, data: { accessToken: '...', refreshToken: '...' } }
+
       return ResponseProvider.success(res, result.data, result.message);
 
     } catch (error) {
-      // Catch de seguridad para cualquier error no controlado
       console.error("Error inesperado en AuthController.login:", error);
       return ResponseProvider.error(res, "Ocurrió un error inesperado.", 500);
     }

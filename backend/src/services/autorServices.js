@@ -1,4 +1,3 @@
-// src/services/autorService.js
 import connection from "../utils/db.js";
 
 class AutorService {

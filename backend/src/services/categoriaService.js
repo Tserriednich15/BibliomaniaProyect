@@ -1,9 +1,5 @@
-// src/services/categoriasService.js
 import Categoria from "../models/categoria.js";
 
-/**
- * Clase que maneja la lógica de negocio para las Categorías.
- */
 class CategoriasService {
   static async getAll() {
     try {

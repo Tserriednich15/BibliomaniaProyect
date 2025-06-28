@@ -1,9 +1,6 @@
-// src/models/ejemplar.js
-
 import connection from "../utils/db.js";
 
 class Ejemplar {
-  // ... tus métodos getAll, buscarDisponiblesPorTitulo y getById se mantienen igual ...
   static async getAll() {
     const query = `
       SELECT e.id, e.estado, l.titulo AS libro_titulo 
@@ -47,12 +44,6 @@ class Ejemplar {
     return { id: result.insertId, libro_id, estado: estado || "disponible" };
   }
 
-  /**
-   * Actualiza el estado de un ejemplar.
-   * @param {number} id - El ID del ejemplar.
-   * @param {string} estado - El nuevo estado ('disponible', 'prestado', etc.).
-   * @param {object} conn - Conexión de BD para transacciones.
-   */
   static async actualizarEstado(id, estado, conn = connection) {
     const [result] = await conn.query(
       "UPDATE ejemplares SET estado = ? WHERE id = ?",

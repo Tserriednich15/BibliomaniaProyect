@@ -15,7 +15,6 @@ function editarAutorController(params) {
   const handleUpdate = async (e) => {
     e.preventDefault();
     
-    // Llama a la nueva función de validación específica para autores
     if (!validarFormularioAutor(form)) {
       mostrarError('Formulario Incompleto', 'Por favor, corrige los errores señalados.');
       return;

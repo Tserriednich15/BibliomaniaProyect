@@ -14,7 +14,6 @@ export default async function nuevoPrestamoController() {
 
     let debounceTimer;
 
-    // Lógica de búsqueda de libros (sin cambios)
     libroSearchInput.addEventListener('input', (e) => {
         const query = e.target.value;
         resultsContainer.innerHTML = '';
@@ -66,18 +65,14 @@ export default async function nuevoPrestamoController() {
         }, 300);
     });
 
-    // Lógica del envío del formulario (actualizada)
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        // Usamos nuestro nuevo validador
         if (!validarFormularioPrestamo(form)) {
             mostrarError('Formulario Incompleto', 'Por favor, corrige los errores señalados.');
             return;
         }
         
-        // --- MODIFICACIÓN CLAVE ---
-        // Hacemos la recolección de datos "a prueba de nulos"
         const cedulaEl = document.getElementById('visitante-cedula');
         const nombreEl = document.getElementById('visitante-nombre');
         const apellidoEl = document.getElementById('visitante-apellido');
@@ -89,7 +84,6 @@ export default async function nuevoPrestamoController() {
                 cedula: cedulaEl ? cedulaEl.value.trim() : '',
                 nombre: nombreEl ? nombreEl.value.trim() : '',
                 apellido: apellidoEl ? apellidoEl.value.trim() : '',
-                // Para campos opcionales, asignamos null si el elemento no existe
                 telefono: telefonoEl ? telefonoEl.value.trim() : null,
                 correo: correoEl ? correoEl.value.trim() : null,
             },

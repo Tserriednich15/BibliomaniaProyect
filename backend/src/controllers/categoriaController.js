@@ -1,4 +1,3 @@
-// src/controllers/categoriasController.js
 import CategoriasService from "../services/categoriaService.js";
 import ResponseProvider from "../providers/responseProvider.js";
 
@@ -64,7 +63,6 @@ class CategoriasController {
   }
   static async buscarEjemplaresDisponibles(req, res) {
     try {
-      // El término de búsqueda viene como un query param (ej: /buscar?q=rebelion)
       const query = req.query.q;
       if (!query) {
         return ResponseProvider.error(res, "El término de búsqueda es requerido.", 400);

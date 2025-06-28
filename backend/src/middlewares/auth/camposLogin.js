@@ -1,7 +1,5 @@
-// camposLogin.js
 import ResponseProvider from "../../providers/responseProvider.js";
 
-// Definición de campos para login: usamos "usuario" y "contrasena"
 const campos = [
   {
     name: "usuario",

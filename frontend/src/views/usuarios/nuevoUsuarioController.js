@@ -14,7 +14,6 @@ async function populateRolesDropdown() {
     
     selectRol.innerHTML = '<option value="">Seleccione un rol...</option>';
     responseData.data.forEach(rol => {
-        // Asumiendo que no quieres que se puedan crear Administradores desde aquí
         if (rol.nombre.toLowerCase() !== 'administrador') {
             const option = document.createElement('option');
             option.value = rol.id;
@@ -32,13 +31,11 @@ function nuevoUsuarioController() {
   const form = document.getElementById('generic-form');
   if (!form) return;
 
-  // Poblar el dropdown de roles al cargar la vista
   populateRolesDropdown();
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    // Usamos nuestro nuevo validador específico para usuarios
     if (!validarFormularioUsuario(form)) {
         mostrarError('Formulario Incompleto', 'Por favor, corrige los errores señalados.');
         return;
@@ -62,7 +59,6 @@ function nuevoUsuarioController() {
       
       await mostrarExito('¡Usuario Creado!', 'El nuevo usuario ha sido registrado exitosamente.');
       
-      // Limpiar formulario y redirigir
       form.reset();
       location.hash = '#usuarios';
 

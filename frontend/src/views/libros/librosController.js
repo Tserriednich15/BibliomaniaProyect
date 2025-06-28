@@ -1,5 +1,3 @@
-// Archivo: src/controllers/librosController.js (Versión corregida y limpia)
-
 import fetchWithAuth from '../../helpers/fetchWithAuth.js';
 import { eliminarLibro } from './eliminarLibroController.js'; 
 
@@ -13,7 +11,7 @@ function librosController() {
       const responseData = await request.json();
       if (!responseData.success) throw new Error(responseData.message);
 
-      tbody.innerHTML = ''; // Limpiamos la tabla
+      tbody.innerHTML = '';
 
       if (responseData.data.length === 0) {
         tbody.innerHTML = `<tr><td colspan="6" class="text-center">No hay libros para mostrar.</td></tr>`;

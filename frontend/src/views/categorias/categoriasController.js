@@ -1,5 +1,5 @@
 import fetchWithAuth from '../../helpers/fetchWithAuth.js';
-import { eliminarCategoria } from './eliminarCategoriasController.js'; // Nombre en singular y con llaves {}
+import { eliminarCategoria } from './eliminarCategoriasController.js';
 
 function categoriasController() {
   const tbody = document.querySelector("#categorias_table_body");

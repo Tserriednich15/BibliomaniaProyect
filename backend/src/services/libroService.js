@@ -28,16 +28,13 @@ class LibroService {
     try {
       await conn.beginTransaction();
 
-      // 1. Creamos el libro
       const nuevoLibroId = await Libro.create(libroData, conn);
       
-      // 2. Preparamos los datos para su primer ejemplar
       const datosEjemplar = {
         libro_id: nuevoLibroId,
         estado: 'disponible'
       };
 
-      // 3. Creamos el ejemplar
       await Ejemplar.create(datosEjemplar, conn);
 
       await conn.commit();

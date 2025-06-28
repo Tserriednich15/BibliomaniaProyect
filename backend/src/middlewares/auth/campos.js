@@ -1,4 +1,3 @@
-// Campos.js
 export const campos = [
   {
     name: "usuario",

@@ -1,11 +1,7 @@
-// src/models/prestamo.js
-
 import connection from "../utils/db.js";
 
 class Prestamo {
-  /**
-   * Obtiene todos los préstamos que están actualmente activos.
-   */
+  
   static async getAllActivos() {
     const query = `
       SELECT 
@@ -26,21 +22,11 @@ class Prestamo {
     return rows;
   }
 
-  /**
-   * Busca un préstamo por su ID.
-   * @param {number} id - El ID del préstamo.
-   * @param {object} conn - Una conexión de BD activa para transacciones.
-   */
   static async findById(id, conn = connection) {
     const [rows] = await conn.query("SELECT * FROM prestamos WHERE id = ?", [id]);
     return rows[0] || null;
   }
 
-  /**
-   * Crea un nuevo préstamo en la base de datos.
-   * @param {object} prestamoData - Datos del préstamo.
-   * @param {object} conn - Conexión de BD para transacciones.
-   */
   static async create({ ejemplar_id, visitante_id, dias_prestamo = 15 }, conn = connection) {
     const query = `
       INSERT INTO prestamos (ejemplar_id, visitante_id, fecha_prestamo, fecha_vencimiento, estado) 
@@ -50,11 +36,6 @@ class Prestamo {
     return result.insertId;
   }
 
-  /**
-   * Actualiza el estado de un préstamo a 'devuelto'.
-   * @param {number} id - El ID del préstamo a actualizar.
-   * @param {object} conn - Conexión de BD para transacciones.
-   */
   static async marcarComoDevuelto(id, conn = connection) {
     const [result] = await conn.query(
       "UPDATE prestamos SET estado = 'devuelto' WHERE id = ?",

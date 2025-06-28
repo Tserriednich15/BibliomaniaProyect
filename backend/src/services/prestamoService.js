@@ -1,5 +1,3 @@
-// src/services/prestamoService.js
-
 import connection from '../utils/db.js';
 import Prestamo from '../models/prestamo.js';
 import Ejemplar from '../models/ejemplar.js';
@@ -14,7 +12,6 @@ class PrestamoService {
       return { success: true, data: prestamos, message: "Préstamos activos listados" };
     } catch (error) {
       console.error("Error en servicio al obtener préstamos:", error);
-      // Devolvemos un objeto de error en lugar de lanzar una excepción
       return { success: false, message: "Error interno al obtener los préstamos.", code: 500 };
     }
   }

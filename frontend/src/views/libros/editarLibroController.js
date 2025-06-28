@@ -45,7 +45,6 @@ export async function editarLibroController(params) {
             document.querySelector('#titulo').value = libro.titulo;
             document.querySelector('#anio_publicacion').value = libro.anio_publicacion;
 
-            // Poblar los selects y seleccionar el valor correcto
             await Promise.all([
                 populateSelect('categoria_id', 'categorias', libro.categoria_id),
                 populateSelect('autor_id', 'autores', libro.autor_id),

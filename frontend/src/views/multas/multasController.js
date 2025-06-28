@@ -1,5 +1,3 @@
-// frontend/src/controllers/multasController.js
-
 import fetchWithAuth from '../../helpers/fetchWithAuth.js';
 import Swal from 'sweetalert2';
 
@@ -31,7 +29,6 @@ async function handlePagarMulta(multaId, tr) {
     
     await Swal.fire('¡Éxito!', 'La multa ha sido marcada como pagada.', 'success');
     
-    // Eliminamos la fila de la tabla como solicitaste
     tr.classList.add('fade-out');
     tr.addEventListener('transitionend', () => tr.remove());
 
@@ -83,7 +80,7 @@ function multasController() {
         if (multa.estado === 'pendiente') {
           const btnPagar = document.createElement('button');
           btnPagar.textContent = 'Marcar como Pagada';
-          btnPagar.classList.add('btn', 'btn_success'); // Nueva clase para estilizar
+          btnPagar.classList.add('btn', 'btn_success');
           btnPagar.addEventListener('click', () => handlePagarMulta(multa.id, tr));
           accionesCell.appendChild(btnPagar);
         } else {

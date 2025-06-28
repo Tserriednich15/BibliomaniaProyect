@@ -1,7 +1,4 @@
-// Archivo: nuevoEditorialController.js (Refactorizado)
-
 import fetchWithAuth from '../../helpers/fetchWithAuth.js';
-// Importamos los helpers que necesitamos
 import { mostrarExito, mostrarError } from '../../helpers/notificaciones_helper.js';
 import { validarFormularioEditorial } from '../../helpers/validacion_helper.js';
 
@@ -15,13 +12,11 @@ function nuevoEditorialController() {
   form.addEventListener('submit', async e => {
     e.preventDefault();
 
-    // 1. Reemplazamos la validación manual con una llamada a nuestro helper
     if (!validarFormularioEditorial(form)) {
       mostrarError('Formulario Incompleto', 'Por favor, corrige los errores señalados.');
-      return; // Detenemos si hay errores
+      return;
     }
     
-    // Si la validación pasa, continuamos
     const formData = new FormData(form);
     const editorialData = Object.fromEntries(formData.entries());
 

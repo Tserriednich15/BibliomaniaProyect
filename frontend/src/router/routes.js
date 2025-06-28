@@ -127,11 +127,7 @@ const routes = {
     controller: multasController,
     protected: true
   },
-  'usuarios': {
-    template: 'src/views/usuarios/usuarios.html',
-    controller: usuariosController,
-    protected: true
-  },
+  
   'nuevo_usuario': {
     template: 'src/views/usuarios/formulario.html',
     controller: nuevoUsuarioController,

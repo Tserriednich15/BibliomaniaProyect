@@ -15,7 +15,6 @@ function editarVisitanteController(params) {
   const handleUpdate = async (e) => {
     e.preventDefault();
 
-    // Llama a la nueva función de validación específica para visitantes
     if (!validarFormularioVisitante(form)) {
       mostrarError('Formulario Incompleto', 'Por favor, corrige los errores señalados.');
       return;

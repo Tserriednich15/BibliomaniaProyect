@@ -15,7 +15,6 @@ function editarCategoriaController(params) {
   const handleUpdate = async (e) => {
     e.preventDefault();
 
-    // Llama a la nueva función de validación específica para categorías
     if (!validarFormularioCategoria(form)) {
       mostrarError('Formulario Incompleto', 'Por favor, corrige los errores señalados.');
       return;
