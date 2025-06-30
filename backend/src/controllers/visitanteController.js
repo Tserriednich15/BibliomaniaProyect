@@ -1,6 +1,5 @@
 import VisitanteService from "../services/visitanteService.js";
 import ResponseProvider from "../providers/responseProvider.js";
-
 class VisitanteController {
   static async obtenerTodos(req, res) {
     try {
@@ -11,7 +10,6 @@ class VisitanteController {
       return ResponseProvider.error(res, "Error al obtener los visitantes");
     }
   }
-
   static async obtenerPorId(req, res) {
     try {
       const { id } = req.params;
@@ -27,7 +25,6 @@ class VisitanteController {
       return ResponseProvider.error(res, "Error al obtener el visitante");
     }
   }
-
   static async crear(req, res) {
     try {
       const { cedula, nombre, apellido, telefono, correo } = req.body;
@@ -44,7 +41,6 @@ class VisitanteController {
       return ResponseProvider.error(res, "Error al crear el visitante");
     }
   }
-
   static async actualizar(req, res) {
     try {
       const { id } = req.params;
@@ -63,7 +59,6 @@ class VisitanteController {
       return ResponseProvider.error(res, "Error al actualizar el visitante");
     }
   }
-
   static async eliminar(req, res) {
     try {
       const { id } = req.params;
@@ -77,9 +72,8 @@ class VisitanteController {
       return ResponseProvider.success(res, { message: "Visitante eliminado correctamente" });
     } catch (error) {
       console.error("Error al eliminar visitante:", error);
-      return ResponseProvider.error(res, "Error al eliminar el visitante");
+      return ResponseProvider.error(res, error.message, error.statusCode || 500);
     }
   }
 }
-
 export default VisitanteController;

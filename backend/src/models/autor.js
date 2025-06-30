@@ -31,6 +31,15 @@ class Autor {
   static async delete(id) {
     await connection.query("DELETE FROM autores WHERE id = ?", [id]);
   }
+
+  static async countLibros(autorId) {
+    const [rows] = await connection.query(
+      "SELECT COUNT(*) AS count FROM libros WHERE autor_id = ?",
+      [autorId]
+    );
+    return rows[0].count;
+  }
+
 }
 
 export default Autor;

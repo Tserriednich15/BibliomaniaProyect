@@ -55,14 +55,26 @@ class CategoriasService {
 
   static async delete(id) {
     try {
-      const affectedRows = await Categoria.delete(id);
-      if (affectedRows === 0) {
+      const categoriaExistente = await Categoria.getById(id);
+      if (!categoriaExistente) {
         return { success: false, code: 404, message: "Categoría no encontrada para eliminar." };
       }
+
+      const libroCount = await Categoria.countLibros(id);
+      if (libroCount > 0) {
+        return {
+          success: false,
+          code: 409,
+          message: `No se puede eliminar la categoría porque está asignada a ${libroCount} libro(s).`
+        };
+      }
+
+      await Categoria.delete(id);
       return { success: true, message: "Categoría eliminada exitosamente." };
+
     } catch (error) {
       console.error("Error en el servicio al eliminar categoría:", error);
-      throw new Error("Error al eliminar la categoría.");
+      throw new Error("Error interno al eliminar la categoría.");
     }
   }
 }

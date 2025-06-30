@@ -21,14 +21,27 @@ class UsuarioService {
     }
   }
   static async eliminar(id) {
+    const numericId = Number(id);
+    const [usuarioExistente, prestamoCount] = await Promise.all([
+      Usuario.findByUsername(numericId),
+      Usuario.countPrestamos(numericId)
+    ]);
+    if (prestamoCount > 0) {
+      return {
+        success: false,
+        code: 409,
+        message: `No se puede eliminar el usuario porque está asociado a ${prestamoCount} préstamo(s).`
+      };
+    }
+
     try {
-        const affectedRows = await Usuario.delete(id);
-        if (affectedRows === 0) {
-            return { success: false, message: "Usuario no encontrado.", code: 404 };
-        }
-        return { success: true, message: "Usuario eliminado exitosamente." };
+      const affectedRows = await Usuario.delete(numericId);
+      if (affectedRows === 0) {
+        return { success: false, message: "Usuario no encontrado.", code: 404 };
+      }
+      return { success: true, message: "Usuario eliminado exitosamente." };
     } catch (error) {
-        return { success: false, message: error.message, code: 403 };
+      return { success: false, message: error.message, code: 403 };
     }
   }
 }

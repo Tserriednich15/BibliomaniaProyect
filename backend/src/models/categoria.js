@@ -32,6 +32,12 @@ class Categoria {
     const [result] = await connection.query("DELETE FROM categorias WHERE id = ?", [id]);
     return result.affectedRows;
   }
+
+  static async countLibros(categoriaId) {
+    const [rows] = await connection.query("SELECT COUNT(*) as count FROM libros WHERE categoria_id = ?", [categoriaId]);
+    return rows[0].count;
+  }
+
 }
 
 export default Categoria;

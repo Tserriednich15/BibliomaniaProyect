@@ -64,7 +64,7 @@ class autorController {
         }
     };
 
-    static async eliminarAutor  (req, res) {
+    static async eliminarAutor(req, res) {
         try {
             const { id } = req.params;
             const autorExistente = await Autor.getById(id);
@@ -73,14 +73,24 @@ class autorController {
                 return ResponseProvider.error(res, "Autor no encontrado", 404);
             }
 
+            const libroCount = await Autor.countLibros(id);
+
+            if (libroCount > 0) {
+                return ResponseProvider.error(
+                    res,
+                    `No se puede eliminar el autor porque tiene ${libroCount} libro(s) asociado(s).`,
+                    409 
+                );
+            }
+
             await Autor.delete(id);
             return ResponseProvider.success(res, { message: "Autor eliminado correctamente" });
+            
         } catch (error) {
             console.error("Error al eliminar autor:", error);
-            return ResponseProvider.error(res, "Error al eliminar el autor");
+            return ResponseProvider.error(res, "Error interno al eliminar el autor");
         }
     };
-
 }
 
 export default autorController;

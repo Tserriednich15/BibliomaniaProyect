@@ -1,7 +1,5 @@
 import EditorialService from "../services/editorialServices.js";
 import ResponseProvider from "../providers/responseProvider.js";
-
-
 class EditorialController {
   static async obtenerEditoriales(req, res) {
     try {
@@ -12,7 +10,6 @@ class EditorialController {
       return ResponseProvider.error(res, "Error al obtener las editoriales");
     }
   }
-
   static async obtenerEditorialPorId(req, res) {
     try {
       const { id } = req.params;
@@ -28,7 +25,6 @@ class EditorialController {
       return ResponseProvider.error(res, "Error al obtener la editorial");
     }
   }
-
   static async crearEditorial(req, res) {
     try {
       const { nombre, pais, fundacion, sitio_web, contacto_email } = req.body;
@@ -50,7 +46,6 @@ class EditorialController {
       return ResponseProvider.error(res, "Error al crear la editorial");
     }
   }
-
   static async actualizarEditorial(req, res) {
     try {
       const { id } = req.params;
@@ -74,7 +69,6 @@ class EditorialController {
       return ResponseProvider.error(res, "Error al actualizar la editorial");
     }
   }
-
   static async eliminarEditorial(req, res) {
     try {
       const { id } = req.params;
@@ -91,9 +85,8 @@ class EditorialController {
       });
     } catch (error) {
       console.error("Error al eliminar editorial:", error);
-      return ResponseProvider.error(res, "Error al eliminar la editorial");
+      return ResponseProvider.error(res, error.message, error.statusCode || 500);
     }
   }
 }
-
 export default EditorialController;

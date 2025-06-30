@@ -32,10 +32,17 @@ class AutorService {
         return { id, ...datos };
     }
 
-    static async eliminar(id) {
-        const [result] = await connection.query("DELETE FROM autores WHERE id = ?", [id]);
-        return result.affectedRows > 0;
+    static async eliminarEditorial(id) {
+    const libroCount = await Editorial.countLibros(id);
+
+    if (libroCount > 0) {
+      const error = new Error(`No se puede eliminar la editorial porque tiene ${libroCount} libro(s) asociado(s).`);
+      error.statusCode = 409;
+      throw error;
     }
+
+    return await Editorial.delete(id);
+}
 }
 
 export default AutorService;

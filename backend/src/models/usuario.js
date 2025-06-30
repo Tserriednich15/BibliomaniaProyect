@@ -1,6 +1,5 @@
 import connection from "../utils/db.js";
 import bcrypt from 'bcrypt';
-
 class Usuario {
   static async findAll() {
     const query = `
@@ -22,7 +21,7 @@ class Usuario {
     const [rows] = await connection.query(query, [username]);
     return rows[0];
   }
-  
+
   static async create(data) {
     const { usuario, contrasena, rol_id } = data;
     const saltRounds = 10;
@@ -48,6 +47,14 @@ class Usuario {
     const [result] = await connection.query("DELETE FROM usuarios WHERE id = ?", [id]);
     return result.affectedRows;
   }
+  static async countPrestamos(usuarioId) {
+    try {
+      const [rows] = await connection.query("SELECT COUNT(*) as count FROM prestamos WHERE usuario_id = ?", [usuarioId]);
+      return rows[0].count;
+    } catch (error) {
+      console.warn("Advertencia: No se pudo verificar los préstamos del usuario. Probablemente la columna 'usuario_id' no existe en la tabla 'prestamos'.", error.code);
+      return 0; 
+    }
+  }
 }
-
 export default Usuario;

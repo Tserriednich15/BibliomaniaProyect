@@ -62,11 +62,24 @@ class LibroService {
   }
   static async eliminar(id) {
     try {
-      const affectedRows = await Libro.delete(id);
-      if (affectedRows === 0) {
+      const libroExistente = await Libro.findById(id);
+      if (!libroExistente) {
         return { success: false, code: 404, message: "Libro no encontrado para eliminar." };
       }
+
+      const ejemplarCount = await Libro.countEjemplares(id);
+
+      if (ejemplarCount > 0) {
+        return {
+          success: false,
+          code: 409,
+          message: `No se puede eliminar el libro porque existen ${ejemplarCount} ejemplare(s) asociados.`
+        };
+      }
+
+      await Libro.delete(id);
       return { success: true, message: "Libro eliminado exitosamente." };
+      
     } catch (error) {
       console.error("Error en servicio al eliminar libro:", error);
       throw new Error("Error interno al eliminar el libro.");

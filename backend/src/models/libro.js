@@ -61,5 +61,9 @@ class Libro {
     const [result] = await connection.query("DELETE FROM libros WHERE id = ?", [id]);
     return result.affectedRows;
   }
+  static async countEjemplares(libroId) {
+    const [rows] = await connection.query("SELECT COUNT(*) as count FROM ejemplares WHERE libro_id = ?", [libroId]);
+    return rows[0].count;
+  }
 }
 export default Libro;
